@@ -25,6 +25,7 @@ class DataLoader implements ApplicationRunner {
     public void run(final ApplicationArguments args) throws Exception {
         userRepository.save(createAdmin());
         roleRepository.saveAll(addRoles());
+        addRoleToDefaultUser();
     }
 
     User createAdmin() {
@@ -42,5 +43,11 @@ class DataLoader implements ApplicationRunner {
         Role admin = new Role("Admin");
         Role owner = new Role("Owner");
         return List.of(user, admin, owner);
+    }
+
+    void addRoleToDefaultUser() {
+        User user = userRepository.findById(1).orElse(null);
+        user.addRole(roleRepository.findByName("Admin"));
+        userRepository.save(user);
     }
 }
