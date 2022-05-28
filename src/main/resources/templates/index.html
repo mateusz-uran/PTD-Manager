@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:form="">
+<head>
+    <meta charset="UTF-8">
+    <title>PTD Manager</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
+    <style>
+      .navbar-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        max-height: 130px;
+        background-color: #393e46;
+        color: white;
+        margin-bottom: 1em;
+      }
+
+      .logo {
+        max-width: 30%;
+        text-align: left;
+        color: #fff;
+        background-color: #0096FF;
+        padding-right: 0.5em;
+        padding-left: 0.5em;
+      }
+
+      .logo p:first-child {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 0;
+        padding-top: 0.7em;
+      }
+
+      .logo p i {
+        padding-right: 0.5em;
+      }
+
+      .logo p:last-child {
+        font-size: 0.8em;
+        border-bottom: 1px solid;
+      }
+
+      .navbar {
+        max-width: 60%;
+      }
+
+      @media screen and (max-width: 1025px) {
+        .logo p:last-child {
+        font-size: 0.6em;
+        }
+      }
+
+      @media screen and (max-width: 880px) {
+      }
+
+      @media screen and (max-width: 768px) {
+        .logo p {
+          padding-bottom: 0.5em;
+        }
+
+        .logo p:first-child {
+          font-size: 1.2em;
+        }
+
+        .logo p:first-child {
+          font-size: 1.2em;
+        }
+        .navbar {
+          font-size: 0.9em;
+          justify-content: flex-end;
+        }
+      }
+
+      @media screen and (max-width: 600px) {
+        .logo p:first-child {
+          font-size: 0.8em;
+        }
+      }
+
+      @media screen and (max-width: 481px) {
+      }
+
+      @media screen and (max-width: 320px) {
+      }
+    </style>
+</head>
+<body>
+<div class="row justify-content-center">
+    <div class="navbar-container">
+        <div class="logo">
+            <p><i class="fa-solid fa-truck"></i>PTG Manager</p>
+            <p>Professional Truck Driver System Managment</p>
+        </div>
+        <div class="navbar">
+        </div>
+    </div>
+</div>
+</body>
+</html>
