@@ -1,5 +1,7 @@
 package io.github.mateuszuran.PTD.Manager;
 
+import io.github.mateuszuran.PTD.Manager.Role.Role;
+import io.github.mateuszuran.PTD.Manager.Role.RoleRepository;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserRepository;
 import org.springframework.boot.ApplicationArguments;
@@ -7,17 +9,22 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 class DataLoader implements ApplicationRunner {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public DataLoader(final UserRepository userRepository) {
+    public DataLoader(final UserRepository userRepository, final RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public void run(final ApplicationArguments args) throws Exception {
         userRepository.save(createAdmin());
+        roleRepository.saveAll(addRoles());
     }
 
     User createAdmin() {
@@ -28,5 +35,12 @@ class DataLoader implements ApplicationRunner {
         user.setFirstName("Mateusz");
         user.setLastName("Uranowski");
         return user;
+    }
+
+    List<Role> addRoles() {
+        Role user = new Role("User");
+        Role admin = new Role("Admin");
+        Role owner = new Role("Owner");
+        return List.of(user, admin, owner);
     }
 }
