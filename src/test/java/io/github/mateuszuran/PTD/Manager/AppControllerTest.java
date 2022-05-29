@@ -35,7 +35,7 @@ class AppControllerTest {
 
     @Test
     void shouldReturnStatus200forAnonymousUser() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("/").with(anonymous()))
+        mockMvc.perform(MockMvcRequestBuilders.get("/login").with(anonymous()))
                 .andExpect(status().is(200));
     }
 }
