@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/home").hasAnyAuthority("User", "Admin", "Owner")
                 .antMatchers("/").anonymous()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login", "/register", "/process_register").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
                 .defaultSuccessUrl("/home", true)
