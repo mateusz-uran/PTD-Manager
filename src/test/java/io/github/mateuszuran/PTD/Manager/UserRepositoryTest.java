@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
@@ -13,9 +14,7 @@ import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Rollback(false)
+@SpringBootTest
 public class UserRepositoryTest {
     @Autowired
     EntityManager entityManager;
@@ -34,5 +33,12 @@ public class UserRepositoryTest {
         User existUser = entityManager.find(User.class, savedUser.getId());
 
         assertThat(existUser.getEmail()).isEqualTo(user.getEmail());
+    }
+
+    @Test
+    void findUserByEmail() {
+        String email = "admin@o2.pl";
+        User userEmail = userRepository.findByEmail(email);
+        assertThat(userEmail).isNotNull();
     }
 }

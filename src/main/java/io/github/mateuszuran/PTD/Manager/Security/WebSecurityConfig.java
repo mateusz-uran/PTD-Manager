@@ -1,5 +1,6 @@
 package io.github.mateuszuran.PTD.Manager.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -49,10 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/home").hasAnyAuthority("User", "Admin", "Owner")
-                .antMatchers("/anonymous*").anonymous()
+                .antMatchers("/").anonymous()
                 .antMatchers("/login*").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()

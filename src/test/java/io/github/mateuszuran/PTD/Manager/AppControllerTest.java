@@ -5,23 +5,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser
 class AppControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @WithMockUser(username = "admin@o2.pl", password = "admin", authorities = "Admin")
     @Test
     void shouldGetHomePage() throws Exception {
+        mockMvc
+                .perform(MockMvcRequestBuilders.get("/home"))
+                .andExpect(status().is(200));
+    }
+
+    @WithMockUser
+    @Test
+    void shouldReturnForbiddenRequest() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/home"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().is(200));
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void shouldReturnStatus200forAnonymousUser() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.get("/").with(anonymous()))
+                .andExpect(status().is(200));
     }
 }
