@@ -1,10 +1,13 @@
 package io.github.mateuszuran.PTD.Manager.User;
 
 import io.github.mateuszuran.PTD.Manager.Role.Role;
+import io.github.mateuszuran.PTD.Manager.Vehicle.Vehicle;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -39,5 +42,9 @@ public class User {
 
     public void setRoles(final Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String fullName() {
+        return getFirstName() + " " + getLastName();
     }
 }

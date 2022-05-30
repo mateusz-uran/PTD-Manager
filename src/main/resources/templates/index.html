@@ -139,6 +139,7 @@
     <div class="tables-container">
         <div class="buttons">
             <a th:href="@{/home/generate}" class="btn btn-light" role="button">Generuj kod aktywacyjny</a>
+            <a th:href="@{/home/vehicle}" class="btn btn-light" role="button">Dodaj nowy pojazd</a>
         </div>
         <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered">
             <thead class="thead-dark">
