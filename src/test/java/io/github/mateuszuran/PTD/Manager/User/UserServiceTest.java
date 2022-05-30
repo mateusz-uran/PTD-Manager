@@ -13,6 +13,8 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.springframework.test.util.AssertionErrors.assertFalse;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest
 class UserServiceTest {
@@ -45,5 +47,13 @@ class UserServiceTest {
         userService.toggleCodeWhenUsed(test);
         var result = codeRepository.findByNumber(test.getNumber());
         assertThat(result);
+    }
+
+    @Test
+    void toggleCode() {
+        Code testCode = codeRepository.save(new Code(1, "code", false));
+        userService.toggle(testCode);
+        codeRepository.save(testCode);
+        assertTrue("Code toggled to true", testCode.isActive());
     }
 }

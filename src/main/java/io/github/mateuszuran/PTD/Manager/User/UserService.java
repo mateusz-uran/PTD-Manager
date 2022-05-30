@@ -68,4 +68,13 @@ public class UserService {
         result.setActive(false);
         codeRepository.save(result);
     }
+
+    public void toggle(Code code) {
+        var checkbox = code.isActive();
+        code.setActive(!checkbox);
+    }
+
+    public Code getCode(Integer id) {
+        return codeRepository.findById(id).orElse(null);
+    }
 }
