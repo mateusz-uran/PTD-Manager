@@ -13,6 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertFalse;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
@@ -42,7 +43,7 @@ class UserServiceTest {
 
     @Test
     void checkIfCodeWasToggled() {
-        var test = new Code(1, "code", true);
+        var test = new Code(1, "code", true, "");
         codeRepository.save(test);
         userService.toggleCodeWhenUsed(test);
         var result = codeRepository.findByNumber(test.getNumber());
@@ -51,9 +52,18 @@ class UserServiceTest {
 
     @Test
     void toggleCode() {
-        Code testCode = codeRepository.save(new Code(1, "code", false));
+        Code testCode = codeRepository.save(new Code(1, "code", false, ""));
         userService.toggle(testCode);
         codeRepository.save(testCode);
         assertTrue("Code toggled to true", testCode.isActive());
+    }
+
+    @Test
+    void setFullNameUsedByUser() {
+        Code code = new Code(1, "number", true, "");
+        codeRepository.save(code);
+        userService.getFullNameUserFromCode(1, "number");
+        var usedCode = codeRepository.findByNumber("number");
+        assertEquals(usedCode.getUsedBy(), "Mateusz Uranowski");
     }
 }

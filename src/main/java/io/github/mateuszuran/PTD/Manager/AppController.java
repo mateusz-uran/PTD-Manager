@@ -57,6 +57,7 @@ public class AppController {
         if(userService.checkIfCodeExists(code)) {
             userService.setUserWithDefaultRole(user);
             userService.toggleCodeWhenUsed(code);
+            userService.getFullNameUserFromCode(user.getId(), code.getNumber());
             return "redirect:/register?success";
         } return "redirect:/register?false";
     }

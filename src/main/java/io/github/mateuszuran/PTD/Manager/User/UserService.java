@@ -45,6 +45,7 @@ public class UserService {
         Code code = new Code();
         code.setNumber(generateRegistrationCode());
         code.setActive(true);
+        code.setUsedBy("Kod nie używany");
 
         codeRepository.save(code);
     }
@@ -76,5 +77,13 @@ public class UserService {
 
     public Code getCode(Integer id) {
         return codeRepository.findById(id).orElse(null);
+    }
+
+    public void getFullNameUserFromCode(Integer id, String number) {
+        User user = userRepository.findById(id).orElse(null);
+        Code getUsedCode = codeRepository.findByNumber(number);
+        var fullName = user.getFirstName() + " " + user.getLastName();
+        getUsedCode.setUsedBy(fullName);
+        codeRepository.save(getUsedCode);
     }
 }

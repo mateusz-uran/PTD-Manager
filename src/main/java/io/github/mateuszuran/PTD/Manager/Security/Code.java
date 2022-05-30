@@ -19,4 +19,12 @@ public class Code {
     private String number;
     @Column(nullable = false)
     private boolean active;
+    @Column(nullable = false, length = 20)
+    private String usedBy;
+
+    public Code(final Integer id, final String number, final boolean active) {
+        this.id = id;
+        this.number = number;
+        this.active = active;
+    }
 }
