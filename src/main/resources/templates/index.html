@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>PTD Manager</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
     <style>
       .navbar-container {
@@ -49,6 +50,17 @@
       .navbar div p {
         padding-right: 1.5em;
         margin: 0;
+      }
+
+      .tables-container {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .buttons {
+        background-color: #0096FF;
+        padding: 0.3em;
       }
 
       @media screen and (max-width: 1025px) {
@@ -100,6 +112,7 @@
 
       @media screen and (max-width: 320px) {
       }
+
     </style>
 </head>
 <body>
@@ -121,6 +134,67 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div class="tables-container">
+        <div class="buttons">
+            <a th:href="@{/home/generate}" class="btn btn-light" role="button">Generuj kod aktywacyjny</a>
+        </div>
+        <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Imię i nazwisko</th>
+                <th>E-mail</th>
+                <th>Uprawnienia</th>
+                <th>Zarządzaj</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="user : ${listUsers}">
+                <tr>
+                    <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:each="role : ${user.roles}">
+                        <p th:text="${role.name}"></p>
+                    </td>
+                    <td>edit</td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Numer</th>
+                <th>Aktywny</th>
+                <th>Użyty przez użytkownika</th>
+                <th>Zarządzaj</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="code : ${listCodes}">
+                <tr>
+                    <td th:text="${code.number}"></td>
+                    <td>
+                        <div class="custom-control custom-switch">
+                            <input th:checked="${code.active}" th:value="code.id" type="checkbox"
+                                   class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1"></label>
+                            <th:block th:if="${code.active}">
+                                <button type="submit" class="btn btn-secondary btn-sm" style="min-width: 88px">
+                                    dezaktywuj
+                                </button>
+                            </th:block>
+                            <th:block th:unless="${code.active}">
+                                <button type="submit" class="btn btn-secondary btn-sm" style="min-width: 88px">aktywuj
+                                </button>
+                            </th:block>
+                        </div>
+                        </form>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

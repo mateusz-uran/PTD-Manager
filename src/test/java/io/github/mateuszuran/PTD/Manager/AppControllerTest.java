@@ -1,9 +1,11 @@
 package io.github.mateuszuran.PTD.Manager;
 
+import io.github.mateuszuran.PTD.Manager.User.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -17,6 +19,8 @@ class AppControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @MockBean
+    private UserService userService;
 
     @WithMockUser(username = "admin@o2.pl", password = "admin", authorities = "Admin")
     @Test
@@ -28,7 +32,7 @@ class AppControllerTest {
 
     @WithMockUser
     @Test
-    void shouldReturnForbiddenRequest() throws Exception{
+    void shouldReturnForbiddenRequestForUserWithoutRole() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.get("/home"))
                 .andExpect(status().isForbidden());
     }

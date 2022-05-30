@@ -1,11 +1,9 @@
 package io.github.mateuszuran.PTD.Manager.Role;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "roles")
@@ -16,7 +14,19 @@ public class Role {
     @Column(nullable = false)
     private String name;
 
+    public Role() {
+    }
+
     public Role(final String name) {
+        this.name = name;
+    }
+
+    public Role(final Integer id) {
+        this.id = id;
+    }
+
+    public Role(final Integer id, final String name) {
+        this.id = id;
         this.name = name;
     }
 }
