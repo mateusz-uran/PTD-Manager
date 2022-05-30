@@ -154,10 +154,13 @@
                 <tr>
                     <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
                     <td th:text="${user.email}"></td>
-                    <td th:each="role : ${user.roles}">
+                    <!--<td th:each="role : ${user.roles}">
                         <p th:text="${role.name}"></p>
+                    </td>-->
+                    <td th:text="${user.roles}"></td>
+                    <td>
+                        <a th:href="@{'/home/edit/' + ${user.id}}">Wybierz</a>
                     </td>
-                    <td>edit</td>
                 </tr>
             </th:block>
             </tbody>

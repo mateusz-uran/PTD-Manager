@@ -1,5 +1,6 @@
 package io.github.mateuszuran.PTD.Manager.User;
 
+import io.github.mateuszuran.PTD.Manager.Role.Role;
 import io.github.mateuszuran.PTD.Manager.Role.RoleRepository;
 import io.github.mateuszuran.PTD.Manager.Security.Code;
 import io.github.mateuszuran.PTD.Manager.Security.CodeRepository;
@@ -85,5 +86,19 @@ public class UserService {
         var fullName = user.getFirstName() + " " + user.getLastName();
         getUsedCode.setUsedBy(fullName);
         codeRepository.save(getUsedCode);
+    }
+
+    public User get(Integer id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public List<Role> getRoles() {
+        return roleRepository.findAll();
+    }
+
+    public void save(User user) {
+        String encodedPassword = user.getPassword();
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
     }
 }

@@ -32,4 +32,12 @@ public class User {
     public void addRole(Role role) {
         this.roles.add(role);
     }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(final Set<Role> roles) {
+        this.roles = roles;
+    }
 }

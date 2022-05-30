@@ -66,4 +66,16 @@ class UserServiceTest {
         var usedCode = codeRepository.findByNumber("number");
         assertEquals(usedCode.getUsedBy(), "Mateusz Uranowski");
     }
+
+    @Test
+    void getUserById() {
+        var result = userService.get(1);
+        assertThat(result, notNullValue());
+    }
+
+    @Test
+    void shouldGetRoles() {
+        var result = userService.getRoles();
+        assertThat(result, notNullValue());
+    }
 }
