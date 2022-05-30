@@ -1,4 +1,4 @@
-package io.github.mateuszuran.PTD.Manager;
+package io.github.mateuszuran.PTD.Manager.User;
 
 import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserRepository;

@@ -48,12 +48,16 @@ public class AppController {
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("code", new Code());
         return "register";
     }
 
     @PostMapping("/process_register")
-    public String registerUser(User user) {
-        userService.setUserWithDefaultRole(user);
-        return "redirect:/register?success";
+    public String registerUser(User user, Code code) {
+        if(userService.checkIfCodeExists(code)) {
+            userService.setUserWithDefaultRole(user);
+            userService.toggleCodeWhenUsed(code);
+            return "redirect:/register?success";
+        } return "redirect:/register?false";
     }
 }

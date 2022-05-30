@@ -52,4 +52,15 @@ public class UserService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
+
+    public boolean checkIfCodeExists(Code code) {
+        Code result = codeRepository.findByNumber(code.getNumber());
+        return codeRepository.existsByNumber(code.getNumber()) && result.isActive();
+    }
+
+    public void toggleCodeWhenUsed(Code code) {
+        Code result = codeRepository.findByNumber(code.getNumber());
+        result.setActive(false);
+        codeRepository.save(result);
+    }
 }
