@@ -111,8 +111,8 @@
         </div>
         <div class="navbar">
             <div>
-                <p th:inline="text">Zalogowany jako [[${#request.userPrincipal.principal.fullName}]]
-                    <span sec:authentication="principal.authorities"></span>
+                <p th:inline="text">Zalogowany jako
+                    <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
                 </p>
             </div>
             <div>

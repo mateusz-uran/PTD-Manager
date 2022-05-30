@@ -2,7 +2,6 @@ package io.github.mateuszuran.PTD.Manager.Security;
 
 import io.github.mateuszuran.PTD.Manager.Role.Role;
 import io.github.mateuszuran.PTD.Manager.User.User;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +14,7 @@ import java.util.Set;
 public class CustomUserDetails implements UserDetails {
     private final User user;
 
-    CustomUserDetails(final User user) {
+    public CustomUserDetails(final User user) {
         this.user = user;
     }
 
@@ -36,7 +35,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getFirstName() + " " + user.getLastName();
     }
 
     @Override
@@ -57,10 +56,5 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Bean
-    public String getFullName() {
-        return user.getFirstName() + " " + user.getLastName();
     }
 }
