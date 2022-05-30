@@ -37,4 +37,13 @@ class UserServiceTest {
         var result = userService.generateRegistrationCode();
         assertThat(result, notNullValue());
     }
+
+    @Test
+    void checkIfCodeWasToggled() {
+        var test = new Code(1, "code", true);
+        codeRepository.save(test);
+        userService.toggleCodeWhenUsed(test);
+        var result = codeRepository.findByNumber(test.getNumber());
+        assertThat(result);
+    }
 }
