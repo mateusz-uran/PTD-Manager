@@ -36,6 +36,12 @@ public class UserController {
         return "redirect:/home";
     }
 
+    @GetMapping("/code/delete/{id}")
+    public String deleteCode(@PathVariable("id") Integer id) {
+        userService.deleteCode(id);
+        return "redirect:/home";
+    }
+
     @GetMapping("/edit/{id}")
     public String showEditUserForm(@PathVariable("id") Integer id, Model model) {
         User user = userService.get(id);

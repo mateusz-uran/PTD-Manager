@@ -2,7 +2,9 @@ package io.github.mateuszuran.PTD.Manager.User;
 
 import io.github.mateuszuran.PTD.Manager.Security.Code;
 import io.github.mateuszuran.PTD.Manager.Security.CodeRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,10 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.util.AssertionErrors.assertFalse;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
@@ -77,5 +82,13 @@ class UserServiceTest {
     void shouldGetRoles() {
         var result = userService.getRoles();
         assertThat(result, notNullValue());
+    }
+
+    @Test
+    void shouldDeleteCodeById() {
+        Code newCode = new Code(1, "number", true, "anonymo");
+        codeRepository.save(newCode);
+        userService.deleteCode(1);
+        assertThat(codeRepository.findById(1).isEmpty());
     }
 }

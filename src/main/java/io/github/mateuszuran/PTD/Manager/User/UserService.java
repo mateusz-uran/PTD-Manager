@@ -88,6 +88,10 @@ public class UserService {
         codeRepository.save(getUsedCode);
     }
 
+    public void deleteCode(Integer id) {
+        codeRepository.deleteById(id);
+    }
+
     public User get(Integer id) {
         return userRepository.findById(id).orElse(null);
     }

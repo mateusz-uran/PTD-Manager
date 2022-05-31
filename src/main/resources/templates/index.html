@@ -195,6 +195,9 @@
                         </form>
                     </td>
                     <td th:text="${code.usedBy}"></td>
+                    <td>
+                        <a th:href="@{'/home/code/delete/' + ${code.id}}" onclick="return confirm('Usunięcie kodu jest nie odwracalne, jesteś pewien?')">Usuń</a>
+                    </td>
                 </tr>
             </th:block>
             </tbody>
