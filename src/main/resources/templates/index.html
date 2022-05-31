@@ -155,9 +155,6 @@
                 <tr>
                     <td th:text="${user.firstName} + ' ' + ${user.lastName}"></td>
                     <td th:text="${user.email}"></td>
-                    <!--<td th:each="role : ${user.roles}">
-                        <p th:text="${role.name}"></p>
-                    </td>-->
                     <td th:text="${user.roles}"></td>
                     <td>
                         <a th:href="@{'/home/edit/' + ${user.id}}">Wybierz</a>
@@ -198,6 +195,31 @@
                         </form>
                     </td>
                     <td th:text="${code.usedBy}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Model ciężarówki</th>
+                <th>Rejestracja ciężarówki i naczepy</th>
+                <th>Pojemnosc zbiorników i adBlue</th>
+                <th>Zdjecie zestawu</th>
+                <th>Zarządzaj</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="vehicle : ${listVehicles}">
+                <tr>
+                    <td th:text="${vehicle.truckMainModel}"></td>
+                    <td th:text="${vehicle.truckLicensePlate} + ' ' + ${vehicle.trailerLicensePlate}"></td>
+                    <td th:text="${vehicle.vehicleFuelCapacity} + 'l - ' + ${vehicle.adBlueCapacity} + 'l'"></td>
+                    <td><img th:src="@{${vehicle.vehicleImagePath}}" style="width: 136px; height: 76px;"/></td>
+                    <td>
+                        <a th:href="@{'/vehicle/edit/' + ${vehicle.id}}">Edytuj</a>
+                        <a th:href="@{'/vehicle/delete/' + ${vehicle.id}}">Usuń</a>
+                    </td>
                 </tr>
             </th:block>
             </tbody>

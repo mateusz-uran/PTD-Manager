@@ -4,6 +4,8 @@ import io.github.mateuszuran.PTD.Manager.Security.Code;
 import io.github.mateuszuran.PTD.Manager.Security.CodeRepository;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserService;
+import io.github.mateuszuran.PTD.Manager.Vehicle.Vehicle;
+import io.github.mateuszuran.PTD.Manager.Vehicle.VehicleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -21,10 +23,12 @@ public class AppController {
     private static final Logger logger = LoggerFactory.getLogger(AppController.class);
     private final UserService userService;
     private final CodeRepository codeRepository;
+    private final VehicleRepository vehicleRepository;
 
-    public AppController(final UserService userService, final CodeRepository codeRepository) {
+    public AppController(final UserService userService, final CodeRepository codeRepository, final VehicleRepository vehicleRepository) {
         this.userService = userService;
         this.codeRepository = codeRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
     @GetMapping("/home")
@@ -33,6 +37,8 @@ public class AppController {
         model.addAttribute("listUsers", listUsers);
         List<Code> listCodes = codeRepository.findAll();
         model.addAttribute("listCodes", listCodes);
+        List<Vehicle> listVehicles = vehicleRepository.findAll();
+        model.addAttribute("listVehicles", listVehicles);
         return "index";
     }
 
