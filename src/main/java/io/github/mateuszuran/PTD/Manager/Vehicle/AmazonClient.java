@@ -4,7 +4,11 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,12 +20,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Objects;
 
 @Service
 public class AmazonClient {
-    private AmazonS3 s3client;
+    private AmazonS3 s3Client;
 
     @Value("${amazonProperties.endpointUrl}")
     private String endpointUrl;
@@ -31,10 +34,11 @@ public class AmazonClient {
     private String accessKey;
     @Value("${amazonProperties.secretKey}")
     private String secretKey;
+
     @PostConstruct
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-        this.s3client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
+        this.s3Client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
     }
 
     public File convertMultiPartToFile(MultipartFile file) throws IOException {
@@ -43,5 +47,35 @@ public class AmazonClient {
             os.write(file.getBytes());
             return convertFile;
         }
+    }
+
+    public String generateFileName(MultipartFile multiPart) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now) + "-" + multiPart.getOriginalFilename().replace(" ", "_");
+    }
+
+    public void uploadFileTos3bucket(String fileName, File file) {
+        s3Client.putObject(new PutObjectRequest(bucketName, fileName, file)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+    }
+
+    public String uploadFile(MultipartFile multipartFile, Vehicle vehicle) {
+        String fileUrl = "";
+        try {
+            File file = convertMultiPartToFile(multipartFile);
+            String fileName = generateFileName(multipartFile);
+            vehicle.setVehicleImageName(fileName);
+            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
+            uploadFileTos3bucket(fileName, file);
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fileUrl;
+    }
+
+    public boolean isBucketExists() {
+        return s3Client.doesBucketExistV2(bucketName);
     }
 }
