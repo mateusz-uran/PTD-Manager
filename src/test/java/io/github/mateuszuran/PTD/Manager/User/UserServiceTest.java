@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertFalse;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
@@ -90,5 +91,12 @@ class UserServiceTest {
         codeRepository.save(newCode);
         userService.deleteCode(1);
         assertThat(codeRepository.findById(1).isEmpty());
+    }
+
+    @Test
+    void shouldReturnFalseIfUserExists() {
+        User user = new User(2, "test@o2.pl",  "password","Foo", "Bar");
+        userRepository.save(user);
+        assertFalse("User exists", userService.checkIfUserExists(user));
     }
 }

@@ -105,4 +105,12 @@ public class UserService {
         user.setPassword(encodedPassword);
         userRepository.save(user);
     }
+
+    private boolean emailExists(final String email) {
+        return userRepository.findByEmail(email) != null;
+    }
+
+    public boolean checkIfUserExists(User user) {
+        return !emailExists(user.getEmail());
+    }
 }

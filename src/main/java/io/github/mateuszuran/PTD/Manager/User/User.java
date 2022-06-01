@@ -2,7 +2,9 @@ package io.github.mateuszuran.PTD.Manager.User;
 
 import io.github.mateuszuran.PTD.Manager.Role.Role;
 import io.github.mateuszuran.PTD.Manager.Vehicle.Vehicle;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -46,5 +50,13 @@ public class User {
 
     public String fullName() {
         return getFirstName() + " " + getLastName();
+    }
+
+    public User(final Integer id, final String email, final String password, final String firstName, final String lastName) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }

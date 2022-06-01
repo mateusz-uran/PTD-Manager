@@ -60,7 +60,7 @@ public class AppController {
 
     @PostMapping("/process_register")
     public String registerUser(User user, Code code) {
-        if(userService.checkIfCodeExists(code)) {
+        if(userService.checkIfCodeExists(code) && userService.checkIfUserExists(user)) {
             userService.setUserWithDefaultRole(user);
             userService.toggleCodeWhenUsed(code);
             userService.getFullNameUserFromCode(user.getId(), code.getNumber());
