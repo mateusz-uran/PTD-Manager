@@ -41,6 +41,15 @@ public class VehicleController {
         return "redirect:/home";
     }
 
+    @GetMapping("/vehicle/edit/{id}")
+    public String editVehicle(@PathVariable("id") Integer id, Model model) {
+        List<User> listUsers = userService.findAllUsers();
+        Vehicle vehicle = vehicleService.findById(id);
+        model.addAttribute("listUsers", listUsers);
+        model.addAttribute("vehicle", vehicle);
+        return "vehicle_form";
+    }
+
     @GetMapping("/vehicle/delete/{id}")
     public String deleteVehicle(@PathVariable("id") Integer id) {
         vehicleService.deleteVehicleById(id);
