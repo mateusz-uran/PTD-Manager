@@ -51,7 +51,7 @@ public class AmazonClient {
     }
 
     public String generateFileName(MultipartFile multiPart) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now) + "-" + multiPart.getOriginalFilename().replace(" ", "_");
     }

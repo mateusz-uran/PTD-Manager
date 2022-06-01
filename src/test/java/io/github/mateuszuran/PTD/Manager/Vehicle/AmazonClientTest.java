@@ -35,7 +35,7 @@ class AmazonClientTest {
     void shouldGetLocalTime() {
         MockMultipartFile multipartFile = new MockMultipartFile("foo", "foo.txt", MediaType.TEXT_PLAIN_VALUE,
                 "Hello World".getBytes());
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         var result = client.generateFileName(multipartFile);
         assertTrue(result.contains(dtf.format(now)));
