@@ -21,7 +21,7 @@ public class VehicleService {
 
     public void deleteVehicleById(Integer id) {
         Vehicle result = vehicleRepository.findById(id).orElse(null);
-        amazonClient.deleteFileFromS3Bucket(result.getVehicleImagePath());
+        amazonClient.deleteFileFromS3Bucket(result.getVehicleImageName());
         vehicleRepository.deleteById(id);
     }
 
