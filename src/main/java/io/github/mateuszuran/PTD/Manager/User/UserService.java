@@ -77,11 +77,11 @@ public class UserService {
     }
 
     public Code getCode(Integer id) {
-        return codeRepository.findById(id).orElse(null);
+        return codeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Code with given id not found"));
     }
 
     public void getFullNameUserFromCode(Integer id, String number) {
-        User user = userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User with given id not found"));;
         Code getUsedCode = codeRepository.findByNumber(number);
         var fullName = user.getFirstName() + " " + user.getLastName();
         getUsedCode.setUsedBy(fullName);
@@ -93,7 +93,7 @@ public class UserService {
     }
 
     public User get(Integer id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User with given id not found"));
     }
 
     public List<Role> getRoles() {

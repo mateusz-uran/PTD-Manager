@@ -44,7 +44,7 @@ public class VehicleController {
     @GetMapping("/vehicle/edit/{id}")
     public String editVehicle(@PathVariable("id") Integer id, Model model) {
         List<User> listUsers = userService.findAllUsers();
-        Vehicle vehicle = vehicleService.findById(id);
+        Vehicle vehicle = vehicleService.findVehicleById(id);
         model.addAttribute("listUsers", listUsers);
         model.addAttribute("vehicle", vehicle);
         return "vehicle_form";

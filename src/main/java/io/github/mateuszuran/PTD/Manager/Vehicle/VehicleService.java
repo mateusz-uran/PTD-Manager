@@ -20,12 +20,12 @@ public class VehicleService {
     }
 
     public void deleteVehicleById(Integer id) {
-        Vehicle result = vehicleRepository.findById(id).orElse(null);
+        Vehicle result = vehicleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Vehicle with given id not found"));
         amazonClient.deleteFileFromS3Bucket(result.getVehicleImageName());
         vehicleRepository.deleteById(id);
     }
 
-    public Vehicle findById(Integer id) {
-        return vehicleRepository.findById(id).orElse(null);
+    public Vehicle findVehicleById(Integer id) {
+        return vehicleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Vehicle with given id not found"));
     }
 }
