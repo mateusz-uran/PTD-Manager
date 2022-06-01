@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import org.springframework.beans.factory.annotation.Value;
@@ -77,5 +78,9 @@ public class AmazonClient {
 
     public boolean isBucketExists() {
         return s3Client.doesBucketExistV2(bucketName);
+    }
+
+    public void deleteFileFromS3Bucket(String fileUrl) {
+        s3Client.deleteObject(new DeleteObjectRequest(bucketName, fileUrl));
     }
 }

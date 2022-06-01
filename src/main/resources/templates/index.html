@@ -63,6 +63,14 @@
         padding: 0.3em;
       }
 
+      .link-buttons {
+        display: flex;
+      }
+
+      .link-buttons a {
+        margin-left: 0.3em;
+      }
+
       @media screen and (max-width: 1025px) {
         .logo p:last-child {
             font-size: 0.6em;
@@ -114,10 +122,11 @@
       }
 
 
+
     </style>
 </head>
 <body>
-<div class="row justify-content-center">
+<div class="row justify-content-center" style="overflow: hidden;">
     <div class="navbar-container">
         <div class="logo">
             <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
@@ -158,7 +167,9 @@
                     <td th:text="${user.roles}"></td>
                     <td>
                         <a th:href="@{'/home/edit/' + ${user.id}}" type="button" class="btn btn-sm btn-outline-primary">Wybierz</a>
-                        <a th:href="@{'/home/user/delete/' + ${user.id}}" onclick="return confirm('Usunięcie użytkownika jest nie odwracalne, jesteś pewien?')" type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
+                        <a th:href="@{'/home/user/delete/' + ${user.id}}"
+                           onclick="return confirm('Usunięcie użytkownika jest nie odwracalne, jesteś pewien?')"
+                           type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
                     </td>
                 </tr>
             </th:block>
@@ -189,7 +200,8 @@
                                     </button>
                                 </th:block>
                                 <th:block th:unless="${code.active}">
-                                    <button type="submit" class="btn btn-secondary btn-sm" style="min-width: 88px">aktywuj
+                                    <button type="submit" class="btn btn-secondary btn-sm" style="min-width: 88px">
+                                        aktywuj
                                     </button>
                                 </th:block>
                             </div>
@@ -197,7 +209,9 @@
                     </td>
                     <td th:text="${code.usedBy}"></td>
                     <td>
-                        <a th:href="@{'/home/code/delete/' + ${code.id}}" onclick="return confirm('Usunięcie kodu jest nie odwracalne, jesteś pewien?')">Usuń</a>
+                        <a th:href="@{'/home/code/delete/' + ${code.id}}"
+                           onclick="return confirm('Usunięcie kodu jest nie odwracalne, jesteś pewien?')" type="button"
+                           class="btn btn-sm btn-outline-danger">Usuń</a>
                     </td>
                 </tr>
             </th:block>
@@ -219,10 +233,12 @@
                     <td th:text="${vehicle.truckMainModel}"></td>
                     <td th:text="${vehicle.truckLicensePlate} + ' ' + ${vehicle.trailerLicensePlate}"></td>
                     <td th:text="${vehicle.vehicleFuelCapacity} + 'l - ' + ${vehicle.adBlueCapacity} + 'l'"></td>
-                    <td><img th:src="@{${vehicle.vehicleImagePath}}" style="width: 136px; height: 76px;"/></td>
+                    <td><img class="img-fluid" th:src="@{${vehicle.vehicleImagePath}}" style="max-width: 136px; max-height: 76px;"/></td>
                     <td>
-                        <a th:href="@{'/vehicle/edit/' + ${vehicle.id}}">Edytuj</a>
-                        <a th:href="@{'/vehicle/delete/' + ${vehicle.id}}">Usuń</a>
+                        <a th:href="@{'/home/vehicle/edit/' + ${vehicle.id}}" type="button" class="btn btn-sm btn-outline-primary">Wybierz</a>
+                        <a th:href="@{'/home/vehicle/delete/' + ${vehicle.id}}"
+                           onclick="return confirm('Usunięcie pojazdu jest nie odwracalne, jesteś pewien?')"
+                           type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
                     </td>
                 </tr>
             </th:block>
