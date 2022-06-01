@@ -53,7 +53,14 @@ public class UserController {
 
     @PostMapping("/edit/save")
     public String saveUser(User user) {
+        Integer id = user.getId();
         userService.save(user);
+        return "redirect:/home/edit/" + id + "?success";
+    }
+
+    @GetMapping("/user/delete/{id}")
+    public String deleteUser(@PathVariable("id") Integer id) {
+        userService.deleteUserById(id);
         return "redirect:/home";
     }
 }

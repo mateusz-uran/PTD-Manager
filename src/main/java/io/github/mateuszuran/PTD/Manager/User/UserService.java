@@ -106,11 +106,15 @@ public class UserService {
         userRepository.save(user);
     }
 
-    private boolean emailExists(final String email) {
+    public boolean emailExists(final String email) {
         return userRepository.findByEmail(email) != null;
     }
 
     public boolean checkIfUserExists(User user) {
         return !emailExists(user.getEmail());
+    }
+
+    public void deleteUserById(Integer id) {
+        userRepository.deleteById(id);
     }
 }
