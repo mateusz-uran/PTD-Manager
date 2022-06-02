@@ -2,9 +2,7 @@ package io.github.mateuszuran.PTD.Manager.User;
 
 import io.github.mateuszuran.PTD.Manager.Security.Code;
 import io.github.mateuszuran.PTD.Manager.Security.CodeRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertFalse;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
@@ -75,7 +72,7 @@ class UserServiceTest {
 
     @Test
     void getUserById() {
-        var result = userService.get(1);
+        var result = userService.getUserById(1);
         assertThat(result, notNullValue());
     }
 

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -92,7 +93,7 @@ public class UserService {
         codeRepository.deleteById(id);
     }
 
-    public User get(Integer id) {
+    public User getUserById(Integer id) {
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User with given id not found"));
     }
 
@@ -112,6 +113,11 @@ public class UserService {
 
     public boolean checkIfUserExists(User user) {
         return !emailExists(user.getEmail());
+    }
+
+    public boolean checkIfEditedUserEmailIsUnique(String email, Integer id) {
+        var result = userRepository.findByEmail(email);
+        return !Objects.equals(result.getId(), id);
     }
 
     public void deleteUserById(Integer id) {

@@ -44,7 +44,7 @@ public class UserController {
 
     @GetMapping("/edit/{id}")
     public String showEditUserForm(@PathVariable("id") Integer id, Model model) {
-        User user = userService.get(id);
+        User user = userService.getUserById(id);
         List<Role> listRoles = userService.getRoles();
         model.addAttribute("user", user);
         model.addAttribute("listRoles", listRoles);
@@ -52,10 +52,14 @@ public class UserController {
     }
 
     @PostMapping("/edit/save")
-    public String saveUser(User user) {
+    public String saveEditedUser(User user) {
         Integer id = user.getId();
-        userService.save(user);
-        return "redirect:/home/edit/" + id + "?success";
+        if(userService.checkIfEditedUserEmailIsUnique(user.getEmail(), id)) {
+            return "redirect:/home/edit/" + id + "?false";
+        } else {
+            userService.save(user);
+            return "redirect:/home/edit/" + id + "?success";
+        }
     }
 
     @GetMapping("/user/delete/{id}")
