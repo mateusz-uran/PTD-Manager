@@ -40,7 +40,7 @@ public class TripController {
         return "redirect:/home/card/" + cardId.getId();
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/trip/edit/{id}")
     public String showEditTripForm(@PathVariable("id") Integer id, Model model) {
         Trip trip = tripService.findTripById(id);
         model.addAttribute("trip", trip);
