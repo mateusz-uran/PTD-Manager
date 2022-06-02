@@ -23,4 +23,8 @@ public class TripService {
     public void saveTrip(Trip trip) {
         tripRepository.save(trip);
     }
+
+    public  void deleteTrip(Integer id) {
+        tripRepository.deleteById(id);
+    }
 }

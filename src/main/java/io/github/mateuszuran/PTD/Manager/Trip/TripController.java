@@ -46,4 +46,11 @@ public class TripController {
         model.addAttribute("trip", trip);
         return "trip_form";
     }
+
+    @GetMapping("/trip/delete/{id}")
+    public String deleteTrip(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Card cardId = cardService.findByUserId(userDetails.getUserId());
+        tripService.deleteTrip(id);
+        return "redirect:/home/card/" + cardId.getId();
+    }
 }

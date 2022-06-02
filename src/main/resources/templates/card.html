@@ -238,7 +238,7 @@
           <tr>
             <td>
               <a th:href="@{'/home/card/edit/' + ${trip.id}}" type="button" class="btn btn-secondary btn-sm">Wybierz</a>
-              <a th:href="@{'/home/card/delete/' + ${trip.id}}" type="button" class="btn btn-secondary btn-sm">Usuń</a>
+              <a th:href="@{'/home/card/trip/delete/' + ${trip.id}}" type="button" class="btn btn-secondary btn-sm">Usuń</a>
             </td>
             <td th:text="${iterator.index+1}"></td>
             <td th:text="${trip.tripStartDay}">20.06</td>
