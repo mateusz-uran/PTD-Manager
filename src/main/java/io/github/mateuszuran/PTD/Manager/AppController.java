@@ -1,7 +1,11 @@
 package io.github.mateuszuran.PTD.Manager;
 
+import io.github.mateuszuran.PTD.Manager.Card.Card;
+import io.github.mateuszuran.PTD.Manager.Card.CardRepository;
+import io.github.mateuszuran.PTD.Manager.Card.CardService;
 import io.github.mateuszuran.PTD.Manager.Security.Code;
 import io.github.mateuszuran.PTD.Manager.Security.CodeRepository;
+import io.github.mateuszuran.PTD.Manager.Security.CustomUserDetails;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserService;
 import io.github.mateuszuran.PTD.Manager.Vehicle.Vehicle;
@@ -10,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +29,24 @@ public class AppController {
     private final UserService userService;
     private final CodeRepository codeRepository;
     private final VehicleRepository vehicleRepository;
+    private final CardService cardService;
 
-    public AppController(final UserService userService, final CodeRepository codeRepository, final VehicleRepository vehicleRepository) {
+    public AppController(final UserService userService, final CodeRepository codeRepository, final VehicleRepository vehicleRepository,  final CardService cardService) {
         this.userService = userService;
         this.codeRepository = codeRepository;
         this.vehicleRepository = vehicleRepository;
+        this.cardService = cardService;
     }
 
     @GetMapping("/home")
-    public String showHomePage(Model model) {
+    public String showHomePage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if(cardService.hasRole()) {
+            List<Card> listCards = cardService.findAllCards();
+            model.addAttribute("listCards", listCards);
+        } else {
+            List<Card> listCards = cardService.findByUserId(userDetails.getUserId());
+            model.addAttribute("listCards", listCards);
+        }
         List<User> listUsers = userService.findAllUsers();
         model.addAttribute("listUsers", listUsers);
         List<Code> listCodes = codeRepository.findAll();

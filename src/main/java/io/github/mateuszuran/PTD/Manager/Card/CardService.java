@@ -1,6 +1,11 @@
 package io.github.mateuszuran.PTD.Manager.Card;
 
+import io.github.mateuszuran.PTD.Manager.User.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CardService {
@@ -16,5 +21,19 @@ public class CardService {
 
     public boolean checkIfCardExists(Card card) {
         return cardRepository.existsByNumber(card.getNumber());
+    }
+
+    public List<Card> findAllCards() {
+        return cardRepository.findAll();
+    }
+
+    public List<Card> findByUserId(Integer id) {
+        return cardRepository.findByUserId(id);
+    }
+
+    public boolean hasRole() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("Admin"));
     }
 }
