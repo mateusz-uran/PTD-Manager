@@ -34,6 +34,10 @@ public class CardService {
         return cardRepository.findByUserId(id);
     }
 
+    public void deleteCard(Integer id) {
+        cardRepository.deleteById(id);
+    }
+
     public boolean hasRole() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()

@@ -92,6 +92,19 @@
         background-color: #fff;
       }
 
+      table th:nth-child(1) {
+        width: 8%;
+      }
+
+      table td:first-child {
+        display: flex;
+        justify-content: center;
+      }
+
+      .btn-secondary {
+        font-size: 70%;
+      }
+
       @media screen and (max-width: 1025px) {
         .logo p:last-child {
             font-size: 0.6em;
@@ -138,6 +151,10 @@
         .btn-light {
           font-size: 60%;
         }
+
+        .btn-secondary {
+          font-size: 30%;
+        }
       }
 
       @media screen and (max-width: 481px) {
@@ -164,7 +181,7 @@
         </p>
       </div>
       <div>
-        <form th:action="@{/logout}" method="get">
+        <form th:action="@{/home}" method="get">
           <input type="submit" value="Strona główna" class="btn btn-primary" role="button"/>
         </form>
       </div>
@@ -181,10 +198,12 @@
         </div>
         <thead>
         <tr class="table-active">
+          <th></th>
           <th scope="col" colspan="6" style="border-right: 1px solid">WYJAZD</th>
           <th scope="col" colspan="5">PRZYJAZD</th>
         </tr>
         <tr>
+          <th>Zarządzaj</th>
           <th scope="col">Lp.</th>
           <th scope="col">Data</th>
           <th scope="col">Godzina</th>
@@ -212,11 +231,16 @@
             <td>-</td>
             <td>-</td>
             <td>-</td>
+            <td>-</td>
           </tr>
         </th:block>
         <th:block th:each="trip,iterator : ${listTrips}">
           <tr>
-            <td th:text="${iterator.index+1}">1</td>
+            <td>
+              <a th:href="@{'/home/card/edit/' + ${trip.id}}" type="button" class="btn btn-secondary btn-sm">Wybierz</a>
+              <a th:href="@{'/home/card/delete/' + ${trip.id}}" type="button" class="btn btn-secondary btn-sm">Usuń</a>
+            </td>
+            <td th:text="${iterator.index+1}"></td>
             <td th:text="${trip.tripStartDay}">20.06</td>
             <td th:text="${trip.tripStartHour}">8:31</td>
             <td th:text="${trip.tripStartLocation}">Zadole</td>

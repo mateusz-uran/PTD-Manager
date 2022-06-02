@@ -53,4 +53,10 @@ public class CardController {
         model.addAttribute("listTrips", listTrips);
         return "card";
     }
+
+    @GetMapping("/card/delete/{id}")
+    public String deleteCard(@PathVariable("id") Integer id) {
+        cardService.deleteCard(id);
+        return "redirect:/home";
+    }
 }

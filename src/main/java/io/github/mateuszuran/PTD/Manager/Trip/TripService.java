@@ -16,6 +16,10 @@ public class TripService {
         return tripRepository.findAllByCardId(id);
     }
 
+    public Trip findTripById(Integer id) {
+        return tripRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Trip with given id not found"));
+    }
+
     public void saveTrip(Trip trip) {
         tripRepository.save(trip);
     }
