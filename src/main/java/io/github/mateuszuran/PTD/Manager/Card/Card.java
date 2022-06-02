@@ -1,10 +1,13 @@
 package io.github.mateuszuran.PTD.Manager.Card;
 
+import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -22,9 +25,19 @@ public class Card {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "card")
+    private List<Trip> trip = new ArrayList<>();
+
     public Card(final Integer id, final String number, final String authorFullName) {
         this.id = id;
         this.number = number;
         this.authorFullName = authorFullName;
+    }
+
+    public Card(final Integer id, final String number, final String authorFullName, final User user) {
+        this.id = id;
+        this.number = number;
+        this.authorFullName = authorFullName;
+        this.user = user;
     }
 }

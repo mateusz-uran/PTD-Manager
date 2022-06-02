@@ -1,6 +1,5 @@
 package io.github.mateuszuran.PTD.Manager.Card;
 
-import io.github.mateuszuran.PTD.Manager.User.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,11 @@ public class CardService {
         return cardRepository.findAll();
     }
 
-    public List<Card> findByUserId(Integer id) {
+    public List<Card> findAllByUserId(Integer id) {
+        return cardRepository.findAllCardsByUserId(id);
+    }
+
+    public Card findByUserId(Integer id) {
         return cardRepository.findByUserId(id);
     }
 

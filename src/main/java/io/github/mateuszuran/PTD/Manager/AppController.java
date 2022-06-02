@@ -1,7 +1,6 @@
 package io.github.mateuszuran.PTD.Manager;
 
 import io.github.mateuszuran.PTD.Manager.Card.Card;
-import io.github.mateuszuran.PTD.Manager.Card.CardRepository;
 import io.github.mateuszuran.PTD.Manager.Card.CardService;
 import io.github.mateuszuran.PTD.Manager.Security.Code;
 import io.github.mateuszuran.PTD.Manager.Security.CodeRepository;
@@ -44,7 +43,7 @@ public class AppController {
             List<Card> listCards = cardService.findAllCards();
             model.addAttribute("listCards", listCards);
         } else {
-            List<Card> listCards = cardService.findByUserId(userDetails.getUserId());
+            List<Card> listCards = cardService.findAllByUserId(userDetails.getUserId());
             model.addAttribute("listCards", listCards);
         }
         List<User> listUsers = userService.findAllUsers();

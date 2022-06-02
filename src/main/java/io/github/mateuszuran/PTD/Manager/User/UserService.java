@@ -82,7 +82,7 @@ public class UserService {
     }
 
     public void getFullNameUserFromCode(Integer id, String number) {
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User with given id not found"));;
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User with given id not found"));
         Code getUsedCode = codeRepository.findByNumber(number);
         var fullName = user.getFirstName() + " " + user.getLastName();
         getUsedCode.setUsedBy(fullName);
