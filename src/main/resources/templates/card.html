@@ -206,6 +206,7 @@
           <th></th>
           <th scope="col" colspan="6" style="border-right: 1px solid">WYJAZD</th>
           <th scope="col" colspan="5">PRZYJAZD</th>
+          <th></th>
         </tr>
         <tr>
           <th>Zarządzaj</th>
@@ -220,11 +221,13 @@
           <th scope="col">Miejscowość</th>
           <th scope="col">Państwo</th>
           <th scope="col">Licznik</th>
+          <th scope="col">Przeboeg</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:if="${#lists.isEmpty(listTrips)}">
           <tr>
+            <td>-</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
@@ -256,6 +259,7 @@
             <td th:text="${trip.tripEndLocation}">Hamburg</td>
             <td th:text="${trip.tripEndCountry}">DE</td>
             <td th:text="${trip.tripEndVehicleOdometer}">346197</td>
+            <td th:text="${trip.carMileage}">300</td>
           </tr>
         </th:block>
         </tbody>

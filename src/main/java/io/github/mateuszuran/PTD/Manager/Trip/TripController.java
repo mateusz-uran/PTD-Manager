@@ -32,6 +32,7 @@ public class TripController {
     public String saveTrip(Trip trip, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Card cardId = cardService.findByUserId(userDetails.getUserId());
         trip.setCard(cardId);
+        trip.setCarMileage(trip.subtract());
         tripService.saveTrip(trip);
         return "redirect:/home/card/" + cardId.getId();
     }

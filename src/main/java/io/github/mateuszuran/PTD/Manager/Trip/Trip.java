@@ -38,4 +38,8 @@ public class Trip {
     @ManyToOne
     @JoinColumn(name = "card_id")
     private Card card;
+
+    public Integer subtract() {
+        return tripEndVehicleOdometer - tripStartVehicleOdometer;
+    }
 }
