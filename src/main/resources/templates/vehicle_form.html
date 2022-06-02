@@ -70,8 +70,7 @@
         align-items: center;
         color: #fff;
         padding: 3em;
-        height: 70vh;
-        justify-content: center;
+        justify-content: flex-start;
       }
 
       .header {
@@ -118,7 +117,7 @@
                 </p>
             </div>
             <div>
-                <form th:action="@{/home}" method="post">
+                <form th:action="@{/home}" method="get">
                     <input type="submit" value="Strona główna" class="btn btn-primary" role="button"/>
                 </form>
             </div>

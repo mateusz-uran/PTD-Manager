@@ -17,4 +17,11 @@ public class UserRepositoryTest {
         User userEmail = userRepository.findByEmail(email);
         assertThat(userEmail).isNotNull();
     }
+
+    @Test
+    void findUserById() {
+        userRepository.save(new User(2, "test@o2.pl", "password", "Foo", "Bar"));
+        User user = userRepository.findById(2).orElseThrow(() -> new IllegalArgumentException("User with given id not found"));
+        assertThat(user).isNotNull();
+    }
 }

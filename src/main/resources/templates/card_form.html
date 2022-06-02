@@ -156,6 +156,7 @@
       @media screen and (max-width: 320px) {
       }
 
+
     </style>
 </head>
 <body>
@@ -179,63 +180,31 @@
         </div>
     </div>
     <div class="container">
-        <h1 class="header">Edycja użytkownika</h1>
+        <h1 class="header">Dodaj nową kartę</h1>
         <div class="row">
             <div class="row info-row">
                 <div class="col-md-12 col-sm-12">
-                    <p th:if="${param.success}" class="alert alert-success" role="alert">Zmiany zatwierdzono
-                        pomyślnie</p>
-                    <p th:if="${param.false}" class="alert alert-danger" role="alert">Użytkownik o takim mailu już
+                    <p th:if="${param.success}" class="alert alert-success" role="alert">Karta dodana</p>
+                    <p th:if="${param.false}" class="alert alert-danger" role="alert">Karta o takim numerze już
                         istnieje</p>
                 </div>
             </div>
         </div>
-        <form th:action="@{/home/edit/save}" method="post"
-              th:object="${user}">
-            <input type="hidden" th:field="*{id}" th:value="${user.id}"/>
+        <form th:action="@{/home/save-card}" method="post"
+              th:object="${card}">
+            <input type="hidden" th:field="*{id}" th:value="${card.id}"/>
             <div class="row">
                 <div class="row info-row">
-                    <div class="col-md-6 col-sm-6">
-                        <label class="form-label">Email</label>
-                        <input class="form-control" th:field="*{email}" placeholder="Default input"
-                               aria-label="default input example" required>
-                    </div>
-                    <div class="col-md-6 col-sm-6" style="display: none;">
-                        <label class="form-label">password</label>
-                        <input class="form-control" th:field="*{password}" placeholder="Default input"
-                               aria-label="default input example" required>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="row info-row">
-                    <div class="col-md-6 col-sm-6">
-                        <label class="form-label">Imie</label>
-                        <input class="form-control" type="text" th:field="*{firstName}" placeholder="Default input"
-                               aria-label="default input example" required>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <label class="form-label">Nazwisko</label>
-                        <input class="form-control" type="text" th:field="*{lastName}" placeholder="Default input"
-                               aria-label="default input example" required>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="row info-row">
-                    <h3 class="header">Role do przypisania</h3>
                     <div class="col-md-12 col-sm-12">
-                        <th:block th:each="role : ${listRoles}">
-                            <input class="form-check-input" type="checkbox" th:field="*{roles}"
-                                   th:value="${role.id}"
-                                   th:text="${role.name}" style="margin-right: 0.2em; margin-left: 0.7em;"/>
-                        </th:block>
+                        <label class="form-label">Numer</label>
+                        <input class="form-control" th:field="*{number}" placeholder="Default input"
+                               aria-label="default input example" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="button-submit">
-                    <button class="btn btn-primary btn-lg" type="submit">Zapisz zmiany</button>
+                    <button class="btn btn-primary btn-lg" type="submit">Zapisz</button>
                 </div>
             </div>
         </form>

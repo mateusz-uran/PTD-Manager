@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS card;
+CREATE TABLE card (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    number VARCHAR(20) NOT NULL UNIQUE,
+    author_full_name VARCHAR(45) NOT NULL,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+)
