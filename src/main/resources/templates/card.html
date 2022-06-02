@@ -101,6 +101,10 @@
         justify-content: center;
       }
 
+      .fuel-table th:nth-child(2) {
+        width: 10%;
+      }
+
       .btn-secondary {
         font-size: 70%;
       }
@@ -189,7 +193,8 @@
   </div>
   <div class="tables-container">
     <div class="buttons">
-      <a th:href="@{/home/card/add}" class="btn btn-light" role="button">Dodaj nowy punkt trasy</a>
+      <a th:href="@{/home/card/add-trip}" class="btn btn-light" role="button">Dodaj nowy punkt trasy</a>
+      <a th:href="@{/home/card/add-fuel}" class="btn btn-light" role="button">Dodaj nowe tankowanie</a>
     </div>
     <div class="table-responsive-md">
       <table class="table table-bordered">
@@ -251,6 +256,46 @@
             <td th:text="${trip.tripEndLocation}">Hamburg</td>
             <td th:text="${trip.tripEndCountry}">DE</td>
             <td th:text="${trip.tripEndVehicleOdometer}">346197</td>
+          </tr>
+        </th:block>
+        </tbody>
+      </table>
+      <table class="table table-bordered fuel-table">
+        <div class="row-header">
+          <h3>Rozliczenie tankowania</h3>
+        </div>
+        <thead>
+        <tr>
+          <th>Zarządzaj</th>
+          <th scope="col">Lp.</th>
+          <th scope="col">Data</th>
+          <th scope="col">Miejscowość</th>
+          <th scope="col">Licznik</th>
+          <th scope="col">Ilość tankowania</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:if="${#lists.isEmpty(listFuels)}">
+          <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </th:block>
+        <th:block th:each="fuel,iterator : ${listFuels}">
+          <tr>
+            <td>
+              <a th:href="@{'/home/card/fuel/edit/' + ${fuel.id}}" type="button" class="btn btn-secondary btn-sm">Wybierz</a>
+              <a th:href="@{'/home/card/fuel/delete/' + ${fuel.id}}" type="button" class="btn btn-secondary btn-sm">Usuń</a>
+            </td>
+            <td th:text="${iterator.index+1}"></td>
+            <td th:text="${fuel.refuelingDate}">20.06</td>
+            <td th:text="${fuel.refuelingLocation}">Opole Lubelskie</td>
+            <td th:text="${fuel.vehicleOdometer}">344123</td>
+            <td th:text="${fuel.fuelAmount}">850</td>
           </tr>
         </th:block>
         </tbody>

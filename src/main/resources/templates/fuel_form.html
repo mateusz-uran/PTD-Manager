@@ -96,6 +96,10 @@
         border-radius: 1em;
       }
 
+      .col-4 {
+        margin-top: 1em;
+      }
+
       .button-submit {
         display: flex;
         width: 100%;
@@ -124,66 +128,34 @@
     </div>
   </div>
   <div class="container">
-    <h1 class="header">Dodaj szczegółowe informacje o każdym punkcie trasy. Należy wypełnić wszystkie dostępne pola.</h1>
-    <form th:action="@{/home/card/save-trip}" th:object="${trip}" method="post" enctype="multipart/form-data">
-      <input type="hidden" th:field="*{id}" th:value="${trip.id}"/>
+    <h1 class="header">Dodaj szczegółowe informacje o każdym tankowaniu. Należy wypełnić wszystkie dostępne pola.</h1>
+    <form th:action="@{/home/card/save-fuel}" th:object="${fuel}" method="post" enctype="multipart/form-data">
+      <input type="hidden" th:field="*{id}" th:value="${fuel.id}"/>
       <div class="row">
         <div class="row-header">
-          <h3>Parametry wyjazdu</h3>
         </div>
         <div class="row info-row">
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Data</label>
-            <input class="form-control" type="text" th:field="*{tripStartDay}" placeholder="Default input" aria-label="default input example" required>
+          <div class="col-4 col-sm-4">
+            <label class="form-label">Data tankowania</label>
+            <input class="form-control" type="text" th:field="*{refuelingDate}" placeholder="Default input" aria-label="default input example" required>
           </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Godzina</label>
-            <input class="form-control" type="text" th:field="*{tripStartHour}" placeholder="Default input" aria-label="default input example" required>
+          <div class="col-4 col-sm-4">
+            <label class="form-label">Miejsce tankowania</label>
+            <input class="form-control" type="text" th:field="*{refuelingLocation}" placeholder="Default input" aria-label="default input example" required>
           </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Miejscowość</label>
-            <input class="form-control" type="text" th:field="*{tripStartLocation}" placeholder="Default input" aria-label="default input example" required>
+          <div class="col-4 col-sm-4">
+            <label class="form-label">Stan licznika</label>
+            <input class="form-control" type="text" th:field="*{vehicleOdometer}" placeholder="Default input" aria-label="default input example" required>
           </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Państwo</label>
-            <input class="form-control" type="text" th:field="*{tripStartCountry}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Licznik</label>
-            <input class="form-control" type="number" th:field="*{tripStartVehicleOdometer}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="row-header">
-          <h3>Parametry przyjazdu</h3>
-        </div>
-        <div class="row info-row">
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Data</label>
-            <input class="form-control" type="text" th:field="*{tripEndDay}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Godzina</label>
-            <input class="form-control" type="text" th:field="*{tripEndHour}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Miejscowość</label>
-            <input class="form-control" type="text" th:field="*{tripEndLocation}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Państwo</label>
-            <input class="form-control" type="text" th:field="*{tripEndCountry}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Licznik</label>
-            <input class="form-control" type="number" th:field="*{tripEndVehicleOdometer}" placeholder="Default input" aria-label="default input example" required>
+          <div class="col-4 col-sm-4">
+            <label class="form-label">Ilość tankowania</label>
+            <input class="form-control" type="text" th:field="*{fuelAmount}" placeholder="Default input" aria-label="default input example" required>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="button-submit">
-          <button class="btn btn-primary btn-lg" type="submit">Dodaj pojazd</button>
+          <button class="btn btn-primary btn-lg" type="submit">Dodaj tankowanie</button>
         </div>
       </div>
     </form>

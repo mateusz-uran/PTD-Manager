@@ -2,9 +2,7 @@ package io.github.mateuszuran.PTD.Manager.Trip;
 
 import io.github.mateuszuran.PTD.Manager.Card.Card;
 import io.github.mateuszuran.PTD.Manager.Card.CardService;
-import io.github.mateuszuran.PTD.Manager.Role.Role;
 import io.github.mateuszuran.PTD.Manager.Security.CustomUserDetails;
-import io.github.mateuszuran.PTD.Manager.User.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @RequestMapping("/home/card")
 @Controller
@@ -26,13 +22,13 @@ public class TripController {
         this.tripService = tripService;
     }
 
-    @GetMapping("/add")
+    @GetMapping("/add-trip")
     public String addTrip(Model model) {
         model.addAttribute("trip", new Trip());
         return "trip_form";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/save-trip")
     public String saveTrip(Trip trip, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Card cardId = cardService.findByUserId(userDetails.getUserId());
         trip.setCard(cardId);

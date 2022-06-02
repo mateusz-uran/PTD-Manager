@@ -32,6 +32,8 @@ public class Trip {
     private Integer tripStartVehicleOdometer;
     @Column(length = 15, nullable = false)
     private Integer tripEndVehicleOdometer;
+    @Column(length = 15)
+    private Integer carMileage;
 
     @ManyToOne
     @JoinColumn(name = "card_id")

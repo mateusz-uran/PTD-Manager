@@ -1,5 +1,7 @@
 package io.github.mateuszuran.PTD.Manager.Card;
 
+import io.github.mateuszuran.PTD.Manager.Fuel.Fuel;
+import io.github.mateuszuran.PTD.Manager.Fuel.FuelService;
 import io.github.mateuszuran.PTD.Manager.Security.CustomUserDetails;
 import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import io.github.mateuszuran.PTD.Manager.Trip.TripService;
@@ -21,11 +23,13 @@ public class CardController {
     private final CardService cardService;
     private final UserService userService;
     private final TripService tripService;
+    private final FuelService fuelService;
 
-    public CardController(final CardService cardService, final UserService userService, final TripService tripService) {
+    public CardController(final CardService cardService, final UserService userService, final TripService tripService, final FuelService fuelService) {
         this.cardService = cardService;
         this.userService = userService;
         this.tripService = tripService;
+        this.fuelService = fuelService;
     }
 
     @GetMapping("/add-card")
@@ -51,6 +55,8 @@ public class CardController {
     public String showCard(@PathVariable("id") Integer id, Model model) {
         List<Trip> listTrips = tripService.findAllTripsFromCard(id);
         model.addAttribute("listTrips", listTrips);
+        List<Fuel> listFuels = fuelService.findAllFuelsFromCard(id);
+        model.addAttribute("listFuels", listFuels);
         return "card";
     }
 

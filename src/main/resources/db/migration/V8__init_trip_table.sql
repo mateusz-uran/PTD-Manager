@@ -11,6 +11,7 @@ CREATE TABLE trip (
   tripEndCountry VARCHAR(25),
   tripStartVehicleOdometer INT NOT NULL,
   tripEndVehicleOdometer INT NOT NULL,
-  card_id INT UNSIGNED,
+  car_mileage VARCHAR(15),
+  card_id INT,
   FOREIGN KEY (card_id) REFERENCES card (id)
 )
