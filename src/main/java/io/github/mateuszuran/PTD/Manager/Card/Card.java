@@ -33,8 +33,9 @@ public class Card {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "card")
     private List<Fuel> fuel = new ArrayList<>();
 
+//    private List<Counters> counters = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "card")
-    private Counters counters = new Counters();
+    private Counters counters;
 
     public Card(final Integer id, final String number, final String authorFullName) {
         this.id = id;

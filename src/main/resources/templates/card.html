@@ -304,6 +304,44 @@
         </th:block>
         </tbody>
       </table>
+      <table class="table table-bordered fuel-table">
+        <div class="row-header">
+          <h3>Podsumowanie trasy</h3>
+        </div>
+        <thead>
+        <tr>
+          <th>Zarządzaj</th>
+          <th scope="col">Początkowy stan licznika</th>
+          <th scope="col">Końcowy stan licznika</th>
+          <th scope="col">Przebieg z trasy</th>
+          <th scope="col">Suma tankowania z trasy</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:if="${#lists.isEmpty(counters)}">
+          <tr>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </th:block>
+        <th:block th:each="counter : ${counters}">
+          <tr>
+            <td>
+              <a th:href="@{'/home/card/counters/edit/' + ${counters.id}}" type="button" class="btn btn-secondary btn-sm">Wybierz</a>
+              <a th:href="@{'/home/card/counters/delete/' + ${counters.id}}" type="button" class="btn btn-secondary btn-sm">Usuń</a>
+            </td>
+            <td th:text="${counter.counterTripStart}">333444</td>
+            <td th:text="${counter.counterTripEnd}">333555</td>
+            <td th:text="${counter.sumCounterMileage}">111</td>
+            <td th:text="${counter.sumCounterRefueling}">850</td>
+          </tr>
+        </th:block>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

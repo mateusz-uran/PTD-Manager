@@ -1,5 +1,8 @@
 package io.github.mateuszuran.PTD.Manager.Card;
 
+import io.github.mateuszuran.PTD.Manager.Counters.CounterService;
+import io.github.mateuszuran.PTD.Manager.Counters.Counters;
+import io.github.mateuszuran.PTD.Manager.Counters.CountersRepository;
 import io.github.mateuszuran.PTD.Manager.Fuel.Fuel;
 import io.github.mateuszuran.PTD.Manager.Fuel.FuelService;
 import io.github.mateuszuran.PTD.Manager.Security.CustomUserDetails;
@@ -24,12 +27,18 @@ public class CardController {
     private final UserService userService;
     private final TripService tripService;
     private final FuelService fuelService;
+    private final CountersRepository countersRepository;
+    private final CounterService counterService;
 
-    public CardController(final CardService cardService, final UserService userService, final TripService tripService, final FuelService fuelService) {
+    public CardController(final CardService cardService, final UserService userService,
+                          final TripService tripService, final FuelService fuelService,
+                          final CountersRepository countersRepository, final CounterService counterService) {
         this.cardService = cardService;
         this.userService = userService;
         this.tripService = tripService;
         this.fuelService = fuelService;
+        this.countersRepository = countersRepository;
+        this.counterService = counterService;
     }
 
     @GetMapping("/add-card")
@@ -46,7 +55,8 @@ public class CardController {
         }
         card.setUser(user);
         card.setAuthorFullName(user.fullName());
-        cardService.saveCarD(card);
+        cardService.saveCard(card);
+        counterService.saveEmptyCounters(card);
 
         return "redirect:/home/add-card/?success";
     }
@@ -57,6 +67,9 @@ public class CardController {
         model.addAttribute("listTrips", listTrips);
         List<Fuel> listFuels = fuelService.findAllFuelsFromCard(id);
         model.addAttribute("listFuels", listFuels);
+        Counters counters = counterService.findByCardId(id);
+        model.addAttribute("counters", counters);
+
         return "card";
     }
 

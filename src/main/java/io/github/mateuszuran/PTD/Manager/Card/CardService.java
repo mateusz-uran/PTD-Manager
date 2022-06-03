@@ -1,5 +1,7 @@
 package io.github.mateuszuran.PTD.Manager.Card;
 
+import io.github.mateuszuran.PTD.Manager.Counters.Counters;
+import io.github.mateuszuran.PTD.Manager.Counters.CountersRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ public class CardService {
         this.cardRepository = cardRepository;
     }
 
-    public void saveCarD(Card card) {
+    public void saveCard(Card card) {
         cardRepository.save(card);
     }
 
