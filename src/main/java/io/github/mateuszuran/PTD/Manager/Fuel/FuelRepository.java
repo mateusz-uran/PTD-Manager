@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface FuelRepository extends JpaRepository<Fuel, Integer> {
     List<Fuel> findAllByCardId(Integer id);
+
+    List<Fuel> findAllByCardIdOrderByVehicleOdometer(Integer id);
 }

@@ -29,6 +29,10 @@ public class FuelService {
         return fuelRepository.findAllByCardId(id);
     }
 
+    public List<Fuel> findAllAndSort(Integer id) {
+        return fuelRepository.findAllByCardIdOrderByVehicleOdometer(id);
+    }
+
     public  void deleteFuel(Integer id) {
         fuelRepository.deleteById(id);
     }

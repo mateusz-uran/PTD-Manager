@@ -60,9 +60,11 @@ public class CardController {
 
     @GetMapping("/card/{id}")
     public String showCard(@PathVariable("id") Integer id, Model model) {
-        List<Trip> listTrips = tripService.findAllTripsFromCard(id);
+//        List<Trip> listTrips = tripService.findAllTripsFromCard(id);
+        List<Trip> listTrips = tripService.findAllAndSort(id);
         model.addAttribute("listTrips", listTrips);
-        List<Fuel> listFuels = fuelService.findAllFuelsFromCard(id);
+//        List<Fuel> listFuels = fuelService.findAllFuelsFromCard(id);
+        List<Fuel> listFuels = fuelService.findAllAndSort(id);
         model.addAttribute("listFuels", listFuels);
         Counters counters = counterService.findByCardId(id);
         model.addAttribute("counters", counters);

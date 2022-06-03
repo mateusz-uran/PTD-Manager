@@ -1,5 +1,7 @@
 package io.github.mateuszuran.PTD.Manager.Trip;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,10 @@ public class TripService {
 
     public List<Trip> findAllTripsFromCard(Integer id) {
         return tripRepository.findAllByCardId(id);
+    }
+
+    public List<Trip> findAllAndSort(Integer id) {
+        return tripRepository.findAllByCardIdOrderByTripStartVehicleCounter(id);
     }
 
     public Trip findTripById(Integer id) {
