@@ -4,6 +4,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -42,5 +44,21 @@ public class CardService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
                 .anyMatch(r -> r.getAuthority().equals("Admin"));
+    }
+
+    public String currentDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+    }
+
+    public void toggleCard(Integer id) {
+        Card card = cardRepository.findByUserId(id);
+        card.setDone(!card.isDone());
+        cardRepository.save(card);
+    }
+
+    public Card findCard(Integer id) {
+        return cardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Card of given id not exists"));
     }
 }

@@ -1,0 +1,2 @@
+ALTER TABLE card ADD create_date VARCHAR(20) NOT NULL;
+ALTER TABLE card ADD done BIT;

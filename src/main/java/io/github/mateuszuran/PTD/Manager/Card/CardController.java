@@ -52,6 +52,8 @@ public class CardController {
         }
         card.setUser(user);
         card.setAuthorFullName(user.fullName());
+        card.setCreateDate(cardService.currentDate());
+        card.setDone(false);
         cardService.saveCard(card);
         counterService.saveEmptyCounters(card);
 
@@ -60,14 +62,14 @@ public class CardController {
 
     @GetMapping("/card/{id}")
     public String showCard(@PathVariable("id") Integer id, Model model) {
-//        List<Trip> listTrips = tripService.findAllTripsFromCard(id);
         List<Trip> listTrips = tripService.findAllAndSort(id);
         model.addAttribute("listTrips", listTrips);
-//        List<Fuel> listFuels = fuelService.findAllFuelsFromCard(id);
         List<Fuel> listFuels = fuelService.findAllAndSort(id);
         model.addAttribute("listFuels", listFuels);
         Counters counters = counterService.findByCardId(id);
         model.addAttribute("counters", counters);
+        Card card = cardService.findCard(id);
+        model.addAttribute("card", card);
 
         return "card";
     }
@@ -76,5 +78,11 @@ public class CardController {
     public String deleteCard(@PathVariable("id") Integer id) {
         cardService.deleteCard(id);
         return "redirect:/home";
+    }
+
+    @GetMapping("/card/toggle/{id}")
+    public String toggleCard(@PathVariable("id") Integer id) {
+        cardService.toggleCard(id);
+        return "redirect:/home/card/" + id;
     }
 }

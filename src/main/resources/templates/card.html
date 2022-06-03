@@ -193,8 +193,19 @@
   </div>
   <div class="tables-container">
     <div class="buttons">
+      <a th:href="@{'/home/card/toggle/' + ${card.id}}" type="button" class="btn btn-secondary btn-sm">Wybierz</a>
       <a th:href="@{/home/card/add-trip}" class="btn btn-light" role="button">Dodaj nowy punkt trasy</a>
       <a th:href="@{/home/card/add-fuel}" class="btn btn-light" role="button">Dodaj nowe tankowanie</a>
+      <th:block th:if="${card.done}">
+        <p class="alert alert-success" role="alert">
+          Karta zakończona
+        </p>
+      </th:block>
+      <th:block th:unless="${card.done}">
+        <p class="alert alert-warning" role="alert">
+          Karta niezakończona
+        </p>
+      </th:block>
     </div>
     <div class="table-responsive-md">
       <table class="table table-bordered">

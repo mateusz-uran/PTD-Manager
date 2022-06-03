@@ -23,6 +23,9 @@ public class Card {
     private String number;
     @Column(length = 45, nullable = false)
     private String authorFullName;
+    @Column(length = 20, nullable = false)
+    private String createDate;
+    private boolean done;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -33,7 +36,6 @@ public class Card {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "card")
     private List<Fuel> fuel = new ArrayList<>();
 
-//    private List<Counters> counters = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "card")
     private Counters counters;
 
