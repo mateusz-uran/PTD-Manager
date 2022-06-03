@@ -331,8 +331,7 @@
         <th:block th:each="counter : ${counters}">
           <tr>
             <td>
-              <a th:href="@{'/home/card/counters/edit/' + ${counters.id}}" type="button" class="btn btn-secondary btn-sm">Wybierz</a>
-              <a th:href="@{'/home/card/counters/delete/' + ${counters.id}}" type="button" class="btn btn-secondary btn-sm">Usuń</a>
+              <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}" type="button" class="btn btn-secondary btn-sm">Aktualizuj</a>
             </td>
             <td th:text="${counter.counterTripStart}">333444</td>
             <td th:text="${counter.counterTripEnd}">333555</td>
