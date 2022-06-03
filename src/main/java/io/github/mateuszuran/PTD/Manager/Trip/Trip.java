@@ -29,9 +29,9 @@ public class Trip {
     @Column(length = 25)
     private String tripEndCountry;
     @Column(length = 15, nullable = false)
-    private Integer tripStartVehicleOdometer;
+    private Integer tripStartVehicleCounter;
     @Column(length = 15, nullable = false)
-    private Integer tripEndVehicleOdometer;
+    private Integer tripEndVehicleCounter;
     @Column(length = 15)
     private Integer carMileage;
 
@@ -40,6 +40,6 @@ public class Trip {
     private Card card;
 
     public Integer subtract() {
-        return tripEndVehicleOdometer - tripStartVehicleOdometer;
+        return tripEndVehicleCounter - tripStartVehicleCounter;
     }
 }

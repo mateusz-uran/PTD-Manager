@@ -5,6 +5,6 @@ CREATE TABLE fuel (
   refueling_location VARCHAR(20),
   vehicle_odometer INT,
   fuel_amount INT NOT NULL,
-  card_id INT,
+  card_id INT UNSIGNED,
   FOREIGN KEY (card_id) REFERENCES card (id)
 )

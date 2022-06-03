@@ -1,5 +1,6 @@
 package io.github.mateuszuran.PTD.Manager.Card;
 
+import io.github.mateuszuran.PTD.Manager.Counters.Counters;
 import io.github.mateuszuran.PTD.Manager.Fuel.Fuel;
 import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import io.github.mateuszuran.PTD.Manager.User.User;
@@ -31,6 +32,9 @@ public class Card {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "card")
     private List<Fuel> fuel = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "card")
+    private Counters counters = new Counters();
 
     public Card(final Integer id, final String number, final String authorFullName) {
         this.id = id;
