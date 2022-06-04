@@ -175,6 +175,8 @@
 
 
 
+
+
     </style>
 </head>
 <body>
@@ -203,6 +205,53 @@
             <a th:href="@{/home/vehicle}" class="btn btn-light" role="button">Dodaj nowy pojazd</a>
             <a th:href="@{/home/add-card}" class="btn btn-light" role="button">Dodaj nową karte</a>
         </div>
+        </table>
+        <table class="table table-bordered">
+            <div class="row-header">
+                <h3>Dane karty</h3>
+            </div>
+            <thead class="thead-dark">
+            <tr>
+                <th>Numer karty</th>
+                <th>Autor karty</th>
+                <th>Data utworzenia</th>
+                <th>Etap</th>
+                <th>Zarządzaj</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:if="${#lists.isEmpty(listCards)}">
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </th:block>
+            <th:block th:each="card : ${listCards}">
+                <tr>
+                    <td th:text="${card.number}">Karta nr 1</td>
+                    <td th:text="${card.authorFullName}">Jan Kowalski</td>
+                    <td th:text="${card.createDate}">15:15</td>
+                    <td>
+                        <th:block th:if="${card.done}">
+                            <p>Zakończona</p>
+                        </th:block>
+                        <th:block th:unless="${card.done}">
+                            <p>Nie zakończona</p>
+                        </th:block>
+                    </td>
+                    <td>
+                        <a th:href="@{'/home/card/' + ${card.id}}" type="button" class="btn btn-sm btn-outline-primary">Wybierz</a>
+                        <a th:href="@{'/home/card/delete/' + ${card.id}}"
+                           onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
+                           type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
         <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered">
             <div class="row-header">
                 <h3>Dane każdego użytkownika</h3>
@@ -336,52 +385,6 @@
                            class="btn btn-sm btn-outline-primary">Wybierz</a>
                         <a th:href="@{'/home/vehicle/delete/' + ${vehicle.id}}"
                            onclick="return confirm('Usunięcie pojazdu jest nie odwracalne, jesteś pewien?')"
-                           type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
-                    </td>
-                </tr>
-            </th:block>
-            </tbody>
-        </table>
-        <table class="table table-bordered">
-            <div class="row-header">
-                <h3>Dane karty</h3>
-            </div>
-            <thead class="thead-dark">
-            <tr>
-                <th>Numer karty</th>
-                <th>Autor karty</th>
-                <th>Data utworzenia</th>
-                <th>Zakończona</th>
-                <th>Zarządzaj</th>
-            </tr>
-            </thead>
-            <tbody>
-            <th:block th:if="${#lists.isEmpty(listCards)}">
-                <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </th:block>
-            <th:block th:each="card : ${listCards}">
-                <tr>
-                    <td th:text="${card.number}">Karta nr 1</td>
-                    <td th:text="${card.authorFullName}">Jan Kowalski</td>
-                    <td th:text="${card.createDate}">15:15</td>
-                    <td>
-                        <th:block th:if="${card.done}">
-                            <p>Zakończona</p>
-                        </th:block>
-                        <th:block th:unless="${card.done}">
-                            <p>Nie zakończona</p>
-                        </th:block>
-                    </td>
-                    <td>
-                        <a th:href="@{'/home/card/' + ${card.id}}" type="button" class="btn btn-sm btn-outline-primary">Wybierz</a>
-                        <a th:href="@{'/home/card/delete/' + ${card.id}}"
-                           onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
                            type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
                     </td>
                 </tr>
