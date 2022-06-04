@@ -108,6 +108,15 @@
         border-top: 2px solid #0096FF;
         color: #fff;
         padding-left: 0.5em;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .row-header p {
+        margin-right: 0.8em;
+        font-size: 70%;
+        border-bottom: 1px solid red;
       }
 
       h3 {
@@ -253,6 +262,7 @@
             <table class="table table-bordered">
                 <div class="row-header">
                     <h3>Punkty trasy</h3>
+                    <p th:if="${param.false}" >Karta została zakończona, odlokuj aby móc edytować!
                 </div>
                 <thead>
                 <tr class="table-active">

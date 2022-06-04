@@ -61,4 +61,9 @@ public class CardService {
     public Card findCard(Integer id) {
         return cardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Card of given id not exists"));
     }
+
+    public boolean checkIfCardIsDone(Integer id) {
+        Card card = cardRepository.findByUserId(id);
+        return card.isDone();
+    }
 }

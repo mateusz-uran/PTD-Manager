@@ -23,9 +23,14 @@ public class TripController {
     }
 
     @GetMapping("/add-trip")
-    public String addTrip(Model model) {
+    public String addTrip(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Card cardId = cardService.findByUserId(userDetails.getUserId());
+        if(cardService.checkIfCardIsDone(userDetails.getUserId())) {
+            return "redirect:/home/card/" + cardId.getId() + "/?false";
+        } else {
         model.addAttribute("trip", new Trip());
         return "trip_form";
+        }
     }
 
     @PostMapping("/save-trip")

@@ -24,9 +24,14 @@ public class FuelController {
     }
 
     @GetMapping("/add-fuel")
-    public String addFuel(Model model) {
+    public String addFuel(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Card cardId = cardService.findByUserId(userDetails.getUserId());
+        if(cardService.checkIfCardIsDone(userDetails.getUserId())) {
+            return "redirect:/home/card/" + cardId.getId() + "/?false";
+        } else {
         model.addAttribute("fuel", new Fuel());
         return "fuel_form";
+        }
     }
 
     @PostMapping("/save-fuel")
