@@ -19,7 +19,7 @@ class CardRepositoryTest {
 
     @Test
     void shouldReturnTrueIfCardExists() {
-        Card card = new Card(anyInt(), "number", "author");
+        Card card = new Card(anyInt(), "number", "author", "1.01.1997");
         cardRepository.save(card);
         assertTrue(cardRepository.existsByNumber(card.getNumber()));
     }
@@ -27,7 +27,7 @@ class CardRepositoryTest {
     @Test
     void shouldReturnAlLCardsAssignmentToUser() {
         User user = userRepository.findById(1).orElseThrow(() -> new IllegalArgumentException("User with given id not found"));
-        cardRepository.save(new Card(anyInt(), "number", "author", user));
+        cardRepository.save(new Card(anyInt(), "number2", "author", "1.01.1997", user));
         assertThat(cardRepository.findAllCardsByUserId(1)).isNotNull();
         assertThat(cardRepository.findByUserId(1)).isNotNull();
     }

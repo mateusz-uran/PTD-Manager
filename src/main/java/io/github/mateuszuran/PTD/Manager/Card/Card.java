@@ -39,16 +39,27 @@ public class Card {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "card")
     private Counters counters;
 
-    public Card(final Integer id, final String number, final String authorFullName) {
+    public Card(final Integer id, final String number, final String authorFullName, final String createDate) {
         this.id = id;
         this.number = number;
         this.authorFullName = authorFullName;
+        this.createDate = createDate;
     }
 
-    public Card(final Integer id, final String number, final String authorFullName, final User user) {
+    public Card(final Integer id, final String number, final String authorFullName, String createDate, final User user) {
         this.id = id;
         this.number = number;
         this.authorFullName = authorFullName;
+        this.createDate = createDate;
+        this.user = user;
+    }
+
+    public Card(final Integer id, final String number, final String authorFullName, final String createDate, boolean done, final User user) {
+        this.id = id;
+        this.number = number;
+        this.authorFullName = authorFullName;
+        this.createDate = createDate;
+        this.done = done;
         this.user = user;
     }
 }
