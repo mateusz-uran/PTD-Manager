@@ -1,10 +1,14 @@
 package io.github.mateuszuran.PTD.Manager.Trip;
 
 import io.github.mateuszuran.PTD.Manager.Card.Card;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "trip")
@@ -41,5 +45,14 @@ public class Trip {
 
     public Integer subtract() {
         return tripEndVehicleCounter - tripStartVehicleCounter;
+    }
+
+    public Trip(final Integer id, final String tripStartDay, final String tripEndDay, final Integer tripStartVehicleCounter, final Integer tripEndVehicleCounter, final Card card) {
+        this.id = id;
+        this.tripStartDay = tripStartDay;
+        this.tripEndDay = tripEndDay;
+        this.tripStartVehicleCounter = tripStartVehicleCounter;
+        this.tripEndVehicleCounter = tripEndVehicleCounter;
+        this.card = card;
     }
 }
