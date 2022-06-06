@@ -262,7 +262,7 @@
             <table class="table table-bordered">
                 <div class="row-header">
                     <h3>Punkty trasy</h3>
-                    <p th:if="${param.false}" >Karta została zakończona, odlokuj aby móc edytować!
+                    <p th:if="${param.false}">Karta została zakończona, odlokuj aby móc edytować!</p>
                 </div>
                 <thead>
                 <tr class="table-active">
@@ -376,6 +376,7 @@
                 </tbody>
             </table>
             <table class="table table-bordered fuel-table">
+                <p th:if="${param.false}">Dane nieaktualne</p>
                 <div class="row-header">
                     <h3>Podsumowanie trasy</h3>
                 </div>
@@ -403,8 +404,14 @@
                     <tr>
                         <td>
                             <div class="table-buttons">
-                                <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}" type="button"
-                                   class="btn btn-secondary btn-sm">Aktualizuj</a>
+                                <th:block th:if="${counters.upToDate}">
+                                    <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}" type="button"
+                                       class="btn btn-secondary btn-sm">Aktualne</a>
+                                </th:block>
+                                <th:block th:unless="${counters.upToDate}">
+                                    <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}" type="button"
+                                       class="btn btn-secondary btn-sm">Aktualizuj</a>
+                                </th:block>
                             </div>
                         </td>
                         <td th:text="${counter.counterTripStart}">333444</td>

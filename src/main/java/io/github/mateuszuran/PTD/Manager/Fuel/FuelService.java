@@ -13,10 +13,6 @@ public class FuelService {
         this.fuelRepository = fuelRepository;
     }
 
-    public List<Fuel> getAllRefueling() {
-        return fuelRepository.findAll();
-    }
-
     public void saveRefueling(Fuel fuel) {
         fuelRepository.save(fuel);
     }

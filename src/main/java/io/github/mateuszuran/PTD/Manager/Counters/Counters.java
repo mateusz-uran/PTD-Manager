@@ -24,6 +24,7 @@ public class Counters {
     private Integer sumCounterMileage;
     @Column(length = 10, nullable = false)
     private Integer sumCounterRefueling;
+    private boolean upToDate = true;
 
     @OneToOne
     @JoinColumn(name = "card_id")

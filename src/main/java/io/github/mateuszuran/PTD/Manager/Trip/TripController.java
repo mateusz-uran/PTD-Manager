@@ -2,6 +2,7 @@ package io.github.mateuszuran.PTD.Manager.Trip;
 
 import io.github.mateuszuran.PTD.Manager.Card.Card;
 import io.github.mateuszuran.PTD.Manager.Card.CardService;
+import io.github.mateuszuran.PTD.Manager.Counters.CounterService;
 import io.github.mateuszuran.PTD.Manager.Security.CustomUserDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TripController {
     private final CardService cardService;
     private final TripService tripService;
+    private final CounterService counterService;
 
-    public TripController(final CardService cardService, final TripService tripService) {
+    public TripController(final CardService cardService, final TripService tripService, final CounterService counterService) {
         this.cardService = cardService;
         this.tripService = tripService;
+        this.counterService = counterService;
     }
 
     @GetMapping("/add-trip")
@@ -39,6 +42,7 @@ public class TripController {
         trip.setCard(cardId);
         trip.setCarMileage(trip.subtract());
         tripService.saveTrip(trip);
+        counterService.toggleToFalse(cardId.getId());
         return "redirect:/home/card/" + cardId.getId();
     }
 
@@ -53,6 +57,7 @@ public class TripController {
     public String deleteTrip(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Card cardId = cardService.findByUserId(userDetails.getUserId());
         tripService.deleteTrip(id);
+        counterService.toggleToFalse(cardId.getId());
         return "redirect:/home/card/" + cardId.getId();
     }
 }

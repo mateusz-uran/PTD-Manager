@@ -1,0 +1,1 @@
+ALTER TABLE counters ADD up_to_date BIT;

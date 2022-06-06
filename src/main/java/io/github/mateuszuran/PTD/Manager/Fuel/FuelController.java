@@ -2,8 +2,8 @@ package io.github.mateuszuran.PTD.Manager.Fuel;
 
 import io.github.mateuszuran.PTD.Manager.Card.Card;
 import io.github.mateuszuran.PTD.Manager.Card.CardService;
+import io.github.mateuszuran.PTD.Manager.Counters.CounterService;
 import io.github.mateuszuran.PTD.Manager.Security.CustomUserDetails;
-import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FuelController {
     private final FuelService fuelService;
     private final CardService cardService;
+    private final CounterService counterService;
 
-    public FuelController(final FuelService fuelService, final CardService cardService) {
+    public FuelController(final FuelService fuelService, final CardService cardService, final CounterService counterService) {
         this.fuelService = fuelService;
         this.cardService = cardService;
+        this.counterService = counterService;
     }
 
     @GetMapping("/add-fuel")
@@ -39,6 +41,7 @@ public class FuelController {
         Card cardId = cardService.findByUserId(userDetails.getUserId());
         fuel.setCard(cardId);
         fuelService.saveRefueling(fuel);
+        counterService.toggleToFalse(cardId.getId());
         return "redirect:/home/card/" + cardId.getId();
     }
 
@@ -53,6 +56,7 @@ public class FuelController {
     public String deleteFuel(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Card cardId = cardService.findByUserId(userDetails.getUserId());
         fuelService.deleteFuel(id);
+        counterService.toggleToFalse(cardId.getId());
         return "redirect:/home/card/" + cardId.getId();
     }
 }

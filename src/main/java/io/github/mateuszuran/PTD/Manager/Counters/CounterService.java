@@ -30,7 +30,7 @@ public class CounterService {
         return countersRepository.findByCardId(id).orElseThrow(() -> new IllegalArgumentException("Counters of given ID not found"));
     }
 
-    private Counters getCountersInfo(Integer id) {
+    private void getCountersInfo(Integer id) {
         List<Trip> listTrips = tripService.findAllTripsFromCard(id);
         OptionalInt firstCounter = listTrips.stream()
                 .mapToInt(Trip::getTripStartVehicleCounter).min();
@@ -46,7 +46,8 @@ public class CounterService {
         counters.setCounterTripEnd(lastCounter.orElse(0));
         counters.setSumCounterMileage(tripCourse);
         counters.setSumCounterRefueling(sumRefueling);
-        return countersRepository.save(counters);
+        counters.setUpToDate(true);
+        countersRepository.save(counters);
     }
 
     public void saveCounters(Integer id) {
@@ -55,5 +56,11 @@ public class CounterService {
 
     public void saveEmptyCounters(Card card) {
         countersRepository.save(new Counters(0, 0, 0, 0, card));
+    }
+
+    public void toggleToFalse(Integer id) {
+        Counters counters = countersRepository.findByCardId(id).orElseThrow(() -> new IllegalArgumentException("Counters of given ID not found"));
+        counters.setUpToDate(false);
+        countersRepository.save(counters);
     }
 }
