@@ -63,4 +63,9 @@ public class CounterService {
         counters.setUpToDate(false);
         countersRepository.save(counters);
     }
+
+    public boolean checkIfCardIsUpToDate(Integer id) {
+        Counters counters = countersRepository.findByCardId(id).orElseThrow(() -> new IllegalArgumentException("Counters of given ID not found"));
+        return counters.isUpToDate();
+    }
 }

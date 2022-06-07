@@ -263,6 +263,7 @@
                 <div class="row-header">
                     <h3>Punkty trasy</h3>
                     <p th:if="${param.false}">Karta została zakończona, odlokuj aby móc edytować!</p>
+                    <p th:if="${!counters.upToDate}">Nieaktualne dane</p>
                 </div>
                 <thead>
                 <tr class="table-active">
@@ -376,7 +377,6 @@
                 </tbody>
             </table>
             <table class="table table-bordered fuel-table">
-                <p th:if="${param.false}">Dane nieaktualne</p>
                 <div class="row-header">
                     <h3>Podsumowanie trasy</h3>
                 </div>
@@ -410,7 +410,7 @@
                                 </th:block>
                                 <th:block th:unless="${counters.upToDate}">
                                     <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}" type="button"
-                                       class="btn btn-secondary btn-sm">Aktualizuj</a>
+                                       class="btn btn-secondary btn-sm">Zaktualizuj</a>
                                 </th:block>
                             </div>
                         </td>

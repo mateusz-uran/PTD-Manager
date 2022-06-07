@@ -2,6 +2,7 @@ package io.github.mateuszuran.PTD.Manager.Card;
 
 import io.github.mateuszuran.PTD.Manager.Counters.CounterService;
 import io.github.mateuszuran.PTD.Manager.Counters.Counters;
+import io.github.mateuszuran.PTD.Manager.Counters.CountersController;
 import io.github.mateuszuran.PTD.Manager.Fuel.Fuel;
 import io.github.mateuszuran.PTD.Manager.Fuel.FuelService;
 import io.github.mateuszuran.PTD.Manager.Security.CustomUserDetails;
@@ -9,6 +10,8 @@ import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import io.github.mateuszuran.PTD.Manager.Trip.TripService;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,7 @@ import java.util.List;
 @RequestMapping("/home")
 @Controller
 public class CardController {
+    private static final Logger logger = LoggerFactory.getLogger(CardController.class);
     private final CardService cardService;
     private final UserService userService;
     private final TripService tripService;
@@ -82,7 +86,11 @@ public class CardController {
 
     @GetMapping("/card/toggle/{id}")
     public String toggleCard(@PathVariable("id") Integer id) {
-        cardService.toggleCard(id);
+        if(!counterService.checkIfCardIsUpToDate(id)) {
+            return "redirect:/home/card/" + id;
+        } else {
+            cardService.toggleCard(id);
+        }
         return "redirect:/home/card/" + id;
     }
 }

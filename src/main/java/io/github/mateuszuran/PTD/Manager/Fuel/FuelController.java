@@ -46,17 +46,26 @@ public class FuelController {
     }
 
     @GetMapping("/fuel/edit/{id}")
-    public String showEditFuelForm(@PathVariable("id") Integer id, Model model) {
-        Fuel fuel = fuelService.findFuelById(id);
-        model.addAttribute("fuel", fuel);
-        return "fuel_form";
+    public String showEditFuelForm(@PathVariable("id") Integer id, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        Card cardId = cardService.findByUserId(userDetails.getUserId());
+        if(cardService.checkIfCardIsDone(userDetails.getUserId())) {
+            return "redirect:/home/card/" + cardId.getId() + "/?false";
+        } else {
+            Fuel fuel = fuelService.findFuelById(id);
+            model.addAttribute("fuel", fuel);
+            return "fuel_form";
+        }
     }
 
     @GetMapping("/fuel/delete/{id}")
     public String deleteFuel(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Card cardId = cardService.findByUserId(userDetails.getUserId());
-        fuelService.deleteFuel(id);
-        counterService.toggleToFalse(cardId.getId());
-        return "redirect:/home/card/" + cardId.getId();
+        if(cardService.checkIfCardIsDone(userDetails.getUserId())) {
+            return "redirect:/home/card/" + cardId.getId() + "/?false";
+        } else {
+            fuelService.deleteFuel(id);
+            counterService.toggleToFalse(cardId.getId());
+            return "redirect:/home/card/" + cardId.getId();
+        }
     }
 }
