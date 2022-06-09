@@ -1,0 +1,211 @@
+.container {
+  background-color: #393e46;
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  display: flex;
+  color: #fff;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  padding-left: 0.7em;
+  padding-right: 0.7e;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  background-color: #0096FF;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+}
+
+.logo p:first-child {
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+.logo p i {
+  padding-right: 0.5em;
+}
+
+.logo p:last-child {
+  font-size: 0.7rem;
+  margin: 0;
+}
+
+.auth {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.auth p {
+  margin: 0;
+  margin-right: 0.8em;
+  font-size: small;
+}
+
+.section {
+  display: flex;
+  color: #fff;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.header {
+  padding-top: 0.5em;
+  padding-bottom: 0.8em;
+}
+
+.row {
+  justify-content: center;
+  margin: 0;
+}
+
+.check {
+  text-align: end;
+}
+
+.errors {
+  width: auto;
+  padding: 0.3em;
+}
+
+.errors p {
+  border: 1px solid red;
+  border-radius: 10px 10px;
+  padding: 0.3em;
+}
+
+.form-row {
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-row p {
+  font-size: small;
+}
+
+.form-inputs {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  display: flex;
+  align-items: baseline;
+}
+
+.buttons {
+  padding: 0.5em;
+}
+
+table {
+  background-color: #fff;
+  font-size: 90%;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.link-primary {
+  text-decoration: none;
+}
+
+h3 {
+  font-size: medium;
+}
+
+table .manage {
+  width: 10%;
+}
+
+.table-index th:nth-child(1) {
+  width: 20%;
+}
+
+.table-index th:nth-child(2) {
+  width: 20%;
+}
+
+.table-index th:nth-child(3) {
+  width: 20%;
+}
+
+.table-index th:nth-child(4) {
+  width: 20%;
+}
+
+.form-fields {
+  padding-top: 1em;
+}
+
+.btn-field {
+  padding-top: 0.9em;
+}
+
+.btn-primary {
+  background-color: transparent;
+  border-color: #0096FF;
+}
+
+.btn-primary:hover {
+  background-color: #0096FF;
+}
+
+.btn-outline-primary {
+  width: 100%;
+  margin-bottom: 0.5em;
+  border-color: #0096FF;
+}
+
+.btn-outline-danger {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
+.card-btn {
+  width: auto;
+}
+
+.update-ok {
+  border-color: #4BB543;
+  transition: transform .2s;
+}
+
+.update-ok:hover {
+  background-color: transparent;
+  border-color: transparent;
+  transform: scale(1.5);
+}
+
+.update-fail {
+  border-color: #cc0000;
+  transition: transform .2s;
+}
+
+.update-fail:hover {
+  background-color: transparent;
+  border-color: transparent;
+  transform: scale(1.5);
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    font-size: small;
+  }
+  .auth p {
+    margin: 0;
+    margin-right: 0.8em;
+    font-size: smaller;
+  }
+}

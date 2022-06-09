@@ -1,210 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:form="">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Trip</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-            crossorigin="anonymous"></script>
-    <style>
-      .navbar-container {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        max-height: 130px;
-        background-color: #393e46;
-        color: white;
-        margin-bottom: 1em;
-      }
-
-      .btn-primary {
-        background-color: #0096FF;
-      }
-
-      .logo {
-        max-width: 30%;
-        text-align: left;
-        color: #fff;
-        background-color: #0096FF;
-        padding-right: 0.5em;
-        padding-left: 0.5em;
-      }
-
-      .logo p:first-child {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin: 0;
-        padding-top: 0.7em;
-      }
-
-      .logo p i {
-        padding-right: 0.5em;
-      }
-
-      .logo p:last-child {
-        font-size: 0.8em;
-        border-bottom: 1px solid;
-      }
-
-      .navbar {
-        max-width: 60%;
-      }
-
-      .navbar div p {
-        padding-right: 1.5em;
-        margin: 0;
-      }
-
-      .wrapper {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-      }
-
-      .container {
-        text-align: center;
-        width: 100%;
-        background-color: #393e46;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #fff;
-        padding: 3em;
-        justify-content: flex-start;
-      }
-
-      .header {
-        font-size: medium;
-        width: 100%;
-      }
-
-      .row {
-        width: 100%;
-        flex-direction: row;
-        padding-bottom: 0.8em;
-        justify-content: center;
-        margin: 0;
-      }
-
-      .row:first-child {
-        border-top: 2px solid #0096FF;
-      }
-
-      .info-row {
-        display: flex;
-        justify-content: center;
-        border-radius: 1em;
-      }
-
-      .button-submit {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-      }
-
-      @media screen and (max-width: 1025px) {
-        .logo p:last-child {
-            font-size: 0.6em;
-        }
-      }
-
-      @media screen and (max-width: 880px) {
-        .navbar {
-          font-size: 0.8em;
-        }
-
-        .navbar div p {
-        padding-right: 0.5em;
-        }
-
-        .btn {
-          font-size: 80%;
-        }
-      }
-
-      @media screen and (max-width: 768px) {
-        .logo p {
-            padding-bottom: 0.5em;
-        }
-
-        .logo p:first-child {
-          font-size: 1.2em;
-        }
-
-        .logo p:first-child {
-          font-size: 1.2em;
-        }
-        .navbar {
-          font-size: 0.9em;
-          justify-content: flex-end;
-        }
-      }
-
-      @media screen and (max-width: 600px) {
-        .logo p:first-child {
-          font-size: 0.8em;
-        }
-      }
-
-      @media screen and (max-width: 481px) {
-      }
-
-      @media screen and (max-width: 320px) {
-      }
-
-
-    </style>
+    <title>PTD-Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
+    <link th:href="@{/css/style-main.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div class="wrapper">
-    <div class="navbar-container">
+<div class="container">
+    <div class="navbar">
         <div class="logo">
             <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
             <p>Professional Truck Driver System Managment</p>
         </div>
-        <div class="navbar">
-            <div>
-                <p th:inline="text">Zalogowany jako
-                    <span th:text="${#authentication.getPrincipal().getUsername()}">anonymo</span>
-                </p>
-            </div>
-            <div>
-                <form th:action="@{/home}" method="get">
-                    <input type="submit" value="Strona główna" class="btn btn-primary" role="button"/>
-                </form>
-            </div>
+        <div class="auth">
+            <p th:inline="text">Zalogowany jako
+                <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+            </p>
+            <form th:action="@{/home}" method="get">
+                <input type="submit" value="Strona główna" class="btn btn-secondary" role="button"/>
+            </form>
         </div>
     </div>
-    <div class="container">
-        <h1 class="header">Dodaj nową kartę</h1>
-        <div class="row">
-            <div class="row info-row">
-                <div class="col-md-12 col-sm-12">
-                    <p th:if="${param.success}" class="alert alert-success" role="alert">Karta dodana</p>
-                    <p th:if="${param.false}" class="alert alert-danger" role="alert">Karta o takim numerze już
-                        istnieje</p>
-                </div>
-            </div>
-        </div>
-        <form th:action="@{/home/save-card}" method="post"
-              th:object="${card}">
+    <div class="section">
+        <form th:action="@{/home/save-card}" method="post" th:object="${card}">
             <input type="hidden" th:field="*{id}" th:value="${card.id}"/>
-            <div class="row">
-                <div class="row info-row">
-                    <div class="col-md-12 col-sm-12">
-                        <label class="form-label">Numer</label>
-                        <input class="form-control" th:field="*{number}" placeholder="Default input"
-                               aria-label="default input example" required>
+            <div class="header">
+                <h3>Dodaj unikatowy numer karty.</h3>
+            </div>
+            <div class="row form-row">
+                <div class="col-sm-auto">
+                    <p th:if="${param.success}" class="alert alert-success" role="alert">Karta dodana</p>
+                    <p th:if="${param.false}" class="alert alert-danger" role="alert">Karta o takim numerze już istnieje</p>
+                </div>
+                <div class="row form-inputs border-top border-bottom">
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Numer</label>
+                        <input type="text" class="form-control" th:field="*{number}" placeholder="ABC123xyz" aria-label="default input example" required>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="button-submit">
-                    <button class="btn btn-primary btn-lg" type="submit">Zapisz</button>
+                <div class="col-md-auto btn-field">
+                    <input type="submit" value="Dodaj" class="btn btn-primary"/>
                 </div>
             </div>
         </form>

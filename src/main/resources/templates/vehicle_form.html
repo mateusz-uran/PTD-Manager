@@ -2,203 +2,95 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create Trip</title>
+    <title>PTD-Manager</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <style>
-      .navbar-container {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        max-height: 130px;
-        background-color: #393e46;
-        color: white;
-        margin-bottom: 1em;
-      }
-
-      .btn-primary {
-        background-color: #0096FF;
-      }
-
-      .logo {
-        max-width: 30%;
-        text-align: left;
-        color: #fff;
-        background-color: #0096FF;
-        padding-right: 0.5em;
-        padding-left: 0.5em;
-      }
-
-      .logo p:first-child {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin: 0;
-        padding-top: 0.7em;
-      }
-
-      .logo p i {
-        padding-right: 0.5em;
-      }
-
-      .logo p:last-child {
-        font-size: 0.8em;
-        border-bottom: 1px solid;
-      }
-
-      .navbar {
-        max-width: 60%;
-      }
-
-      .navbar div p {
-        padding-right: 1.5em;
-        margin: 0;
-      }
-
-      .wrapper {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-      }
-
-      .container {
-        text-align: center;
-        width: 100%;
-        background-color: #393e46;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #fff;
-        padding: 3em;
-        justify-content: flex-start;
-      }
-
-      .header {
-        font-size: medium;
-      }
-
-      .row {
-        width: 100%;
-        flex-direction: row;
-        padding-bottom: 0.8em;
-        align-items: flex-end;
-      }
-
-      .row-header {
-        width: 100%;
-        text-align: left;
-        border-top: 2px solid #0096FF;
-      }
-
-      .info-row {
-        display: flex;
-        justify-content: center;
-        border-radius: 1em;
-      }
-
-      .button-submit {
-        display: flex;
-        width: 100%;
-        justify-content: flex-end;
-      }
-    </style>
+    <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
+    <link th:href="@{/css/style-main.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div class="wrapper">
-    <div class="navbar-container">
+<div class="container">
+    <div class="navbar">
         <div class="logo">
             <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
             <p>Professional Truck Driver System Managment</p>
         </div>
-        <div class="navbar">
-            <div>
-                <p th:inline="text">Zalogowany jako
-                    <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
-                </p>
-            </div>
-            <div>
-                <form th:action="@{/home}" method="get">
-                    <input type="submit" value="Strona główna" class="btn btn-primary" role="button"/>
-                </form>
-            </div>
+        <div class="auth">
+            <p th:inline="text">Zalogowany jako
+                <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+            </p>
+            <form th:action="@{/home}" method="get">
+                <input type="submit" value="Strona główna" class="btn btn-secondary" role="button"/>
+            </form>
         </div>
     </div>
-    <div class="container">
-        <h1 class="header">Dodaj dowolny typ pojazdu. Należy wypełnić wszystkie dostępne pola.</h1>
+    <div class="section">
         <form th:action="@{/home/add-vehicle}" th:object="${vehicle}" method="post" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}" th:value="${vehicle.id}"/>
-            <div class="row">
-                <div class="row-header">
-                    <h3>Dodaj nowy pojazd</h3>
-                </div>
-                <div class="row info-row">
-                    <div class="col-4">
-                        <label for="formFile" class="form-label">Zdjęcie pojazdu</label>
-                        <input class="form-control" type="file" id="formFile" name="file" accept="image/png, image/jpeg" required>
-                    </div>
-                    <div class="col-4">
-                        <label class="form-label">Opis pod zdjęciem</label>
-                        <input class="form-control" type="text" th:field="*{vehicleImageDescription}" placeholder="Default input" aria-label="default input example" required>
-                    </div>
-                    <div class="col-4">
-                        <label class="form-label">Model ciężarówki</label>
-                        <input class="form-control" type="text" name="truck" th:field="*{truckMainModel}" placeholder="Default input" aria-label="default input example" required>
-                    </div>
-                </div>
+            <div class="header">
+                <h3>Dodaj szczegółowe informacje o zestawie. Należy wypełnić wszystkie dostępne pola.</h3>
             </div>
-            <div class="row">
-                <div class="row-header">
-                    <h3>Dane ciężarówki</h3>
+            <div class="row form-row">
+                <div class="col-sm-auto">
+                    <p th:if="${param.success}" class="alert alert-success" role="alert">Pojazd dodany</p>
                 </div>
-                <div class="row info-row">
-                    <div class="col-3">
-                        <label class="form-label">Numer rejestracyjny</label>
-                        <input class="form-control" type="text" th:field="*{truckLicensePlate}" placeholder="Default input" aria-label="default input example" required>
+                <div class="row form-inputs border-top border-bottom">
+                    <h6>Podstawowe informacje</h6>
+                    <div class="col-sm-4 form-fields">
+                        <label class="form-label" required autofocus>Zdjęcie</label>
+                        <input type="file" class="form-control" name="file" accept="image/png, image/jpeg" required>
                     </div>
-                    <div class="col-3">
-                        <label class="form-label">Typ ciężarówki</label>
-                        <input class="form-control" type="text" th:field="*{truckType}" placeholder="Default input" aria-label="default input example" required>
+                    <div class="col-sm-4 form-fields">
+                        <label class="form-label" required autofocus>Opis pod zdjęciem</label>
+                        <input type="text" class="form-control" th:field="*{vehicleImageDescription}" placeholder="VOLVO/FH KRONE" aria-label="default input example" required>
                     </div>
-                    <div class="col-3">
-                        <label class="form-label">Pojemność lewego zbiornika</label>
-                        <input class="form-control" type="number" th:field="*{leftTankFuelCapacity}" placeholder="Default input" aria-label="default input example" required>
-                    </div>
-                    <div class="col-3">
-                        <label class="form-label">Pojemność prawego zbiornika</label>
-                        <input class="form-control" type="number" th:field="*{rightTankFuelCapacity}" placeholder="Default input" aria-label="default input example" required>
+                    <div class="col-sm-4 form-fields">
+                        <label class="form-label" required autofocus>Model</label>
+                        <input type="text" class="form-control" th:field="*{truckMainModel}" placeholder="Volvo FH 500 Euro-6" aria-label="default input example" required>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="row-header">
-                    <h3>Dane naczepy</h3>
-                </div>
-                <div class="row info-row">
-                    <div class="col-3">
-                        <label class="form-label">Numer rejestracyjny</label>
-                        <input class="form-control" type="text" th:field="*{trailerLicensePlate}" placeholder="Default input" aria-label="default input example">
+                <div class="row form-inputs border-bottom">
+                    <h6>Szczegółowe informacje ciągnika</h6>
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Numer rejestracyjny</label>
+                        <input type="text" class="form-control" th:field="*{truckLicensePlate}" placeholder="LOP123" aria-label="default input example" required>
                     </div>
-                    <div class="col-3">
-                        <label class="form-label">Typ naczepy</label>
-                        <input class="form-control" type="text" th:field="*{trailerType}" placeholder="Default input" aria-label="default input example">
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Typ ciężarówki</label>
+                        <input type="text" class="form-control" th:field="*{truckType}" placeholder="Ciągnik siodłowy" aria-label="default input example" required>
                     </div>
-                    <div class="col-3">
-                        <label class="form-label">Pojemność zbiornika</label>
-                        <input class="form-control" type="number" th:field="*{trailerCapacity}" placeholder="Default input" aria-label="default input example">
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Pojemność lewego zbiornika</label>
+                        <input type="text" class="form-control" th:field="*{leftTankFuelCapacity}" placeholder="000" aria-label="default input example" required>
                     </div>
-                    <div class="col-3">
-                        <label class="form-label">Pojemność zbiornika adBlue</label>
-                        <input class="form-control" type="number" th:field="*{adBlueCapacity}" placeholder="Default input" aria-label="default input example">
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Pojemność prawego zbiornika</label>
+                        <input type="text" class="form-control" th:field="*{rightTankFuelCapacity}" placeholder="000" aria-label="default input example" required>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="row-header">
-                    <h3>Lista kierowców</h3>
+                <div class="row form-inputs border-bottom">
+                    <h6>Szczegółowe informacje naczepy</h6>
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Numer rejestracyjny</label>
+                        <input type="text" class="form-control" th:field="*{trailerLicensePlate}" placeholder="LOP321" aria-label="default input example" required>
+                    </div>
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Typ ciężarówki</label>
+                        <input type="text" class="form-control" th:field="*{trailerType}" placeholder="Naczepa chłodnia" aria-label="default input example" required>
+                    </div>
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Pojemność lewego zbiornika</label>
+                        <input type="text" class="form-control" th:field="*{trailerCapacity}" placeholder="000" aria-label="default input example" required>
+                    </div>
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label" required autofocus>Pojemność zbiornika adBlue</label>
+                        <input type="text" class="form-control" th:field="*{adBlueCapacity}" placeholder="000" aria-label="default input example" required>
+                    </div>
                 </div>
-                <div class="row info-row">
-                    <div class="col-4">
-                        <label class="form-label">Kierowca pojazdu</label>
+                <div class="row form-inputs border-bottom">
+                    <h6>Kierowca zestawu</h6>
+                    <div class="col-sm-3 form-fields">
+                        <label class="form-label">Imię i nazwisko</label>
                         <select class="form-control" th:field="*{user}" required>
                             <th:block th:each="user : ${listUsers}">
                                 <option th:text="${user.fullName}" th:value="${user.id}"></option>
@@ -206,10 +98,8 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="button-submit">
-                    <button class="btn btn-primary btn-lg" type="submit">Dodaj pojazd</button>
+                <div class="col-md-auto btn-field">
+                    <input type="submit" value="Zapisz" class="btn btn-primary"/>
                 </div>
             </div>
         </form>

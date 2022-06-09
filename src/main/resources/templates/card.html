@@ -1,429 +1,235 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:form="">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>PTD Manager</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>PTD-Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
-    <style>
-      .navbar-container {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        max-height: 130px;
-        background-color: #393e46;
-        color: white;
-        margin-bottom: 1em;
-      }
-
-      .logo {
-        max-width: 30%;
-        text-align: left;
-        color: #fff;
-        background-color: #0096FF;
-        padding-right: 0.5em;
-        padding-left: 0.5em;
-      }
-
-      .logo p:first-child {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin: 0;
-        padding-top: 0.7em;
-      }
-
-      .logo p i {
-        padding-right: 0.5em;
-      }
-
-      .logo p:last-child {
-        font-size: 0.8em;
-        border-bottom: 1px solid;
-      }
-
-      .navbar {
-        max-width: 60%;
-      }
-
-      .navbar div p {
-        padding-right: 1.5em;
-        margin: 0;
-      }
-
-      .tables-container {
-        width: 90%;
-        display: flex;
-        flex-direction: column;
-        background-color: #393e46
-      }
-
-      .buttons {
-        background-color: #393e46;
-        padding: 0.3em;
-        margin-bottom: 0.5em;
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        text-align: center;
-        align-items: center;
-      }
-      .link-buttons {
-        display: flex;
-        width: 80%;
-        text-align: center;
-      }
-
-      .link-buttons a {
-        margin-left: 0.3em;
-        border: 1px solid;
-      }
-
-      .toggle-icons {
-        display: flex;
-        padding: 0.3em;
-        align-items: center;
-        text-align: center;
-        justify-content: flex-end;
-      }
-
-      .toggle-icons a {
-        margin-left: 0.3em;
-        border: 1px solid;
-      }
-
-
-      .fa-circle-check {
-        color:#4BB543;
-      }
-
-      .fa-circle-dot {
-        color: #cc0000;
-      }
-
-      .row-header {
-        width: 100%;
-        text-align: left;
-        border-top: 2px solid #0096FF;
-        color: #fff;
-        padding-left: 0.5em;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-
-      .row-header p {
-        margin-right: 0.8em;
-        font-size: 70%;
-        border-bottom: 1px solid red;
-      }
-
-      h3 {
-        font-size: medium;
-      }
-
-      table {
-        table-layout: fixed;
-        font-size: 0.8vw;
-        text-align: center;
-        background-color: #fff;
-      }
-
-      table th:nth-child(1) {
-        width: 8%;
-      }
-
-      table td:first-child {
-        display: flex;
-        justify-content: center;
-      }
-
-      .fuel-table th:nth-child(2) {
-        width: 10%;
-      }
-
-      .table-buttons {
-        display: flex;
-        flex-direction: row;
-        color: #fff;
-      }
-
-      .table-buttons a {
-        margin-right: 0.5em;
-      }
-
-      .btn-secondary {
-        font-size: 70%;
-        background-color: #0096FF;
-      }
-
-      @media screen and (max-width: 1025px) {
-        .logo p:last-child {
-            font-size: 0.6em;
-        }
-      }
-
-      @media screen and (max-width: 880px) {
-        .navbar {
-          font-size: 0.8em;
-        }
-
-        .navbar div p {
-        padding-right: 0.5em;
-        }
-
-        .btn {
-          font-size: 70%;
-        }
-      }
-
-      @media screen and (max-width: 768px) {
-        .logo p {
-            padding-bottom: 0.5em;
-        }
-
-        .logo p:first-child {
-          font-size: 1.2em;
-        }
-
-        .logo p:first-child {
-          font-size: 1.2em;
-        }
-        .navbar {
-          font-size: 0.9em;
-          justify-content: flex-end;
-        }
-      }
-
-      @media screen and (max-width: 610px) {
-        .logo p:first-child {
-          font-size: 0.8em;
-        }
-
-        .btn-light {
-          font-size: 60%;
-        }
-
-        .btn-secondary {
-          font-size: 30%;
-        }
-      }
-
-      @media screen and (max-width: 481px) {
-      }
-
-      @media screen and (max-width: 320px) {
-      }
-
-
-
-
-    </style>
+    <link th:href="@{/css/style-main.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div class="row justify-content-center" style="margin: 0; padding: 0;">
-    <div class="navbar-container">
+<div class="container">
+    <div class="navbar">
         <div class="logo">
             <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
             <p>Professional Truck Driver System Managment</p>
         </div>
-        <div class="navbar">
-            <div>
-                <p th:inline="text">Zalogowany jako
-                    <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
-                </p>
-            </div>
-            <div>
-                <form th:action="@{/home}" method="get">
-                    <input type="submit" value="Strona główna" class="btn btn-primary" role="button"/>
-                </form>
-            </div>
+        <div class="auth">
+            <p th:inline="text">Zalogowany jako
+                <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+            </p>
+            <form th:action="@{/home}" method="get">
+                <input type="submit" value="Strona główna" class="btn btn-secondary" role="button"/>
+            </form>
         </div>
     </div>
-    <div class="tables-container">
-        <div class="toggle-icons">
-            <th:block th:if="${card.done}">
-                <i class="fa-solid fa-circle-check"></i>
-                <a th:href="@{'/home/card/toggle/' + ${card.id}}" class="btn btn-sm btn-light" role="button">Edytuj</a>
-            </th:block>
-            <th:block th:unless="${card.done}">
-                <i class="fa-solid fa-circle-dot"></i>
-                <a th:href="@{'/home/card/toggle/' + ${card.id}}" class="btn btn-sm btn-light" role="button">Zakończ</a>
-            </th:block>
-        </div>
+    <div class="section">
         <div class="buttons">
-            <div class="link-buttons">
-                <a th:href="@{/home/card/add-trip}" class="btn btn-light" role="button">Dodaj nowy punkt trasy</a>
-                <a th:href="@{/home/card/add-fuel}" class="btn btn-light" role="button">Dodaj nowe tankowanie</a>
+            <a th:href="@{/home/card/add-trip}" class="btn btn-primary btn-sm" role="button">Dodaj punkt trasy</a>
+            <a th:href="@{/home/card/add-fuel}" class="btn btn-primary btn-sm" role="button">Dodaj tankowanie</a>
+        </div>
+        <div class="row form-row">
+            <div class="row">
+                <div class="check">
+                    <th:block th:if="${card.done}">
+                        <a th:href="@{'/home/card/toggle/' + ${card.id}}" class="link-primary" role="button">
+                            <i class="fa-solid fa-circle-check" style="color:#4BB543;"></i>
+                        </a>
+                    </th:block>
+                    <th:block th:unless="${card.done}">
+                        <a th:href="@{'/home/card/toggle/' + ${card.id}}" class="link-primary" role="button">
+                            <i class="fa-solid fa-circle-dot" style="color: #cc0000;"></i>
+                        </a>
+                    </th:block>
+                </div>
+                <div class="errors">
+                    <p th:if="${param.false}">Karta została zakończona, odlokuj aby móc edytować!</p>
+                    <p th:if="${!counters.upToDate}">Nieaktualne dane!</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-sm">
+                        <div class="table-header">
+                            <h3>Szczegóły trasy</h3>
+                        </div>
+                        <thead>
+                        <tr>
+                            <th colspan="7" style="border-right: 2px solid;">WYJAZD</th>
+                            <th colspan="6">PRZYJAZD</th>
+                        </tr>
+                        <tr>
+                            <th scope="col" class="manage">Zarządzaj</th>
+                            <th scope="col">Lp.</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Godzina</th>
+                            <th scope="col">Miejscowość</th>
+                            <th scope="col">Państwo</th>
+                            <th scope="col" style="border-right: 2px solid;">Licznik</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Godzina</th>
+                            <th scope="col">Miejscowość</th>
+                            <th scope="col">Państwo</th>
+                            <th scope="col">Licznik</th>
+                            <th scope="col">Przebieg</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:if="${#lists.isEmpty(listTrips)}">
+                            <tr>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td style="border-right: 2px solid;">-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        </th:block>
+                        <th:block th:each="trip,iterator : ${listTrips}">
+                            <tr>
+                                <td>
+                                    <a th:href="@{'/home/card/trip/edit/' + ${trip.id}}" type="button"
+                                       class="btn btn-sm btn-outline-primary card-btn">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a th:href="@{'/home/card/trip/delete/' + ${trip.id}}"
+                                       onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
+                                       type="button" class="btn btn-sm btn-outline-danger card-btn"><i
+                                            class="fa-solid fa-circle-minus"></i></a>
+                                </td>
+                                <td th:text="${iterator.index+1}"></td>
+                                <td th:text="${trip.tripStartDay}">20.06</td>
+                                <td th:text="${trip.tripStartHour}">8:31</td>
+                                <td th:text="${trip.tripStartLocation}">Zadole</td>
+                                <td th:text="${trip.tripStartCountry}">PL</td>
+                                <td th:text="${trip.tripStartVehicleCounter}" style="border-right: 2px solid;">344521</td>
+                                <td th:text="${trip.tripEndDay}">22.06</td>
+                                <td th:text="${trip.tripEndHour}">13:33</td>
+                                <td th:text="${trip.tripEndLocation}">Hamburg</td>
+                                <td th:text="${trip.tripEndCountry}">DE</td>
+                                <td th:text="${trip.tripEndVehicleCounter}">346197</td>
+                                <td th:text="${trip.carMileage}">300</td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-sm">
+                        <div class="table-header">
+                            <h3>Szczegóły tankowań</h3>
+                        </div>
+                        <thead>
+                        <tr>
+                            <th scope="col" class="manage">Zarządzaj</th>
+                            <th scope="col">Lp.</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Miejscowość</th>
+                            <th scope="col">Licznik</th>
+                            <th scope="col">Ilość tankowania</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:if="${#lists.isEmpty(listFuels)}">
+                            <tr>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        </th:block>
+                        <th:block th:each="fuel,iterator : ${listFuels}">
+                            <tr>
+                                <td>
+                                    <a th:href="@{'/home/card/fuel/edit/' + ${fuel.id}}" type="button"
+                                       class="btn btn-sm btn-outline-primary card-btn">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a th:href="@{'/home/card/fuel/delete/' + ${fuel.id}}"
+                                       onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
+                                       type="button" class="btn btn-sm btn-outline-danger card-btn"><i
+                                            class="fa-solid fa-circle-minus"></i></a>
+                                </td>
+                                <td th:text="${iterator.index+1}"></td>
+                                <td th:text="${fuel.refuelingDate}">20.06</td>
+                                <td th:text="${fuel.refuelingLocation}">Opole Lubelskie</td>
+                                <td th:text="${fuel.vehicleOdometer}">344123</td>
+                                <td th:text="${fuel.fuelAmount}">850</td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-sm">
+                        <div class="table-header">
+                            <h3>Podsumowanie informacji</h3>
+                        </div>
+                        <thead>
+                        <tr>
+                            <th scope="col" class="manage">Zarządzaj</th>
+                            <th scope="col">Początkowy stan licznika</th>
+                            <th scope="col">Końcowy stan licznika</th>
+                            <th scope="col">Przebieg</th>
+                            <th scope="col">Suma tankowania</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:if="${#lists.isEmpty(counters)}">
+                            <tr>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        </th:block>
+                        <th:block th:each="counter : ${counters}">
+                            <tr>
+                                <td>
+                                    <th:block th:if="${counters.upToDate}">
+                                        <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}"
+                                           type="button"
+                                           class="btn btn-sm btn-outline-primary card-btn update-ok">
+                                            <i class="fa-solid fa-rotate" style="color: #4BB543;"></i>
+                                        </a>
+                                    </th:block>
+                                    <th:block th:unless="${counters.upToDate}">
+                                        <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}"
+                                           type="button"
+                                           class="btn btn-sm btn-outline-primary card-btn update-fail">
+                                            <i class="fa-solid fa-rotate" style="color: #cc0000;"></i>
+                                        </a>
+                                    </th:block>
+                                </td>
+                                <td th:text="${counter.counterTripStart}">333444</td>
+                                <td th:text="${counter.counterTripEnd}">333555</td>
+                                <td th:text="${counter.sumCounterMileage}">111</td>
+                                <td th:text="${counter.sumCounterRefueling}">850</td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="table-responsive-md">
-            <table class="table table-bordered">
-                <div class="row-header">
-                    <h3>Punkty trasy</h3>
-                    <p th:if="${param.false}">Karta została zakończona, odlokuj aby móc edytować!</p>
-                    <p th:if="${!counters.upToDate}">Nieaktualne dane</p>
-                </div>
-                <thead>
-                <tr class="table-active">
-                    <th></th>
-                    <th scope="col" colspan="6" style="border-right: 1px solid">WYJAZD</th>
-                    <th scope="col" colspan="5">PRZYJAZD</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th>Zarządzaj</th>
-                    <th scope="col">Lp.</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Godzina</th>
-                    <th scope="col">Miejscowość</th>
-                    <th scope="col">Państwo</th>
-                    <th scope="col" style="border-right: 1px solid">Licznik</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Godzina</th>
-                    <th scope="col">Miejscowość</th>
-                    <th scope="col">Państwo</th>
-                    <th scope="col">Licznik</th>
-                    <th scope="col">Przeboeg</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:if="${#lists.isEmpty(listTrips)}">
-                    <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </th:block>
-                <th:block th:each="trip,iterator : ${listTrips}">
-                    <tr>
-                        <td>
-                            <div class="table-buttons">
-                                <a th:href="@{'/home/card/trip/edit/' + ${trip.id}}" type="button"
-                                   class="btn btn-secondary btn-sm"><i class="fa-solid fa-rotate"></i></a>
-                                <a th:href="@{'/home/card/trip/delete/' + ${trip.id}}" type="button"
-                                   class="btn btn-secondary btn-sm"><i class="fa-solid fa-circle-minus"></i></a>
-                            </div>
-                        </td>
-                        <td th:text="${iterator.index+1}"></td>
-                        <td th:text="${trip.tripStartDay}">20.06</td>
-                        <td th:text="${trip.tripStartHour}">8:31</td>
-                        <td th:text="${trip.tripStartLocation}">Zadole</td>
-                        <td th:text="${trip.tripStartCountry}">PL</td>
-                        <td th:text="${trip.tripStartVehicleCounter}" style="border-right: 1px solid">344521</td>
-                        <td th:text="${trip.tripEndDay}">22.06</td>
-                        <td th:text="${trip.tripEndHour}">13:33</td>
-                        <td th:text="${trip.tripEndLocation}">Hamburg</td>
-                        <td th:text="${trip.tripEndCountry}">DE</td>
-                        <td th:text="${trip.tripEndVehicleCounter}">346197</td>
-                        <td th:text="${trip.carMileage}">300</td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-            <table class="table table-bordered fuel-table">
-                <div class="row-header">
-                    <h3>Rozliczenie tankowania</h3>
-                </div>
-                <thead>
-                <tr>
-                    <th>Zarządzaj</th>
-                    <th scope="col">Lp.</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">Miejscowość</th>
-                    <th scope="col">Licznik</th>
-                    <th scope="col">Ilość tankowania</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:if="${#lists.isEmpty(listFuels)}">
-                    <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </th:block>
-                <th:block th:each="fuel,iterator : ${listFuels}">
-                    <tr>
-                        <td>
-                            <div class="table-buttons">
-                                <a th:href="@{'/home/card/fuel/edit/' + ${fuel.id}}" type="button"
-                                   class="btn btn-secondary btn-sm"><i class="fa-solid fa-rotate"></i></a>
-                                <a th:href="@{'/home/card/fuel/delete/' + ${fuel.id}}" type="button"
-                                   class="btn btn-secondary btn-sm"><i class="fa-solid fa-circle-minus"></i></a>
-                            </div>
-                        </td>
-                        <td th:text="${iterator.index+1}"></td>
-                        <td th:text="${fuel.refuelingDate}">20.06</td>
-                        <td th:text="${fuel.refuelingLocation}">Opole Lubelskie</td>
-                        <td th:text="${fuel.vehicleOdometer}">344123</td>
-                        <td th:text="${fuel.fuelAmount}">850</td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-            <table class="table table-bordered fuel-table">
-                <div class="row-header">
-                    <h3>Podsumowanie trasy</h3>
-                </div>
-                <thead>
-                <tr>
-                    <th>Zarządzaj</th>
-                    <th scope="col">Początkowy stan licznika</th>
-                    <th scope="col">Końcowy stan licznika</th>
-                    <th scope="col">Przebieg z trasy</th>
-                    <th scope="col">Suma tankowania z trasy</th>
-                </tr>
-                </thead>
-                <tbody>
-                <th:block th:if="${#lists.isEmpty(counters)}">
-                    <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </th:block>
-                <th:block th:each="counter : ${counters}">
-                    <tr>
-                        <td>
-                            <div class="table-buttons">
-                                <th:block th:if="${counters.upToDate}">
-                                    <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}" type="button"
-                                       class="btn btn-secondary btn-sm">Aktualne</a>
-                                </th:block>
-                                <th:block th:unless="${counters.upToDate}">
-                                    <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}" type="button"
-                                       class="btn btn-secondary btn-sm">Zaktualizuj</a>
-                                </th:block>
-                            </div>
-                        </td>
-                        <td th:text="${counter.counterTripStart}">333444</td>
-                        <td th:text="${counter.counterTripEnd}">333555</td>
-                        <td th:text="${counter.sumCounterMileage}">111</td>
-                        <td th:text="${counter.sumCounterRefueling}">850</td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-        </div>
     </div>
+</div>
 </div>
 </body>
 </html>

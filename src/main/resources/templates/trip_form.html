@@ -2,188 +2,86 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Create Trip</title>
+  <title>PTD-Manager</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-  <style>
-      .navbar-container {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        max-height: 130px;
-        background-color: #393e46;
-        color: white;
-        margin-bottom: 1em;
-      }
-
-      .btn-primary {
-        background-color: #0096FF;
-      }
-
-      .logo {
-        max-width: 30%;
-        text-align: left;
-        color: #fff;
-        background-color: #0096FF;
-        padding-right: 0.5em;
-        padding-left: 0.5em;
-      }
-
-      .logo p:first-child {
-        font-size: 1.5em;
-        font-weight: bold;
-        margin: 0;
-        padding-top: 0.7em;
-      }
-
-      .logo p i {
-        padding-right: 0.5em;
-      }
-
-      .logo p:last-child {
-        font-size: 0.8em;
-        border-bottom: 1px solid;
-      }
-
-      .navbar {
-        max-width: 60%;
-      }
-
-      .navbar div p {
-        padding-right: 1.5em;
-        margin: 0;
-      }
-
-      .wrapper {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-      }
-
-      .container {
-        text-align: center;
-        width: 100%;
-        background-color: #393e46;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        color: #fff;
-        padding: 3em;
-        justify-content: flex-start;
-      }
-
-      .header {
-        font-size: medium;
-      }
-
-      .row {
-        width: 100%;
-        flex-direction: row;
-        padding-bottom: 0.8em;
-        align-items: flex-end;
-      }
-
-      .row-header {
-        width: 100%;
-        text-align: left;
-        border-top: 2px solid #0096FF;
-      }
-
-      .info-row {
-        display: flex;
-        justify-content: center;
-        border-radius: 1em;
-      }
-
-      .button-submit {
-        display: flex;
-        width: 100%;
-        justify-content: flex-end;
-      }
-    </style>
+  <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
+  <link th:href="@{/css/style-main.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div class="wrapper">
-  <div class="navbar-container">
+<div class="container">
+  <div class="navbar">
     <div class="logo">
       <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
       <p>Professional Truck Driver System Managment</p>
     </div>
-    <div class="navbar">
-      <div>
-        <p th:inline="text">Zalogowany jako
-          <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
-        </p>
-      </div>
-      <div>
-        <form th:action="@{/home}" method="get">
-          <input type="submit" value="Strona główna" class="btn btn-primary" role="button"/>
-        </form>
-      </div>
+    <div class="auth">
+      <p th:inline="text">Zalogowany jako
+        <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+      </p>
+      <form th:action="@{/home}" method="get">
+        <input type="submit" value="Strona główna" class="btn btn-secondary" role="button"/>
+      </form>
     </div>
   </div>
-  <div class="container">
-    <h1 class="header">Dodaj szczegółowe informacje o każdym punkcie trasy. Należy wypełnić wszystkie dostępne pola.</h1>
+  <div class="section">
     <form th:action="@{/home/card/save-trip}" th:object="${trip}" method="post" enctype="multipart/form-data">
       <input type="hidden" th:field="*{id}" th:value="${trip.id}"/>
-      <div class="row">
-        <div class="row-header">
-          <h3>Parametry wyjazdu</h3>
-        </div>
-        <div class="row info-row">
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Data</label>
-            <input class="form-control" type="text" th:field="*{tripStartDay}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Godzina</label>
-            <input class="form-control" type="text" th:field="*{tripStartHour}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Miejscowość</label>
-            <input class="form-control" type="text" th:field="*{tripStartLocation}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Państwo</label>
-            <input class="form-control" type="text" th:field="*{tripStartCountry}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Licznik</label>
-            <input class="form-control" type="number" th:field="*{tripStartVehicleCounter}" placeholder="Default input" aria-label="default input example" required>
-          </div>
-        </div>
+      <div class="header">
+        <h3>Dodaj szczegółowe informacje o każdym punkcie trasy. Należy wypełnić wszystkie dostępne pola.</h3>
       </div>
-      <div class="row">
-        <div class="row-header">
-          <h3>Parametry przyjazdu</h3>
+      <div class="row form-row">
+        <div class="col-sm-auto">
+          <p th:if="${param.success}" class="alert alert-success" role="alert">Punkt dodany</p>
         </div>
-        <div class="row info-row">
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Data</label>
-            <input class="form-control" type="text" th:field="*{tripEndDay}" placeholder="Default input" aria-label="default input example" required>
+        <div class="row form-inputs border-top border-bottom">
+          <h6>Dane wyjazdu</h6>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Data</label>
+            <input type="text" class="form-control" th:field="*{tripStartDay}" placeholder="1.01" aria-label="default input example" required>
           </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Godzina</label>
-            <input class="form-control" type="text" th:field="*{tripEndHour}" placeholder="Default input" aria-label="default input example" required>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Godzina</label>
+            <input type="text" class="form-control" th:field="*{tripStartHour}" placeholder="23.59" aria-label="default input example" required>
           </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Miejscowość</label>
-            <input class="form-control" type="text" th:field="*{tripEndLocation}" placeholder="Default input" aria-label="default input example" required>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Miejscowość</label>
+            <input type="text" class="form-control" th:field="*{tripStartLocation}" placeholder="Warszawa" aria-label="default input example" required>
           </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Państwo</label>
-            <input class="form-control" type="text" th:field="*{tripEndCountry}" placeholder="Default input" aria-label="default input example" required>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Państwo</label>
+            <input type="text" class="form-control" th:field="*{tripStartCountry}" placeholder="PL" aria-label="default input example" required>
           </div>
-          <div class="col-sm-2 col-sm-2">
-            <label class="form-label">Licznik</label>
-            <input class="form-control" type="number" th:field="*{tripEndVehicleCounter}" placeholder="Default input" aria-label="default input example" required>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Licznik</label>
+            <input type="text" class="form-control" th:field="*{tripStartVehicleCounter}" placeholder="123456" aria-label="default input example" required>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="button-submit">
-          <button class="btn btn-primary btn-lg" type="submit">Dodaj pojazd</button>
+        <div class="row form-inputs border-bottom">
+          <h6>Dane wyjazdu</h6>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Data</label>
+            <input type="text" class="form-control" th:field="*{tripEndDay}" placeholder="1.01" aria-label="default input example" required>
+          </div>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Godzina</label>
+            <input type="text" class="form-control" th:field="*{tripEndHour}" placeholder="23.59" aria-label="default input example" required>
+          </div>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Miejscowość</label>
+            <input type="text" class="form-control" th:field="*{tripEndLocation}" placeholder="Warszawa" aria-label="default input example" required>
+          </div>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Państwo</label>
+            <input type="text" class="form-control" th:field="*{tripEndCountry}" placeholder="PL" aria-label="default input example" required>
+          </div>
+          <div class="col-sm-2 form-fields">
+            <label class="form-label" required autofocus>Licznik</label>
+            <input type="text" class="form-control" th:field="*{tripEndVehicleCounter}" placeholder="123456" aria-label="default input example" required>
+          </div>
+        </div>
+        <div class="col-md-auto btn-field">
+          <input type="submit" value="Zapisz" class="btn btn-primary"/>
         </div>
       </div>
     </form>
