@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style-main.css">
+    <link th:href="@{/css/style-main.css}" rel="stylesheet" />
 </head>
 <body>
 <div class="container">
@@ -32,12 +32,16 @@
             </div>
             <div class="row form-row">
                 <div class="col-md-auto">
-                    <p th:if="${param.logout}" class="alert alert-success" role="alert">Zmiany zatwierdzono</p>
+                    <p th:if="${param.success}" class="alert alert-success" role="alert">Zmiany zatwierdzono</p>
                     <p th:if="${param.error}" class="alert alert-danger" role="alert">Użytkownik o takim emailu już istnieje</p>
                 </div>
                 <div class="col-md-auto form-fields">
                     <label class="form-label">Email</label>
-                    <input type="password" name="password" class="form-control" th:field="*{email}" placeholder="user@gmail.com" aria-label="default input example" required>
+                    <input type="text" name="email" class="form-control" th:field="*{email}" placeholder="user@gmail.com" aria-label="default input example" required>
+                </div>
+                <div class="col-md-auto form-fields" style="display: none;">
+                    <label class="form-label">Hasło</label>
+                    <input type="password" name="password" class="form-control" th:field="*{password}" placeholder="******" aria-label="default input example">
                 </div>
                 <div class="row">
                     <div class="col-md-auto form-fields">
