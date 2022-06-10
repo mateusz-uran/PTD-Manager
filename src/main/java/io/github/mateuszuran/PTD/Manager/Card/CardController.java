@@ -2,6 +2,7 @@ package io.github.mateuszuran.PTD.Manager.Card;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import io.github.mateuszuran.PTD.Manager.AppController;
 import io.github.mateuszuran.PTD.Manager.Counters.CounterService;
 import io.github.mateuszuran.PTD.Manager.Counters.Counters;
 import io.github.mateuszuran.PTD.Manager.Fuel.Fuel;
@@ -11,19 +12,17 @@ import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import io.github.mateuszuran.PTD.Manager.Trip.TripService;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserService;
-import io.github.mateuszuran.PTD.Manager.Vehicle.Vehicle;
 import io.github.mateuszuran.PTD.Manager.Vehicle.VehicleService;
+import org.bouncycastle.math.raw.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -36,6 +35,7 @@ import java.util.List;
 @RequestMapping("/home")
 @Controller
 public class CardController {
+    private static final Logger logger = LoggerFactory.getLogger(CardController.class);
     private final CardService cardService;
     private final UserService userService;
     private final TripService tripService;
@@ -68,7 +68,7 @@ public class CardController {
     @PostMapping("/save-card")
     public String saveNewCard(Card card, @AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userService.getUserById(userDetails.getUserId());
-        if(cardService.checkIfCardExists(card)) {
+        if (cardService.checkIfCardExists(card)) {
             return "redirect:/home/add-card/?false";
         }
         card.setUser(user);
@@ -103,7 +103,7 @@ public class CardController {
 
     @GetMapping("/card/toggle/{id}")
     public String toggleCard(@PathVariable("id") Integer id) {
-        if(!counterService.checkIfCardIsUpToDate(id)) {
+        if (!counterService.checkIfCardIsUpToDate(id)) {
             return "redirect:/home/card/" + id;
         } else {
             cardService.toggleCard(id);
@@ -112,39 +112,30 @@ public class CardController {
     }
 
     @GetMapping("/card/pdf/{id}")
-    public ResponseEntity<?> getPDF(@PathVariable Integer id, @AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> getPDF(@PathVariable Integer id, @AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException {
         Integer userId = userDetails.getUserId();
-        Card card = getAllDataFromCard(id, userId);
+        Card card = cardService.getAllDataFromCard(id, userId);
+        if (!card.isDone()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else {
+            WebContext context = new WebContext(request, response, servletContext);
+            context.setVariable("card", card);
+            String cardHtml = templateEngine.process("pdf_template", context);
+            ByteArrayOutputStream target = new ByteArrayOutputStream();
+            ConverterProperties converterProperties = new ConverterProperties();
+            converterProperties.setBaseUri("http://localhost:8080");
 
-        WebContext context = new WebContext(request, response, servletContext);
-        context.setVariable("card", card);
-        String cardHtml = templateEngine.process("pdf_template", context);
-        ByteArrayOutputStream target = new ByteArrayOutputStream();
-        ConverterProperties converterProperties = new ConverterProperties();
-        converterProperties.setBaseUri("http://localhost:8080");
-
-        HtmlConverter.convertToPdf(cardHtml, target, converterProperties);
-        byte[] bytes = target.toByteArray();
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(bytes);
-
+            HtmlConverter.convertToPdf(cardHtml, target, converterProperties);
+            byte[] bytes = target.toByteArray();
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(bytes);
+        }
     }
 
-    private Card getAllDataFromCard(Integer cardId, Integer userId) {
-        Card card = new Card();
-        Card cardFromDb = cardService.findCard(cardId);
-        card.setNumber(cardFromDb.getNumber());
-        Vehicle vehicle = vehicleService.findVehicleByUserId(userId);
-        card.setVehicle(vehicle);
-        List<Fuel> fuel = fuelService.findAllAndSort(cardId);
-        card.setFuel(fuel);
-        Counters counters = counterService.findByCardId(cardId);
-        card.setCounters(counters);
-        List<Trip> trip = tripService.findAllAndSort(cardId);
-        card.setTrip(trip);
-
-        return card;
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleAllExceptions(Exception e) {
+        return "error"; /* use the correct view name */
     }
 }

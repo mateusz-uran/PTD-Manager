@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface TripRepository extends JpaRepository<Trip, Integer> {
     List<Trip> findAllByCardId(Integer id);
 
-    List<Trip> findAllByCardIdOrderByTripStartVehicleCounter(Integer id);
+    Optional<List<Trip>> findAllByCardIdOrderByTripStartVehicleCounter(Integer id);
 
     Optional<Trip> findById(Integer id);
 }

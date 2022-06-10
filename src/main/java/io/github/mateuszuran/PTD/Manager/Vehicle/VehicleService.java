@@ -30,6 +30,6 @@ public class VehicleService {
     }
 
     public Vehicle findVehicleByUserId(Integer id) {
-        return vehicleRepository.findByUserId(id);
+        return vehicleRepository.findByUserId(id).orElseThrow(() -> new IllegalArgumentException("Vehicle with given id not found"));
     }
 }

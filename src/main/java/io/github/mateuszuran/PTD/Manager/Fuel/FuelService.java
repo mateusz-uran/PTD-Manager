@@ -26,7 +26,7 @@ public class FuelService {
     }
 
     public List<Fuel> findAllAndSort(Integer id) {
-        return fuelRepository.findAllByCardIdOrderByVehicleOdometer(id);
+        return fuelRepository.findAllByCardIdOrderByVehicleOdometer(id).orElseThrow(() -> new IllegalArgumentException("Refueling with given id not found"));
     }
 
     public  void deleteFuel(Integer id) {

@@ -17,7 +17,7 @@ public class TripService {
     }
 
     public List<Trip> findAllAndSort(Integer id) {
-        return tripRepository.findAllByCardIdOrderByTripStartVehicleCounter(id);
+        return tripRepository.findAllByCardIdOrderByTripStartVehicleCounter(id).orElseThrow(() -> new IllegalArgumentException("Trips with given id not found"));
     }
 
     public Trip findTripById(Integer id) {

@@ -61,6 +61,10 @@
   flex-direction: column;
 }
 
+.exception {
+  margin-top: 3em;
+}
+
 .header {
   padding-top: 0.5em;
   padding-bottom: 0.8em;
