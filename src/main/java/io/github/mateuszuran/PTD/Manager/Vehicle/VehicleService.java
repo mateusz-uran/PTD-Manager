@@ -28,4 +28,8 @@ public class VehicleService {
     public Vehicle findVehicleById(Integer id) {
         return vehicleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Vehicle with given id not found"));
     }
+
+    public Vehicle findVehicleByUserId(Integer id) {
+        return vehicleRepository.findByUserId(id);
+    }
 }

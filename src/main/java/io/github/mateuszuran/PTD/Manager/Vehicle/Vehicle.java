@@ -1,5 +1,6 @@
 package io.github.mateuszuran.PTD.Manager.Vehicle;
 
+import io.github.mateuszuran.PTD.Manager.Card.Card;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,9 @@ public class Vehicle {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @OneToOne
+    @JoinColumn(name = "card_id")
+    private Card card;
 
     @Transient
     public int getVehicleFuelCapacity() {

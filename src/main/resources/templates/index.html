@@ -71,6 +71,7 @@
                             </td>
                             <td>
                                 <a th:href="@{'/home/card/' + ${card.id}}" type="button" class="btn btn-sm btn-outline-primary">Wybierz</a>
+                                <a th:href="@{'/home/card/pdf/' + ${card.id}}" type="button" class="btn btn-sm btn-outline-primary">PDF</a>
                                 <a th:href="@{'/home/card/delete/' + ${card.id}}"
                                    onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
                                    type="button" class="btn btn-sm btn-outline-danger">Usuń</a>

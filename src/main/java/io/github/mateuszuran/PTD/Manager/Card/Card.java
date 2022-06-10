@@ -4,6 +4,8 @@ import io.github.mateuszuran.PTD.Manager.Counters.Counters;
 import io.github.mateuszuran.PTD.Manager.Fuel.Fuel;
 import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import io.github.mateuszuran.PTD.Manager.User.User;
+import io.github.mateuszuran.PTD.Manager.Vehicle.Vehicle;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "card")
@@ -38,6 +41,9 @@ public class Card {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "card")
     private Counters counters;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "card")
+    private Vehicle vehicle;
 
     public Card(final Integer id, final String number, final String authorFullName, final String createDate) {
         this.id = id;
