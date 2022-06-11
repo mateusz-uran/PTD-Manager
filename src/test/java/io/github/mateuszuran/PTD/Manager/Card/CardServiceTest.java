@@ -27,6 +27,6 @@ class CardServiceTest {
         cardService.toggleCard(2);
         var result = cardRepository.findByNumber("toggleCard");
         assertFalse(result.isDone());
-//        assertFalse(cardService.checkIfCardIsDone(1));
+        assertFalse(cardService.checkIfCardIsDone(1));
     }
 }
