@@ -136,6 +136,6 @@ public class CardController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleAllExceptions(Exception e) {
-        return "error"; /* use the correct view name */
+        return "error";
     }
 }

@@ -20,9 +20,10 @@ class DataLoaderTest {
     RoleRepository roleRepository;
 
     @Test
-    void shouldReturnDefaultNumberOfUsers() {
+    void shouldReturnAdminAsDefaultUser() {
         List<User> listUsers = userRepository.findAll();
-        assertEquals(1, listUsers.size());
+        User user = userRepository.findByEmail("admin@o2.pl");
+        assertEquals(user.getEmail(), "admin@o2.pl");
     }
 
     @Test

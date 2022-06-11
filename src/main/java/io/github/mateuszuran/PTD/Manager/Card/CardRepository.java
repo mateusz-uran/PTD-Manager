@@ -10,4 +10,10 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     List<Card> findAllCardsByUserId(Integer id);
 
     Card findByUserId(Integer id);
+
+    Card findByNumber(String number);
+
+    Card findByUserEmail(String number);
+
+    Card findCardIdByNumber(String number);
 }

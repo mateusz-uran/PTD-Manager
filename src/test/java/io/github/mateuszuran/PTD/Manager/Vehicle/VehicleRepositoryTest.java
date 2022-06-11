@@ -35,7 +35,7 @@ class VehicleRepositoryTest {
                 5, 100, "vehicleImageName",
                 "vehicleImageDescription", "vehicleImagePath", user, card);
         vehicleRepository.save(vehicle);
-        var getVehicle = vehicleRepository.findByUserId(1);
+        var getVehicle = vehicleRepository.findByUserId(1).orElse(null);
         assertEquals(vehicle, getVehicle);
     }
 }
