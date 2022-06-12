@@ -1,6 +1,5 @@
 package io.github.mateuszuran.PTD.Manager;
 
-import io.github.mateuszuran.PTD.Manager.Card.Card;
 import io.github.mateuszuran.PTD.Manager.Role.Role;
 import io.github.mateuszuran.PTD.Manager.Role.RoleRepository;
 import io.github.mateuszuran.PTD.Manager.User.User;

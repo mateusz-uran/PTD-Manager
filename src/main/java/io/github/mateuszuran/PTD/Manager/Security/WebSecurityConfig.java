@@ -1,14 +1,12 @@
 package io.github.mateuszuran.PTD.Manager.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,13 +16,12 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import javax.sql.DataSource;
 
 @Configuration
-public class WebSecurityConfig {
+@EnableWebSecurity
+public class WebSecurityConfig{
 
-    private final DataSource dataSource;
 
-    public WebSecurityConfig(final DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    @Autowired
+    private DataSource dataSource;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -60,7 +57,8 @@ public class WebSecurityConfig {
                 .defaultSuccessUrl("/home", true)
                 .usernameParameter("email").permitAll()
                 .and().logout().permitAll()
-                .and().rememberMe().tokenRepository(persistentTokenRepository());
+                .and().rememberMe().tokenValiditySeconds(3 * 24 * 60 * 60)
+                .tokenRepository(persistentTokenRepository());
         return http.build();
     }
 

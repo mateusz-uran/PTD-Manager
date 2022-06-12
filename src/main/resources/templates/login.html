@@ -15,14 +15,6 @@
             <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
             <p>Professional Truck Driver System Managment</p>
         </div>
-        <div class="auth">
-            <p th:inline="text">Zalogowany jako
-                <span>anonymo</span>
-            </p>
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" value="Wyloguj" class="btn btn-secondary" role="button"/>
-            </form>
-        </div>
     </div>
     <div class="section">
         <form th:action="@{/login}" method="post">

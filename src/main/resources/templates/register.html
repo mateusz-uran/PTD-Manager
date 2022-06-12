@@ -15,14 +15,6 @@
             <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
             <p>Professional Truck Driver System Managment</p>
         </div>
-        <div class="auth">
-            <p th:inline="text">Zalogowany jako
-                <span>anonymo</span>
-            </p>
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" value="Wyloguj" class="btn btn-secondary" role="button"/>
-            </form>
-        </div>
     </div>
     <div class="section">
         <form th:action="@{/process_register}" method="post" th:object="${user}">
@@ -37,27 +29,29 @@
                 </div>
                 <div class="row">
                     <div class="col-md-auto form-fields">
-                        <label class="form-label" required autofocus>Email</label>
-                        <input type="email" name="email" class="form-control" th:field="*{email}" placeholder="user@gmail.com" aria-label="default input example" required>
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="user@gmail.com" aria-label="default input example" required>
                     </div>
                     <div class="col-md-auto form-fields">
-                        <label class="form-label" required autofocus>Hasło</label>
-                        <input type="email" name="email" class="form-control" th:field="*{password}" placeholder="********" aria-label="default input example" required>
+                        <label class="form-label">Hasło</label>
+                        <input type="password" class="form-control" th:field="*{password}" placeholder="********" aria-label="default input example" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-auto form-fields">
                         <label class="form-label">Imię</label>
-                        <input type="password" name="password" class="form-control" th:field="*{firstName}" placeholder="Jan" aria-label="default input example" required>
+                        <input type="text" class="form-control" th:field="*{firstName}" placeholder="Jan" aria-label="default input example" required>
                     </div>
                     <div class="col-md-auto form-fields">
                         <label class="form-label">Nazwisko</label>
-                        <input type="password" name="password" class="form-control" th:field="*{lastName}" placeholder="Kowalski" aria-label="default input example" required>
+                        <input type="text" class="form-control" th:field="*{lastName}" placeholder="Kowalski" aria-label="default input example" required>
                     </div>
                 </div>
                 <div class="col-md-auto form-fields">
                     <label class="form-label">Kod aktywacyjny</label>
-                    <input type="password" name="password" class="form-control" th:field="*{number}" placeholder="ABC123xyz" aria-label="default input example" required>
+                    <div th:object="${code}">
+                        <input type="text" class="form-control" th:field="*{number}" placeholder="ABC123xyz" aria-label="default input example" required>
+                    </div>
                 </div>
                 <div class="col-md-auto form-fields">
                     <a th:href="@{/login}" class="link-info" >Masz już konto? Zaloguj się</a>
