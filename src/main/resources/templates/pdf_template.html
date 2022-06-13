@@ -416,9 +416,14 @@
             <td th:text="${trip.tripEndLocation}"></td>
             <td th:text="${trip.tripEndCountry}"></td>
             <td th:text="${trip.tripEndVehicleCounter}" style="border-right: 1px solid black"></td>
+            <td th:text="${trip.carMileage}">&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+        </tr>
+        <tr style="border: 0;">
+            <td colspan="10" style="border: 0;"></td>
+            <td style="border: 0; font-weight: bold;" th:text="'Razem ' + ${card.counters.sumCounterMileage} + ' km'"></td>
+            <td colspan="4" style="border: 0;"></td>
         </tr>
     </table>
 </body>

@@ -69,7 +69,7 @@ public class CardService {
     }
 
     public void toggleCard(Integer id) {
-        Card card = cardRepository.findByUserId(id);
+        Card card = cardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Card of given id not exists"));
         card.setDone(!card.isDone());
         cardRepository.save(card);
     }

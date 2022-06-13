@@ -24,7 +24,7 @@
             </div>
             <div class="row form-row">
                 <div class="col-md-auto">
-                    <p th:if="${param.logout}" class="alert alert-success" role="alert">Zarejestrowany pomyślnie</p>
+                    <p th:if="${param.success}" class="alert alert-success" role="alert">Zarejestrowany pomyślnie</p>
                     <p th:if="${param.error}" class="alert alert-danger" role="alert">Użytkownik o takim emailu już istnieje lub kod o takim numerze jest nieaktywny</p>
                 </div>
                 <div class="row">

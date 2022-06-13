@@ -27,8 +27,8 @@
     </div>
     <div class="section">
         <div class="buttons">
-            <a th:href="@{/home/generate}" class="btn btn-primary btn-sm" role="button">Generuj kod aktywacyjny</a>
-            <a th:href="@{/home/vehicle}" class="btn btn-primary btn-sm" role="button">Dodaj nowy pojazd</a>
+            <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/generate}" class="btn btn-primary btn-sm" role="button">Generuj kod aktywacyjny</a>
+            <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/vehicle}" class="btn btn-primary btn-sm" role="button">Dodaj nowy pojazd</a>
             <a th:href="@{/home/add-card}" class="btn btn-primary btn-sm" role="button">Dodaj nową karte</a>
         </div>
         <div class="row form-row">
