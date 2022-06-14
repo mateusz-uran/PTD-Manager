@@ -99,4 +99,10 @@ public class CardService {
 
         return card;
     }
+
+    public boolean checkCardUser(Integer id, Integer userId) {
+        Card card = cardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Card of given id not exists"));
+        Integer cardUserId = card.getUser().getId();
+        return cardUserId.equals(userId);
+    }
 }

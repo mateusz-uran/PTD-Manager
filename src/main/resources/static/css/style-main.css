@@ -61,8 +61,19 @@
   flex-direction: column;
 }
 
-.exception {
-  margin-top: 3em;
+.modal-content {
+  background-color: #393e46;
+}
+
+.modal-header {
+  background-color: #393e46;
+  justify-content: flex-end;
+}
+
+.close {
+  background-color: #393e46;
+  border: 0;
+  color: #fff;
 }
 
 .header {

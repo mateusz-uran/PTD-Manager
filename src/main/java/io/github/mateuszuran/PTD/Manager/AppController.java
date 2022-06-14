@@ -52,6 +52,9 @@ public class AppController {
         model.addAttribute("listCodes", listCodes);
         List<Vehicle> listVehicles = vehicleRepository.findAll();
         model.addAttribute("listVehicles", listVehicles);
+
+        model.addAttribute("card", new Card());
+
         return "index";
     }
 

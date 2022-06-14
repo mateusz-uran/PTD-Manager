@@ -4,10 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title>PTD-Manager</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
-    <link th:href="@{/css/style-main.css}" rel="stylesheet" />
+    <link th:href="@{/css/style-main.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="style-main.css">
 </head>
 <body>
 <div class="container">
@@ -27,9 +37,42 @@
     </div>
     <div class="section">
         <div class="buttons">
-            <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/generate}" class="btn btn-primary btn-sm" role="button">Generuj kod aktywacyjny</a>
-            <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/vehicle}" class="btn btn-primary btn-sm" role="button">Dodaj nowy pojazd</a>
+            <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/generate}" class="btn btn-primary btn-sm"
+               role="button">Generuj kod aktywacyjny</a>
+            <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/vehicle}" class="btn btn-primary btn-sm"
+               role="button">Dodaj nowy pojazd</a>
             <a th:href="@{/home/add-card}" class="btn btn-primary btn-sm" role="button">Dodaj nową karte</a>
+            <button th:href="@{/home/add-card}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                    data-target="#addCard">Karta modal
+            </button>
+            <div class="errors">
+                <p th:if="${param.false}" role="alert">Karta o takim numerze już istnieje</p>
+            </div>
+        </div>
+        <div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form th:action="@{/home/save-card}" method="post" th:object="${card}">
+                        <input type="hidden" th:field="*{id}" th:value="${card.id}"/>
+                        <div class="modal-header">
+                            <button type="submit" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="number" class="col-form-label">Numer:</label>
+                                <input type="text" th:field="*{number}" class="form-control" id="number">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Zamknij</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Dodaj</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="row form-row">
             <div class="row">
@@ -70,8 +113,10 @@
                                 </th:block>
                             </td>
                             <td>
-                                <a th:href="@{'/home/card/' + ${card.id}}" type="button" class="btn btn-sm btn-outline-primary">Wybierz</a>
-                                <a th:href="@{'/home/card/pdf/' + ${card.id}}" type="button" target="_blank" class="btn btn-sm btn-outline-primary">PDF</a>
+                                <a th:href="@{'/home/card/' + ${card.id}}" type="button"
+                                   class="btn btn-sm btn-outline-primary">Wybierz</a>
+                                <a th:href="@{'/home/card/pdf/' + ${card.id}}" type="button" target="_blank"
+                                   class="btn btn-sm btn-outline-primary">PDF</a>
                                 <a th:href="@{'/home/card/delete/' + ${card.id}}"
                                    onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
                                    type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
@@ -112,7 +157,8 @@
                             <td th:text="${user.roles}">[User]</td>
                             <td>&nbsp;</td>
                             <td>
-                                <a th:href="@{'/home/edit/' + ${user.id}}" type="button" class="btn btn-sm btn-outline-primary">Wybierz</a>
+                                <a th:href="@{'/home/edit/' + ${user.id}}" type="button"
+                                   class="btn btn-sm btn-outline-primary">Wybierz</a>
                                 <a th:href="@{'/home/user/delete/' + ${user.id}}"
                                    onclick="return confirm('Usunięcie użytkownika jest nie odwracalne, jesteś pewien?')"
                                    type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
@@ -167,7 +213,8 @@
                             <td>&nbsp;</td>
                             <td>
                                 <a th:href="@{'/home/code/delete/' + ${code.id}}"
-                                   onclick="return confirm('Usunięcie kodu jest nie odwracalne, jesteś pewien?')" type="button"
+                                   onclick="return confirm('Usunięcie kodu jest nie odwracalne, jesteś pewien?')"
+                                   type="button"
                                    class="btn btn-sm btn-outline-danger">Usuń</a>
                             </td>
                         </tr>
@@ -202,9 +249,11 @@
                     <th:block th:each="vehicle : ${listVehicles}">
                         <tr>
                             <td th:text="${vehicle.truckMainModel}">Scania</td>
-                            <td th:text="${vehicle.truckLicensePlate} + ' ' + ${vehicle.trailerLicensePlate}">LOP123, LOP321
+                            <td th:text="${vehicle.truckLicensePlate} + ' ' + ${vehicle.trailerLicensePlate}">LOP123,
+                                LOP321
                             </td>
-                            <td th:text="${vehicle.vehicleFuelCapacity} + 'l - ' + ${vehicle.adBlueCapacity} + 'l'">500l -
+                            <td th:text="${vehicle.vehicleFuelCapacity} + 'l - ' + ${vehicle.adBlueCapacity} + 'l'">500l
+                                -
                                 300l
                             </td>
                             <td><img class="img-fluid" src="truck_image.jpg" th:src="@{${vehicle.vehicleImagePath}}"
