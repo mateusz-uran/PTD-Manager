@@ -39,9 +39,8 @@
                     <label class="form-label">Email</label>
                     <input type="text" name="email" class="form-control" th:field="*{email}" placeholder="user@gmail.com" aria-label="default input example" required>
                 </div>
-                <div class="col-md-auto form-fields" style="display: none;">
-                    <label class="form-label">Hasło</label>
-                    <input type="password" name="password" class="form-control" th:field="*{password}" placeholder="******" aria-label="default input example">
+                <div class="col-md-auto form-fields">
+                    <input type="hidden" name="password" class="form-control" th:field="*{password}" placeholder="******" aria-label="default input example">
                 </div>
                 <div class="row">
                     <div class="col-md-auto form-fields">

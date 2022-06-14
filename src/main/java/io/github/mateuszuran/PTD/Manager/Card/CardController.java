@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.HttpServerErrorException;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -121,7 +122,7 @@ public class CardController {
             card = cardService.getAllDataFromCard(id, userDetails.getUserId());
         }
         if (!card.isDone()) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Karta nie jest zakończona");
         } else {
             WebContext context = new WebContext(request, response, servletContext);
             context.setVariable("card", card);
@@ -137,10 +138,4 @@ public class CardController {
                     .body(bytes);
         }
     }
-
-    /*@ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public String handleAllExceptions(Exception e) {
-        return "error";
-    }*/
 }
