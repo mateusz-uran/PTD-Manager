@@ -17,7 +17,6 @@
             crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
     <link th:href="@{/css/style-main.css}" rel="stylesheet"/>
-    <link rel="stylesheet" href="style-main.css">
 </head>
 <body>
 <div class="container">
@@ -39,11 +38,11 @@
         <div class="buttons">
             <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/generate}" class="btn btn-primary btn-sm"
                role="button">Generuj kod aktywacyjny</a>
-            <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/vehicle}" class="btn btn-primary btn-sm"
-               role="button">Dodaj nowy pojazd</a>
-            <a th:href="@{/home/add-card}" class="btn btn-primary btn-sm" role="button">Dodaj nową karte</a>
             <button th:href="@{/home/add-card}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                     data-target="#addCard">Karta modal
+            </button>
+            <button sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/vehicle}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                    data-target="#addVehicle">Auto modal
             </button>
             <div class="errors">
                 <p th:if="${param.false}" role="alert">Karta o takim numerze już istnieje</p>
@@ -63,7 +62,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="number" class="col-form-label">Numer:</label>
-                                <input type="text" th:field="*{number}" class="form-control" id="number">
+                                <input type="text" th:field="*{number}" class="form-control" id="number" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -74,204 +73,285 @@
                 </div>
             </div>
         </div>
-        <div class="row form-row">
-            <div class="row">
-                <table class="table table-bordered table-hover table-index">
-                    <div class="table-header">
-                        <h3>Dane karty</h3>
+        <div class="modal fade" id="addVehicle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <form th:action="@{/home/add-vehicle}" th:object="${vehicle}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id}" th:value="${vehicle.id}"/>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <thead>
-                    <tr>
-                        <th scope="col">Numer karty</th>
-                        <th scope="col">Autor karty</th>
-                        <th scope="col">Data utworzenia</th>
-                        <th scope="col">Etap</th>
-                        <th scope="col">Zarządzaj</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <th:block th:if="${#lists.isEmpty(listCards)}">
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                    </th:block>
-                    <th:block th:each="card : ${listCards}">
-                        <tr>
-                            <td th:text="${card.number}">Karta nr 1</td>
-                            <td th:text="${card.authorFullName}">Jan Kowalski</td>
-                            <td th:text="${card.createDate}">15:15</td>
-                            <td>
-                                <th:block th:if="${card.done}">
-                                    <p>Zakończona</p>
-                                </th:block>
-                                <th:block th:unless="${card.done}">
-                                    <p>Nie zakończona</p>
-                                </th:block>
-                            </td>
-                            <td>
-                                <a th:href="@{'/home/card/' + ${card.id}}" type="button"
-                                   class="btn btn-sm btn-outline-primary">Wybierz</a>
-                                <a th:href="@{'/home/card/pdf/' + ${card.id}}" type="button" target="_blank"
-                                   class="btn btn-sm btn-outline-primary">PDF</a>
-                                <a th:href="@{'/home/card/delete/' + ${card.id}}"
-                                   onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
-                                   type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
-                            </td>
-                        </tr>
-                    </th:block>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row">
-                <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-hover table-index">
-                    <div class="table-header">
-                        <h3>Dane każdego użytkownika</h3>
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="img-vehicle" class="col-form-label">Zdjęcie</label>
+                                    <input type="file" class="form-control" name="file" id="img-vehicle" accept="image/png, image/jpeg" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="desc" class="col-form-label">Opis pod zdjęciem</label>
+                                    <input type="text" th:field="*{vehicleImageDescription}" class="form-control" id="desc" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="model" class="col-form-label">Model auta</label>
+                                    <input type="text" th:field="*{truckMainModel}" class="form-control" id="model" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="truck-plate" class="col-form-label">Rejestracja pojazdu</label>
+                                    <input type="text" th:field="*{truckLicensePlate}" class="form-control" id="truck-plate" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="truck-type" class="col-form-label">Typ pojazdu</label>
+                                    <input type="text" th:field="*{truckType}" class="form-control" id="truck-type" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="left-capacity" class="col-form-label">Lewy zbiornik</label>
+                                    <input type="text" th:field="*{leftTankFuelCapacity}" class="form-control" id="left-capacity" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="right-capacity" class="col-form-label">Prawy zbiornik</label>
+                                    <input type="text" th:field="*{rightTankFuelCapacity}" class="form-control" id="right-capacity" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="trailer-plate" class="col-form-label">Rejestracja naczepy</label>
+                                    <input type="text" th:field="*{trailerLicensePlate}" class="form-control" id="trailer-plate" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="trailer-type" class="col-form-label">Typ naczepy</label>
+                                    <input type="text" th:field="*{trailerType}" class="form-control" id="trailer-type" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="trailer-capacity" class="col-form-label">Zbiornik</label>
+                                    <input type="text" th:field="*{trailerCapacity}" class="form-control" id="trailer-capacity" required>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="adblue-capacity" class="col-form-label">Pojemność adBlue</label>
+                                    <input type="text" th:field="*{adBlueCapacity}" class="form-control" id="adblue-capacity" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3">
+                                    <label for="truck-driver" class="col-form-label">Kierowca</label>
+                                    <select class="form-control" th:field="*{user}" required>
+                                        <th:block th:each="user : ${listUsers}">
+                                            <option th:text="${user.fullName}" th:value="${user.id}" id="truck-driver"></option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                            </div>
                     </div>
-                    <thead>
-                    <tr>
-                        <th scope="col">Imię i Nazwisko</th>
-                        <th scope="col">E-mail</th>
-                        <th scope="col">Uprawnienia</th>
-                        <th scope="col">&nbsp;</th>
-                        <th scope="col">Zarządzaj</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <th:block th:if="${#lists.isEmpty(listUsers)}">
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                    </th:block>
-                    <th:block th:each="user : ${listUsers}">
-                        <tr>
-                            <td th:text="${user.firstName} + ' ' + ${user.lastName}">Jan Kowalski</td>
-                            <td th:text="${user.email}">user@gmail.com</td>
-                            <td th:text="${user.roles}">[User]</td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <a th:href="@{'/home/edit/' + ${user.id}}" type="button"
-                                   class="btn btn-sm btn-outline-primary">Wybierz</a>
-                                <a th:href="@{'/home/user/delete/' + ${user.id}}"
-                                   onclick="return confirm('Usunięcie użytkownika jest nie odwracalne, jesteś pewien?')"
-                                   type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
-                            </td>
-                        </tr>
-                    </th:block>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row">
-                <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-hover table-index">
-                    <div class="table-header">
-                        <h3>Dane kodu aktywacyjnego</h3>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Zamknij</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Dodaj</button>
                     </div>
-                    <thead>
-                    <tr>
-                        <th scope="col">Numer</th>
-                        <th scope="col">Aktywny</th>
-                        <th scope="col">Użyty przez użytkownika</th>
-                        <th scope="col">&nbsp;</th>
-                        <th scope="col">Zarządzaj</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <th:block th:if="${#lists.isEmpty(listCodes)}">
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                    </th:block>
-                    <th:block th:each="code : ${listCodes}">
-                        <tr>
-                            <td th:text="${code.number}">AAAAAA</td>
-                            <td>
-                                <form th:action="@{'/home/toggle/' + ${code.id}}" method="post" th:object="${code}">
-                                    <th:block th:if="${code.active}">
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                            dezaktywuj
-                                        </button>
-                                    </th:block>
-                                    <th:block th:unless="${code.active}">
-                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                            aktywuj
-                                        </button>
-                                    </th:block>
-                                </form>
-                            </td>
-                            <td th:text="${code.usedBy}">Jan Kowalski</td>
-                            <td>&nbsp;</td>
-                            <td>
-                                <a th:href="@{'/home/code/delete/' + ${code.id}}"
-                                   onclick="return confirm('Usunięcie kodu jest nie odwracalne, jesteś pewien?')"
-                                   type="button"
-                                   class="btn btn-sm btn-outline-danger">Usuń</a>
-                            </td>
-                        </tr>
-                    </th:block>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row">
-                <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-index">
-                    <div class="table-header">
-                        <h3>Dane pojazdu</h3>
-                    </div>
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Model ciężarówki</th>
-                        <th scope="col">Rejestracja ciężarówki i naczepy</th>
-                        <th scope="col">Pojemnosc zbiorników i adBlue</th>
-                        <th scope="col">Zdjecie zestawu</th>
-                        <th scope="col">Zarządzaj</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <th:block th:if="${#lists.isEmpty(listVehicles)}">
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                    </th:block>
-                    <th:block th:each="vehicle : ${listVehicles}">
-                        <tr>
-                            <td th:text="${vehicle.truckMainModel}">Scania</td>
-                            <td th:text="${vehicle.truckLicensePlate} + ' ' + ${vehicle.trailerLicensePlate}">LOP123,
-                                LOP321
-                            </td>
-                            <td th:text="${vehicle.vehicleFuelCapacity} + 'l - ' + ${vehicle.adBlueCapacity} + 'l'">500l
-                                -
-                                300l
-                            </td>
-                            <td><img class="img-fluid" src="truck_image.jpg" th:src="@{${vehicle.vehicleImagePath}}"
-                                     style="max-height: 70px;"/></td>
-                            <td>
-                                <a th:href="@{'/home/vehicle/edit/' + ${vehicle.id}}" type="button"
-                                   class="btn btn-sm btn-outline-primary">Wybierz</a>
-                                <a th:href="@{'/home/vehicle/delete/' + ${vehicle.id}}"
-                                   onclick="return confirm('Usunięcie pojazdu jest nie odwracalne, jesteś pewien?')"
-                                   type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
-                            </td>
-                        </tr>
-                    </th:block>
-                    </tbody>
-                </table>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+    <div class="row form-row">
+        <div class="row">
+            <table class="table table-bordered table-hover table-index">
+                <div class="table-header">
+                    <h3>Dane karty</h3>
+                </div>
+                <thead>
+                <tr>
+                    <th scope="col">Numer karty</th>
+                    <th scope="col">Autor karty</th>
+                    <th scope="col">Data utworzenia</th>
+                    <th scope="col">Etap</th>
+                    <th scope="col">Zarządzaj</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${#lists.isEmpty(listCards)}">
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </th:block>
+                <th:block th:each="card : ${listCards}">
+                    <tr>
+                        <td th:text="${card.number}">Karta nr 1</td>
+                        <td th:text="${card.authorFullName}">Jan Kowalski</td>
+                        <td th:text="${card.createDate}">15:15</td>
+                        <td>
+                            <th:block th:if="${card.done}">
+                                <p>Zakończona</p>
+                            </th:block>
+                            <th:block th:unless="${card.done}">
+                                <p>Nie zakończona</p>
+                            </th:block>
+                        </td>
+                        <td>
+                            <a th:href="@{'/home/card/' + ${card.id}}" type="button"
+                               class="btn btn-sm btn-outline-primary">Wybierz</a>
+                            <a th:href="@{'/home/card/pdf/' + ${card.id}}" type="button" target="_blank"
+                               class="btn btn-sm btn-outline-primary">PDF</a>
+                            <a th:href="@{'/home/card/delete/' + ${card.id}}"
+                               onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
+                               type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-hover table-index">
+                <div class="table-header">
+                    <h3>Dane każdego użytkownika</h3>
+                </div>
+                <thead>
+                <tr>
+                    <th scope="col">Imię i Nazwisko</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Uprawnienia</th>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">Zarządzaj</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${#lists.isEmpty(listUsers)}">
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </th:block>
+                <th:block th:each="user : ${listUsers}">
+                    <tr>
+                        <td th:text="${user.firstName} + ' ' + ${user.lastName}">Jan Kowalski</td>
+                        <td th:text="${user.email}">user@gmail.com</td>
+                        <td th:text="${user.roles}">[User]</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <a th:href="@{'/home/edit/' + ${user.id}}" type="button"
+                               class="btn btn-sm btn-outline-primary">Wybierz</a>
+                            <a th:href="@{'/home/user/delete/' + ${user.id}}"
+                               onclick="return confirm('Usunięcie użytkownika jest nie odwracalne, jesteś pewien?')"
+                               type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-hover table-index">
+                <div class="table-header">
+                    <h3>Dane kodu aktywacyjnego</h3>
+                </div>
+                <thead>
+                <tr>
+                    <th scope="col">Numer</th>
+                    <th scope="col">Aktywny</th>
+                    <th scope="col">Użyty przez użytkownika</th>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">Zarządzaj</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${#lists.isEmpty(listCodes)}">
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </th:block>
+                <th:block th:each="code : ${listCodes}">
+                    <tr>
+                        <td th:text="${code.number}">AAAAAA</td>
+                        <td>
+                            <form th:action="@{'/home/toggle/' + ${code.id}}" method="post" th:object="${code}">
+                                <th:block th:if="${code.active}">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        dezaktywuj
+                                    </button>
+                                </th:block>
+                                <th:block th:unless="${code.active}">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        aktywuj
+                                    </button>
+                                </th:block>
+                            </form>
+                        </td>
+                        <td th:text="${code.usedBy}">Jan Kowalski</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <a th:href="@{'/home/code/delete/' + ${code.id}}"
+                               onclick="return confirm('Usunięcie kodu jest nie odwracalne, jesteś pewien?')"
+                               type="button"
+                               class="btn btn-sm btn-outline-danger">Usuń</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-index">
+                <div class="table-header">
+                    <h3>Dane pojazdu</h3>
+                </div>
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Model ciężarówki</th>
+                    <th scope="col">Rejestracja ciężarówki i naczepy</th>
+                    <th scope="col">Pojemnosc zbiorników i adBlue</th>
+                    <th scope="col">Zdjecie zestawu</th>
+                    <th scope="col">Zarządzaj</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${#lists.isEmpty(listVehicles)}">
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </th:block>
+                <th:block th:each="vehicle : ${listVehicles}">
+                    <tr>
+                        <td th:text="${vehicle.truckMainModel}">Scania</td>
+                        <td th:text="${vehicle.truckLicensePlate} + ' ' + ${vehicle.trailerLicensePlate}">LOP123,
+                            LOP321
+                        </td>
+                        <td th:text="${vehicle.vehicleFuelCapacity} + 'l - ' + ${vehicle.adBlueCapacity} + 'l'">500l
+                            -
+                            300l
+                        </td>
+                        <td><img class="img-fluid" src="truck_image.jpg" th:src="@{${vehicle.vehicleImagePath}}"
+                                 style="max-height: 70px;"/></td>
+                        <td>
+                            <a th:href="@{'/home/vehicle/edit/' + ${vehicle.id}}" type="button"
+                               class="btn btn-sm btn-outline-primary">Wybierz</a>
+                            <a th:href="@{'/home/vehicle/delete/' + ${vehicle.id}}"
+                               onclick="return confirm('Usunięcie pojazdu jest nie odwracalne, jesteś pewien?')"
+                               type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </div>
 </div>
 </body>

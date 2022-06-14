@@ -54,6 +54,7 @@ public class AppController {
         model.addAttribute("listVehicles", listVehicles);
 
         model.addAttribute("card", new Card());
+        model.addAttribute("vehicle", new Vehicle());
 
         return "index";
     }
