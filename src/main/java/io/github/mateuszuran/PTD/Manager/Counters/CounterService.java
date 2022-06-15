@@ -54,8 +54,8 @@ public class CounterService {
         getCountersInfo(id);
     }
 
-    public void saveEmptyCounters(Card card) {
-        countersRepository.save(new Counters(0, 0, 0, 0, card));
+    public Counters saveEmptyCounters(Card card) {
+        return countersRepository.save(new Counters(0, 0, 0, 0, card));
     }
 
     public void toggleToFalse(Integer id) {

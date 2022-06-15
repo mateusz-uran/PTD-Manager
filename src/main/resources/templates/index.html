@@ -1,48 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head>
-    <meta charset="UTF-8">
-    <title>PTD-Manager</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-            crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
-    <link th:href="@{/css/style-main.css}" rel="stylesheet"/>
+<head th:replace="header :: html_head">
 </head>
 <body>
 <div class="container">
-    <div class="navbar">
-        <div class="logo">
-            <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
-            <p>Professional Truck Driver System Managment</p>
-        </div>
-        <div class="auth">
-            <p th:inline="text">Zalogowany jako
-                <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
-            </p>
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" value="Wyloguj" class="btn btn-secondary" role="button"/>
-            </form>
-        </div>
-    </div>
+    <div th:replace="header :: navbar-logout"></div>
     <div class="section">
         <div class="buttons">
             <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/generate}" class="btn btn-primary btn-sm"
                role="button">Generuj kod aktywacyjny</a>
             <button th:href="@{/home/add-card}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addCard">Karta modal
+                    data-target="#addCard">Dodaj kartę
             </button>
-            <button sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/vehicle}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addVehicle">Auto modal
+            <button sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/vehicle}" type="button"
+                    class="btn btn-primary btn-sm" data-toggle="modal"
+                    data-target="#addVehicle">Dodaj pojazd
             </button>
             <div class="errors">
                 <p th:if="${param.false}" role="alert">Karta o takim numerze już istnieje</p>
@@ -73,65 +46,78 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="addVehicle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addVehicle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <form th:action="@{/home/add-vehicle}" th:object="${vehicle}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/home/add-vehicle}" th:object="${vehicle}" method="post"
+                          enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}" th:value="${vehicle.id}"/>
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="img-vehicle" class="col-form-label">Zdjęcie</label>
-                                    <input type="file" class="form-control" name="file" id="img-vehicle" accept="image/png, image/jpeg" required>
+                                    <input type="file" class="form-control" name="file" id="img-vehicle"
+                                           accept="image/png, image/jpeg" required>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="desc" class="col-form-label">Opis pod zdjęciem</label>
-                                    <input type="text" th:field="*{vehicleImageDescription}" class="form-control" id="desc" required>
+                                    <input type="text" th:field="*{vehicleImageDescription}" class="form-control"
+                                           id="desc" required>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="model" class="col-form-label">Model auta</label>
-                                    <input type="text" th:field="*{truckMainModel}" class="form-control" id="model" required>
+                                    <input type="text" th:field="*{truckMainModel}" class="form-control" id="model"
+                                           required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="truck-plate" class="col-form-label">Rejestracja pojazdu</label>
-                                    <input type="text" th:field="*{truckLicensePlate}" class="form-control" id="truck-plate" required>
+                                    <input type="text" th:field="*{truckLicensePlate}" class="form-control"
+                                           id="truck-plate" required>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="truck-type" class="col-form-label">Typ pojazdu</label>
-                                    <input type="text" th:field="*{truckType}" class="form-control" id="truck-type" required>
+                                    <input type="text" th:field="*{truckType}" class="form-control" id="truck-type"
+                                           required>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="left-capacity" class="col-form-label">Lewy zbiornik</label>
-                                    <input type="text" th:field="*{leftTankFuelCapacity}" class="form-control" id="left-capacity" required>
+                                    <input type="text" th:field="*{leftTankFuelCapacity}" class="form-control"
+                                           id="left-capacity" required>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="right-capacity" class="col-form-label">Prawy zbiornik</label>
-                                    <input type="text" th:field="*{rightTankFuelCapacity}" class="form-control" id="right-capacity" required>
+                                    <input type="text" th:field="*{rightTankFuelCapacity}" class="form-control"
+                                           id="right-capacity" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-3">
                                     <label for="trailer-plate" class="col-form-label">Rejestracja naczepy</label>
-                                    <input type="text" th:field="*{trailerLicensePlate}" class="form-control" id="trailer-plate" required>
+                                    <input type="text" th:field="*{trailerLicensePlate}" class="form-control"
+                                           id="trailer-plate" required>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="trailer-type" class="col-form-label">Typ naczepy</label>
-                                    <input type="text" th:field="*{trailerType}" class="form-control" id="trailer-type" required>
+                                    <input type="text" th:field="*{trailerType}" class="form-control" id="trailer-type"
+                                           required>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="trailer-capacity" class="col-form-label">Zbiornik</label>
-                                    <input type="text" th:field="*{trailerCapacity}" class="form-control" id="trailer-capacity" required>
+                                    <input type="text" th:field="*{trailerCapacity}" class="form-control"
+                                           id="trailer-capacity" required>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="adblue-capacity" class="col-form-label">Pojemność adBlue</label>
-                                    <input type="text" th:field="*{adBlueCapacity}" class="form-control" id="adblue-capacity" required>
+                                    <input type="text" th:field="*{adBlueCapacity}" class="form-control"
+                                           id="adblue-capacity" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -139,16 +125,17 @@
                                     <label for="truck-driver" class="col-form-label">Kierowca</label>
                                     <select class="form-control" th:field="*{user}" required>
                                         <th:block th:each="user : ${listUsers}">
-                                            <option th:text="${user.fullName}" th:value="${user.id}" id="truck-driver"></option>
+                                            <option th:text="${user.fullName}" th:value="${user.id}"
+                                                    id="truck-driver"></option>
                                         </th:block>
                                     </select>
                                 </div>
                             </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Zamknij</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Dodaj</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Zamknij</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Dodaj</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -352,7 +339,11 @@
         </div>
     </div>
 </div>
-</div>
-</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
 </body>
 </html>

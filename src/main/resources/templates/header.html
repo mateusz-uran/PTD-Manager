@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head th:fragment="html_head">
+    <meta charset="UTF-8">
+    <title>PTD-Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7f0adcc2fe.js" crossorigin="anonymous"></script>
+    <link th:href="@{/css/style-main.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div th:fragment="navbar-logout" class="navbar">
+    <div class="logo">
+        <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
+        <p>Professional Truck Driver System Managment</p>
+    </div>
+    <div class="auth">
+        <p th:inline="text">Zalogowany jako
+            <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+        </p>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Wyloguj" class="btn btn-secondary" role="button"/>
+        </form>
+    </div>
+</div>
+<div th:fragment="navbar-main-page" class="navbar">
+    <div class="logo">
+        <p><i class="fa-solid fa-truck"></i>PTD Manager</p>
+        <p>Professional Truck Driver System Managment</p>
+    </div>
+    <div class="auth">
+        <p th:inline="text">Zalogowany jako
+            <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+        </p>
+        <form th:action="@{/home}" method="get">
+            <input type="submit" value="Strona główna" class="btn btn-secondary" role="button"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

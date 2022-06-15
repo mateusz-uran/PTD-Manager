@@ -11,8 +11,6 @@ import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import io.github.mateuszuran.PTD.Manager.Trip.TripService;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserService;
-import io.github.mateuszuran.PTD.Manager.Vehicle.VehicleService;
-import org.bouncycastle.math.raw.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,12 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.HttpServerErrorException;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -45,28 +41,20 @@ public class CardController {
     private final TripService tripService;
     private final FuelService fuelService;
     private final CounterService counterService;
-    private final VehicleService vehicleService;
     private final ServletContext servletContext;
     private final TemplateEngine templateEngine;
 
     public CardController(final CardService cardService, final UserService userService,
                           final TripService tripService, final FuelService fuelService,
-                          final CounterService counterService, final VehicleService vehicleService,
+                          final CounterService counterService,
                           final ServletContext servletContext, final TemplateEngine templateEngine) {
         this.cardService = cardService;
         this.userService = userService;
         this.tripService = tripService;
         this.fuelService = fuelService;
         this.counterService = counterService;
-        this.vehicleService = vehicleService;
         this.servletContext = servletContext;
         this.templateEngine = templateEngine;
-    }
-
-    @GetMapping("/add-card")
-    public String showCardForm(Model model) {
-        model.addAttribute("card", new Card());
-        return "card_form";
     }
 
     @PostMapping("/save-card")
@@ -81,7 +69,6 @@ public class CardController {
         card.setDone(false);
         cardService.saveCard(card);
         counterService.saveEmptyCounters(card);
-
         return "redirect:/home";
     }
 

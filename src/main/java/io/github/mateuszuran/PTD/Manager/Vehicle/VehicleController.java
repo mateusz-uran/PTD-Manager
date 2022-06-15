@@ -13,16 +13,10 @@ import java.util.List;
 @RequestMapping("/home")
 @Controller
 public class VehicleController {
-    private final UserRepository userRepository;
-    private final AmazonClient amazonClient;
-    private final VehicleRepository vehicleRepository;
     private final VehicleService vehicleService;
     private final UserService userService;
 
-    public VehicleController(final UserRepository userRepository, final AmazonClient amazonClient, final VehicleRepository vehicleRepository, final VehicleService service, final UserService userService) {
-        this.userRepository = userRepository;
-        this.amazonClient = amazonClient;
-        this.vehicleRepository = vehicleRepository;
+    public VehicleController(final VehicleService service, final UserService userService) {
         this.vehicleService = service;
         this.userService = userService;
     }
