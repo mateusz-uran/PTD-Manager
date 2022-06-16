@@ -1,7 +1,6 @@
 package io.github.mateuszuran.PTD.Manager.Vehicle;
 
 import io.github.mateuszuran.PTD.Manager.User.User;
-import io.github.mateuszuran.PTD.Manager.User.UserRepository;
 import io.github.mateuszuran.PTD.Manager.User.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

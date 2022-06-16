@@ -19,7 +19,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig{
 
-
     @Autowired
     private DataSource dataSource;
 

@@ -40,14 +40,6 @@ public class User {
         this.roles.add(role);
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(final Set<Role> roles) {
-        this.roles = roles;
-    }
-
     public String fullName() {
         return getFirstName() + " " + getLastName();
     }

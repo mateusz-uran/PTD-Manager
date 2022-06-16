@@ -22,10 +22,6 @@ public class CounterService {
         this.fuelService = fuelService;
     }
 
-    public List<Counters> findAllCountersById(Integer id) {
-        return countersRepository.findAllByCardId(id);
-    }
-
     public Counters findByCardId(Integer id) {
         return countersRepository.findByCardId(id).orElseThrow(() -> new IllegalArgumentException("Counters of given ID not found"));
     }
@@ -54,8 +50,8 @@ public class CounterService {
         getCountersInfo(id);
     }
 
-    public Counters saveEmptyCounters(Card card) {
-        return countersRepository.save(new Counters(0, 0, 0, 0, card));
+    public void saveEmptyCounters(Card card) {
+        countersRepository.save(new Counters(0, 0, 0, 0, card));
     }
 
     public void toggleToFalse(Integer id) {

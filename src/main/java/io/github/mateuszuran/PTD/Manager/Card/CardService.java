@@ -24,7 +24,8 @@ public class CardService {
     private final CounterService counterService;
     private final TripService tripService;
 
-    public CardService(final CardRepository cardRepository, final VehicleService vehicleService, final FuelService fuelService, final CounterService counterService, final TripService tripService) {
+    public CardService(final CardRepository cardRepository, final VehicleService vehicleService, final FuelService fuelService,
+                       final CounterService counterService, final TripService tripService) {
         this.cardRepository = cardRepository;
         this.vehicleService = vehicleService;
         this.fuelService = fuelService;

@@ -13,10 +13,10 @@ public class VehicleService {
         this.amazonClient = amazonClient;
     }
 
-    public Vehicle saveVehicle(Vehicle vehicle, MultipartFile file) {
+    public void saveVehicle(Vehicle vehicle, MultipartFile file) {
         var result = amazonClient.uploadFile(file, vehicle);
         vehicle.setVehicleImagePath(result);
-        return vehicleRepository.save(vehicle);
+        vehicleRepository.save(vehicle);
     }
 
     public void deleteVehicleById(Integer id) {

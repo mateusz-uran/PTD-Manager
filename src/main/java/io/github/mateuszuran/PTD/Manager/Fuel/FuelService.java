@@ -1,6 +1,5 @@
 package io.github.mateuszuran.PTD.Manager.Fuel;
 
-import io.github.mateuszuran.PTD.Manager.Trip.Trip;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
