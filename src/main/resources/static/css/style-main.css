@@ -76,9 +76,10 @@
   color: #fff;
 }
 
-.header {
+.table-header {
   padding-top: 0.5em;
   padding-bottom: 0.8em;
+  color: #fff;
 }
 
 .row {
@@ -91,14 +92,14 @@
 }
 
 .errors {
-  width: auto;
+  width: 20%;
   padding: 0.3em;
 }
 
 .errors p {
-  border: 1px solid red;
   border-radius: 10px 10px;
   padding: 0.3em;
+  font-size: small;
 }
 
 .form-group {
@@ -130,6 +131,9 @@
 
 .buttons {
   padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 table {

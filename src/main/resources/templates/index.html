@@ -8,18 +8,20 @@
     <div th:replace="header :: navbar-logout"></div>
     <div class="section">
         <div class="buttons">
-            <a sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/generate}" class="btn btn-primary btn-sm"
-               role="button">Generuj kod aktywacyjny</a>
-            <button th:href="@{/home/add-card}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addCard">Dodaj kartę
-            </button>
-            <button sec:authorize="hasAnyAuthority('Admin')" th:href="@{/home/vehicle}" type="button"
-                    class="btn btn-primary btn-sm" data-toggle="modal"
-                    data-target="#addVehicle">Dodaj pojazd
-            </button>
+            <div>
+                <a sec:authorize="hasAnyAuthority('Admin', 'Owner')" th:href="@{/home/generate}" class="btn btn-primary btn-sm"
+                   role="button">Generuj kod aktywacyjny</a>
+                <button th:href="@{/home/add-card}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#addCard">Dodaj kartę
+                </button>
+                <button sec:authorize="hasAnyAuthority('Admin', 'Owner')" th:href="@{/home/vehicle}" type="button"
+                        class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#addVehicle">Dodaj pojazd
+                </button>
+            </div>
             <div class="errors">
-                <p th:if="${param.false}" role="alert">Karta o takim numerze już istnieje</p>
-                <p th:if="${param.forbidden}" role="alert">Karta należy do innego użytkownika</p>
+                <p th:if="${param.false}" role="alert" class="alert alert-danger">Karta o takim numerze już istnieje</p>
+                <p th:if="${param.forbidden}" role="alert" class="alert alert-danger">Karta należy do innego użytkownika</p>
             </div>
         </div>
         <div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -151,7 +153,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Numer karty</th>
-                    <th scope="col">Autor karty</th>
+                    <th sec:authorize="hasAnyAuthority('Admin', 'Owner')" scope="col">Autor karty</th>
                     <th scope="col">Data utworzenia</th>
                     <th scope="col">Etap</th>
                     <th scope="col">Zarządzaj</th>
@@ -161,7 +163,7 @@
                 <th:block th:if="${#lists.isEmpty(listCards)}">
                     <tr>
                         <td>-</td>
-                        <td>-</td>
+                        <td sec:authorize="hasAnyAuthority('Admin', 'Owner')">-</td>
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>
@@ -170,7 +172,7 @@
                 <th:block th:each="card : ${listCards}">
                     <tr>
                         <td th:text="${card.number}">Karta nr 1</td>
-                        <td th:text="${card.authorFullName}">Jan Kowalski</td>
+                        <td sec:authorize="hasAnyAuthority('Admin', 'Owner')" th:text="${card.authorFullName}">Jan Kowalski</td>
                         <td th:text="${card.createDate}">15:15</td>
                         <td>
                             <th:block th:if="${card.done}">
@@ -195,7 +197,7 @@
             </table>
         </div>
         <div class="row">
-            <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-hover table-index">
+            <table sec:authorize="hasAnyAuthority('Admin', 'Owner')" class="table table-bordered table-hover table-index">
                 <div class="table-header">
                     <h3>Dane każdego użytkownika</h3>
                 </div>
@@ -230,7 +232,7 @@
                             <a th:href="@{'/home/user/delete/' + ${user.id}}"
                                onclick="return confirm('Usunięcie użytkownika jest nie odwracalne, jesteś pewien?')"
                                type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
-                            <a th:href="@{'/home/editModal/' + ${user.id}}" class="btn btn-sm btn-outline-primary eBtn">Edit</a>
+                            <a th:href="@{'/home/edit/' + ${user.id}}" class="btn btn-sm btn-outline-primary eBtn">Edit</a>
                         </td>
                     </tr>
                 </th:block>
@@ -238,7 +240,7 @@
             </table>
         </div>
         <div class="row">
-            <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-hover table-index">
+            <table sec:authorize="hasAnyAuthority('Admin', 'Owner')" class="table table-bordered table-hover table-index">
                 <div class="table-header">
                     <h3>Dane kodu aktywacyjnego</h3>
                 </div>
@@ -292,7 +294,7 @@
             </table>
         </div>
         <div class="row">
-            <table sec:authorize="hasAnyAuthority('Admin')" class="table table-bordered table-index">
+            <table sec:authorize="hasAnyAuthority('Admin', 'Owner')" class="table table-bordered table-index">
                 <div class="table-header">
                     <h3>Dane pojazdu</h3>
                 </div>
