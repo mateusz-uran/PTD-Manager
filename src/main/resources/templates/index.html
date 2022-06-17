@@ -19,6 +19,7 @@
             </button>
             <div class="errors">
                 <p th:if="${param.false}" role="alert">Karta o takim numerze już istnieje</p>
+                <p th:if="${param.forbidden}" role="alert">Karta należy do innego użytkownika</p>
             </div>
         </div>
         <div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

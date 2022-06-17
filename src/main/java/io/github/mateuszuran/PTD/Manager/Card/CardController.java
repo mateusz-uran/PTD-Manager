@@ -88,9 +88,11 @@ public class CardController {
     }
 
     @GetMapping("/card/delete/{id}")
-    public String deleteCard(@PathVariable("id") Integer id) {
-        cardService.deleteCard(id);
-        return "redirect:/home";
+    public String deleteCard(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if(cardService.checkCardUser(id, userDetails.getUserId())) {
+            cardService.deleteCard(id);
+            return "redirect:/home";
+        } return "redirect:/home?forbidden";
     }
 
     @GetMapping("/card/toggle/{id}")
