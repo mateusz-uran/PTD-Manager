@@ -50,7 +50,7 @@ public class WebSecurityConfig{
         http
                 .authorizeRequests()
                 .antMatchers("/").hasAnyAuthority("User", "Admin", "Owner")
-                .antMatchers("/login", "/register", "/process_register", "/resources/**", "/static/**", "/css/**").permitAll()
+                .antMatchers("/login", "/register", "/process_register", "/verify", "/resources/**", "/static/**", "/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
                 .defaultSuccessUrl("/", true)

@@ -29,6 +29,10 @@ public class User {
     private String firstName;
     @Column(nullable = false, length = 20)
     private String lastName;
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+    @Column(nullable = false)
+    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",

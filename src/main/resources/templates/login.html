@@ -25,6 +25,8 @@
                 <div class="col-md-auto">
                     <p th:if="${param.logout}" class="alert alert-success" role="alert">Wylogowany pomyślnie</p>
                     <p th:if="${param.error}" class="alert alert-danger" role="alert">Błędna nazwa użytkownika lub hasło</p>
+                    <p th:if="${param.verify_success}" class="alert alert-success" role="alert">Konto zostało aktywowane, możesz się zalogować</p>
+                    <p th:if="${param.verify_fail}" class="alert alert-danger" role="alert">Konto nie zostało aktywowane, kod może być nieaktywny już zostało wcześniej aktywowane</p>
                 </div>
                 <div class="col-md-auto form-fields">
                     <label class="form-label" required autofocus>Login</label>

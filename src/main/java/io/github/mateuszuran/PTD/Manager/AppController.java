@@ -9,6 +9,7 @@ import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserService;
 import io.github.mateuszuran.PTD.Manager.Vehicle.Vehicle;
 import io.github.mateuszuran.PTD.Manager.Vehicle.VehicleRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +19,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -73,12 +77,26 @@ public class AppController {
     }
 
     @PostMapping("/process_register")
-    public String registerUser(User user, Code code) {
+    public String registerUser(User user, Code code, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         if(userService.checkIfCodeExists(code) && userService.checkIfUserExists(user)) {
-            userService.setUserWithDefaultRole(user);
+            userService.register(user, getSiteURL(request));
             userService.toggleCodeWhenUsed(code);
             userService.getFullNameUserFromCode(user.getId(), code.getNumber());
             return "redirect:/register?success";
         } return "redirect:/register?false";
+    }
+
+    @GetMapping("/verify")
+    public String verifyUser(@Param("verCode") String verCode) {
+        if (userService.verify(verCode)) {
+            return "redirect:/login?verify_success";
+        } else {
+            return "redirect:/login?verify_fail";
+        }
+    }
+
+    private String getSiteURL(HttpServletRequest request) {
+        String siteURL = request.getRequestURL().toString();
+        return siteURL.replace(request.getServletPath(), "");
     }
 }

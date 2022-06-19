@@ -23,9 +23,9 @@ class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(final ApplicationArguments args) throws Exception {
-        /*userRepository.save(createAdmin());
+        userRepository.save(createAdmin());
         roleRepository.saveAll(addRoles());
-        addRoleToDefaultUser();*/
+        addRoleToDefaultUser();
     }
 
     User createAdmin() {
@@ -35,6 +35,7 @@ class DataLoader implements ApplicationRunner {
         user.setPassword(encoder.encode("admin"));
         user.setFirstName("Mateusz");
         user.setLastName("Uranowski");
+        user.setEnabled(true);
         return user;
     }
 
