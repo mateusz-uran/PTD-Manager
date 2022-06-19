@@ -22,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -32,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-@RequestMapping("/home")
 @Controller
 public class CardController {
     private static final Logger logger = LoggerFactory.getLogger(CardController.class);
@@ -61,7 +59,7 @@ public class CardController {
     public String saveNewCard(Card card, @AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userService.getUserById(userDetails.getUserId());
         if (cardService.checkIfCardExists(card)) {
-            return "redirect:/home?false";
+            return "redirect:/?false";
         }
         card.setUser(user);
         card.setAuthorFullName(user.fullName());
@@ -69,7 +67,7 @@ public class CardController {
         card.setDone(false);
         cardService.saveCard(card);
         counterService.saveEmptyCounters(card);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @GetMapping("/card/{id}")
@@ -91,18 +89,18 @@ public class CardController {
     public String deleteCard(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails) {
         if(cardService.checkCardUser(id, userDetails.getUserId())) {
             cardService.deleteCard(id);
-            return "redirect:/home";
-        } return "redirect:/home?forbidden";
+            return "redirect:/";
+        } return "redirect:/?forbidden";
     }
 
     @GetMapping("/card/toggle/{id}")
     public String toggleCard(@PathVariable("id") Integer id) {
         if (!counterService.checkIfCardIsUpToDate(id)) {
-            return "redirect:/home/card/" + id;
+            return "redirect:/card/" + id;
         } else {
             cardService.toggleCard(id);
         }
-        return "redirect:/home/card/" + id;
+        return "redirect:/card/" + id;
     }
 
     @GetMapping("/card/pdf/{id}")

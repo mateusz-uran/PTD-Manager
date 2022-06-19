@@ -9,12 +9,12 @@
     <div class="section">
         <div class="buttons">
             <div>
-                <a sec:authorize="hasAnyAuthority('Admin', 'Owner')" th:href="@{/home/generate}" class="btn btn-primary btn-sm"
+                <a sec:authorize="hasAnyAuthority('Admin', 'Owner')" th:href="@{/generate}" class="btn btn-primary btn-sm"
                    role="button">Generuj kod aktywacyjny</a>
-                <button th:href="@{/home/add-card}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                <button th:href="@{/add-card}" type="button" class="btn btn-primary btn-sm" data-toggle="modal"
                         data-target="#addCard">Dodaj kartę
                 </button>
-                <button sec:authorize="hasAnyAuthority('Admin', 'Owner')" th:href="@{/home/vehicle}" type="button"
+                <button sec:authorize="hasAnyAuthority('Admin', 'Owner')" th:href="@{/vehicle}" type="button"
                         class="btn btn-primary btn-sm" data-toggle="modal"
                         data-target="#addVehicle">Dodaj pojazd
                 </button>
@@ -28,7 +28,7 @@
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form th:action="@{/home/save-card}" method="post" th:object="${card}">
+                    <form th:action="@{/save-card}" method="post" th:object="${card}">
                         <input type="hidden" th:field="*{id}" th:value="${card.id}"/>
                         <div class="modal-header">
                             <button type="submit" class="close" data-dismiss="modal" aria-label="Close">
@@ -53,7 +53,7 @@
              aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <form th:action="@{/home/add-vehicle}" th:object="${vehicle}" method="post"
+                    <form th:action="@{/add-vehicle}" th:object="${vehicle}" method="post"
                           enctype="multipart/form-data">
                         <input type="hidden" th:field="*{id}" th:value="${vehicle.id}"/>
                         <div class="modal-header">
@@ -183,11 +183,11 @@
                             </th:block>
                         </td>
                         <td>
-                            <a th:href="@{'/home/card/' + ${card.id}}" type="button"
+                            <a th:href="@{'/card/' + ${card.id}}" type="button"
                                class="btn btn-sm btn-outline-primary">Wybierz</a>
-                            <a th:href="@{'/home/card/pdf/' + ${card.id}}" type="button" target="_blank"
+                            <a th:href="@{'/card/pdf/' + ${card.id}}" type="button" target="_blank"
                                class="btn btn-sm btn-outline-primary">PDF</a>
-                            <a th:href="@{'/home/card/delete/' + ${card.id}}"
+                            <a th:href="@{'/card/delete/' + ${card.id}}"
                                onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
                                type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
                         </td>
@@ -227,12 +227,11 @@
                         <td th:text="${user.roles}">[User]</td>
                         <td>&nbsp;</td>
                         <td>
-                            <a th:href="@{'/home/edit/' + ${user.id}}" type="button"
+                            <a th:href="@{'/edit/' + ${user.id}}" type="button"
                                class="btn btn-sm btn-outline-primary">Wybierz</a>
-                            <a th:href="@{'/home/user/delete/' + ${user.id}}"
+                            <a th:href="@{'/user/delete/' + ${user.id}}"
                                onclick="return confirm('Usunięcie użytkownika jest nie odwracalne, jesteś pewien?')"
                                type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
-                            <a th:href="@{'/home/edit/' + ${user.id}}" class="btn btn-sm btn-outline-primary eBtn">Edit</a>
                         </td>
                     </tr>
                 </th:block>
@@ -267,7 +266,7 @@
                     <tr>
                         <td th:text="${code.number}">AAAAAA</td>
                         <td>
-                            <form th:action="@{'/home/toggle/' + ${code.id}}" method="post" th:object="${code}">
+                            <form th:action="@{'/toggle/' + ${code.id}}" method="post" th:object="${code}">
                                 <th:block th:if="${code.active}">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">
                                         dezaktywuj
@@ -283,7 +282,7 @@
                         <td th:text="${code.usedBy}">Jan Kowalski</td>
                         <td>&nbsp;</td>
                         <td>
-                            <a th:href="@{'/home/code/delete/' + ${code.id}}"
+                            <a th:href="@{'/code/delete/' + ${code.id}}"
                                onclick="return confirm('Usunięcie kodu jest nie odwracalne, jesteś pewien?')"
                                type="button"
                                class="btn btn-sm btn-outline-danger">Usuń</a>
@@ -330,9 +329,9 @@
                         <td><img class="img-fluid" src="truck_image.jpg" th:src="@{${vehicle.vehicleImagePath}}"
                                  style="max-height: 70px;"/></td>
                         <td>
-                            <a th:href="@{'/home/vehicle/edit/' + ${vehicle.id}}" type="button"
+                            <a th:href="@{'/vehicle/edit/' + ${vehicle.id}}" type="button"
                                class="btn btn-sm btn-outline-primary">Wybierz</a>
-                            <a th:href="@{'/home/vehicle/delete/' + ${vehicle.id}}"
+                            <a th:href="@{'/vehicle/delete/' + ${vehicle.id}}"
                                onclick="return confirm('Usunięcie pojazdu jest nie odwracalne, jesteś pewien?')"
                                type="button" class="btn btn-sm btn-outline-danger">Usuń</a>
                         </td>

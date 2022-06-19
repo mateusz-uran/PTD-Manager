@@ -5,7 +5,7 @@
 <div class="container">
     <div th:replace="header :: navbar-main-page"></div>
     <div class="section">
-        <form th:action="@{/home/add-vehicle}" th:object="${vehicle}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/add-vehicle}" th:object="${vehicle}" method="post" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}" th:value="${vehicle.id}"/>
             <div class="header">
                 <h3>Dodaj szczegółowe informacje o zestawie. Należy wypełnić wszystkie dostępne pola.</h3>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/home/card")
+@RequestMapping("/card")
 @Controller
 public class FuelController {
     private final FuelService fuelService;
@@ -42,14 +42,14 @@ public class FuelController {
         fuel.setCard(cardId);
         fuelService.saveRefueling(fuel);
         counterService.toggleToFalse(cardId.getId());
-        return "redirect:/home/card/" + cardId.getId();
+        return "redirect:/card/" + cardId.getId();
     }
 
     @GetMapping("/fuel/edit/{id}")
     public String showEditFuelForm(@PathVariable("id") Integer id, Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Card cardId = cardService.findByUserId(userDetails.getUserId());
         if(cardService.checkIfCardIsDone(userDetails.getUserId())) {
-            return "redirect:/home/card/" + cardId.getId() + "/?false";
+            return "redirect:/card/" + cardId.getId() + "/?false";
         } else {
             Fuel fuel = fuelService.findFuelById(id);
             model.addAttribute("fuel", fuel);
@@ -61,11 +61,11 @@ public class FuelController {
     public String deleteFuel(@PathVariable("id") Integer id, @AuthenticationPrincipal CustomUserDetails userDetails) {
         Card cardId = cardService.findByUserId(userDetails.getUserId());
         if(cardService.checkIfCardIsDone(userDetails.getUserId())) {
-            return "redirect:/home/card/" + cardId.getId() + "/?false";
+            return "redirect:/card/" + cardId.getId() + "/?false";
         } else {
             fuelService.deleteFuel(id);
             counterService.toggleToFalse(cardId.getId());
-            return "redirect:/home/card/" + cardId.getId();
+            return "redirect:/card/" + cardId.getId();
         }
     }
 }

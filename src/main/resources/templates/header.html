@@ -36,7 +36,7 @@
         <p th:inline="text">Zalogowany jako
             <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
         </p>
-        <form th:action="@{/home}" method="get">
+        <form th:action="@{/}" method="get">
             <input type="submit" value="Strona główna" class="btn btn-secondary" role="button"/>
         </form>
     </div>

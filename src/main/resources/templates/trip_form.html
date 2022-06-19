@@ -5,7 +5,7 @@
 <div class="container">
   <div th:replace="header :: navbar-main-page"></div>
   <div class="section">
-    <form th:action="@{/home/card/save-trip}" th:object="${trip}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/card/save-trip}" th:object="${trip}" method="post" enctype="multipart/form-data">
       <input type="hidden" th:field="*{id}" th:value="${trip.id}"/>
       <div class="header">
         <h3>Dodaj szczegółowe informacje o każdym punkcie trasy. Należy wypełnić wszystkie dostępne pola.</h3>

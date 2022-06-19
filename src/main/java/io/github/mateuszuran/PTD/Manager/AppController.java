@@ -34,7 +34,7 @@ public class AppController {
         this.cardService = cardService;
     }
 
-    @GetMapping("/home")
+    @GetMapping
     public String showHomePage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
         if(cardService.hasRole()) {
             List<Card> listCards = cardService.findAllCards();
@@ -62,7 +62,7 @@ public class AppController {
         if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @GetMapping("/register")

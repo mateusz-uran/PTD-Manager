@@ -5,7 +5,7 @@
 <div class="container">
     <div th:replace="header :: navbar-main-page"></div>
     <div class="section">
-        <form th:action="@{/home/edit/save}" method="post" th:object="${user}">
+        <form th:action="@{/edit/save}" method="post" th:object="${user}">
             <input type="hidden" th:field="*{id}" th:value="${user.id}"/>
             <div class="header">
                 <h3>Edycja użytkownika</h3>

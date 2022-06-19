@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping("/home/card")
+@RequestMapping("/card")
 @Controller
 public class CountersController {
     private static final Logger logger = LoggerFactory.getLogger(CountersController.class);
@@ -22,6 +22,6 @@ public class CountersController {
     @GetMapping("/counters/update/{id}")
     public String updateCounters(@PathVariable("id") Integer id, Model model) {
         counterService.saveCounters(id);
-        return "redirect:/home/card/" + id;
+        return "redirect:/card/" + id;
     }
 }

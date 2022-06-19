@@ -6,19 +6,19 @@
     <div th:replace="header :: navbar-main-page"></div>
     <div class="section">
         <div class="buttons">
-            <a th:href="@{/home/card/add-trip}" class="btn btn-primary btn-sm" role="button">Dodaj punkt trasy</a>
-            <a th:href="@{/home/card/add-fuel}" class="btn btn-primary btn-sm" role="button">Dodaj tankowanie</a>
+            <a th:href="@{/card/add-trip}" class="btn btn-primary btn-sm" role="button">Dodaj punkt trasy</a>
+            <a th:href="@{/card/add-fuel}" class="btn btn-primary btn-sm" role="button">Dodaj tankowanie</a>
         </div>
         <div class="row form-row">
             <div class="row">
                 <div class="check">
                     <th:block th:if="${card.done}">
-                        <a th:href="@{'/home/card/toggle/' + ${card.id}}" class="link-primary" role="button">
+                        <a th:href="@{'/card/toggle/' + ${card.id}}" class="link-primary" role="button">
                             <i class="fa-solid fa-circle-check" style="color:#4BB543;"></i>
                         </a>
                     </th:block>
                     <th:block th:unless="${card.done}">
-                        <a th:href="@{'/home/card/toggle/' + ${card.id}}" class="link-primary" role="button">
+                        <a th:href="@{'/card/toggle/' + ${card.id}}" class="link-primary" role="button">
                             <i class="fa-solid fa-circle-dot" style="color: #cc0000;"></i>
                         </a>
                     </th:block>
@@ -74,11 +74,11 @@
                         <th:block th:each="trip,iterator : ${listTrips}">
                             <tr>
                                 <td>
-                                    <a th:href="@{'/home/card/trip/edit/' + ${trip.id}}" type="button"
+                                    <a th:href="@{'/card/trip/edit/' + ${trip.id}}" type="button"
                                        class="btn btn-sm btn-outline-primary card-btn">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <a th:href="@{'/home/card/trip/delete/' + ${trip.id}}"
+                                    <a th:href="@{'/card/trip/delete/' + ${trip.id}}"
                                        onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
                                        type="button" class="btn btn-sm btn-outline-danger card-btn"><i
                                             class="fa-solid fa-circle-minus"></i></a>
@@ -131,11 +131,11 @@
                         <th:block th:each="fuel,iterator : ${listFuels}">
                             <tr>
                                 <td>
-                                    <a th:href="@{'/home/card/fuel/edit/' + ${fuel.id}}" type="button"
+                                    <a th:href="@{'/card/fuel/edit/' + ${fuel.id}}" type="button"
                                        class="btn btn-sm btn-outline-primary card-btn">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
-                                    <a th:href="@{'/home/card/fuel/delete/' + ${fuel.id}}"
+                                    <a th:href="@{'/card/fuel/delete/' + ${fuel.id}}"
                                        onclick="return confirm('Usunięcie karty jest nie odwracalne, jesteś pewien?')"
                                        type="button" class="btn btn-sm btn-outline-danger card-btn"><i
                                             class="fa-solid fa-circle-minus"></i></a>
@@ -180,14 +180,14 @@
                             <tr>
                                 <td>
                                     <th:block th:if="${counters.upToDate}">
-                                        <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}"
+                                        <a th:href="@{'/card/counters/update/' + ${counters.card.id}}"
                                            type="button"
                                            class="btn btn-sm btn-outline-primary card-btn update-ok">
                                             <i class="fa-solid fa-rotate" style="color: #4BB543;"></i>
                                         </a>
                                     </th:block>
                                     <th:block th:unless="${counters.upToDate}">
-                                        <a th:href="@{'/home/card/counters/update/' + ${counters.card.id}}"
+                                        <a th:href="@{'/card/counters/update/' + ${counters.card.id}}"
                                            type="button"
                                            class="btn btn-sm btn-outline-primary card-btn update-fail">
                                             <i class="fa-solid fa-rotate" style="color: #cc0000;"></i>

@@ -49,11 +49,11 @@ public class WebSecurityConfig{
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/home").hasAnyAuthority("User", "Admin", "Owner")
+                .antMatchers("/").hasAnyAuthority("User", "Admin", "Owner")
                 .antMatchers("/login", "/register", "/process_register", "/resources/**", "/static/**", "/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login")
-                .defaultSuccessUrl("/home", true)
+                .defaultSuccessUrl("/", true)
                 .usernameParameter("email").permitAll()
                 .and().logout().permitAll()
                 .and().rememberMe().tokenValiditySeconds(3 * 24 * 60 * 60)

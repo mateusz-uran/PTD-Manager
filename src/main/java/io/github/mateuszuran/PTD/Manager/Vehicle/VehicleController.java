@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RequestMapping("/home")
 @Controller
 public class VehicleController {
     private final VehicleService vehicleService;
@@ -31,7 +30,7 @@ public class VehicleController {
     @PostMapping("/add-vehicle")
     public String uploadFile(@RequestPart(value = "file") MultipartFile file, Vehicle vehicle) {
         vehicleService.saveVehicle(vehicle, file);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @GetMapping("/vehicle/edit/{id}")
@@ -46,6 +45,6 @@ public class VehicleController {
     @GetMapping("/vehicle/delete/{id}")
     public String deleteVehicle(@PathVariable("id") Integer id) {
         vehicleService.deleteVehicleById(id);
-        return "redirect:/home";
+        return "redirect:/";
     }
 }

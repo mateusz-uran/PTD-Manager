@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/home")
 @Controller
 public class UserController {
     private final UserService userService;
@@ -25,7 +24,7 @@ public class UserController {
     @GetMapping("/generate")
     public String generateCodeForRegistration() {
         userService.saveGeneratedCode();
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @PostMapping("/toggle/{id}")
@@ -33,13 +32,13 @@ public class UserController {
         var checkbox = userService.getCode(id);
         userService.toggle(checkbox);
         codeRepository.save(checkbox);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @GetMapping("/code/delete/{id}")
     public String deleteCode(@PathVariable("id") Integer id) {
         userService.deleteCode(id);
-        return "redirect:/home";
+        return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
@@ -55,16 +54,16 @@ public class UserController {
     public String saveEditedUser(User user) {
         Integer id = user.getId();
         if(userService.checkIfEditedUserEmailIsUnique(user.getEmail(), id)) {
-            return "redirect:/home/edit/" + id + "?false";
+            return "redirect:/edit/" + id + "?false";
         } else {
             userService.save(user);
-            return "redirect:/home/edit/" + id + "?success";
+            return "redirect:/edit/" + id + "?success";
         }
     }
 
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id) {
         userService.deleteUserById(id);
-        return "redirect:/home";
+        return "redirect:/";
     }
 }

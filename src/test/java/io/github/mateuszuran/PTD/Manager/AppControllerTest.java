@@ -26,14 +26,14 @@ class AppControllerTest {
     @Test
     void shouldGetHomePage() throws Exception {
         mockMvc
-                .perform(MockMvcRequestBuilders.get("/home"))
+                .perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(status().is(200));
     }
 
     @WithMockUser
     @Test
     void shouldReturnForbiddenRequestForUserWithoutRole() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("/home"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(status().isForbidden());
     }
 
