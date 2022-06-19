@@ -106,6 +106,7 @@ public class UserService {
     public void save(User user) {
         String encodedPassword = user.getPassword();
         user.setPassword(encodedPassword);
+        user.setEnabled(true);
         userRepository.save(user);
     }
 
