@@ -13,6 +13,6 @@ CREATE TABLE vehicle (
     vehicleImageName VARCHAR(30),
     vehicleImageDescription VARCHAR(30),
     vehicleImagePath VARCHAR(64),
-    user_id INT,
+    user_id INT UNSIGNED,
     FOREIGN KEY (user_id) REFERENCES users (id)
 )
