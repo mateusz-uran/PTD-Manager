@@ -16,10 +16,10 @@
   </p>
   <p>
   <h4>Login as admin:</h4>
-    Login: admin@o2.pl </br>
+    Login: ptd-admin@o2.pl </br>
     Password: admin
   <h4>Login as user:</h4>
-    Login: user@o2.pl </br>
+    Login: ptd-user@o2.pl </br>
     Password: user
   </p>
 </div>
