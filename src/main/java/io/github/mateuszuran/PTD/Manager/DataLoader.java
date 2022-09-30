@@ -33,8 +33,8 @@ class DataLoader implements ApplicationRunner {
         user.setEmail("admin@o2.pl");
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode("admin"));
-        user.setFirstName("Mateusz");
-        user.setLastName("Uranowski");
+        user.setFirstName("John");
+        user.setLastName("Smith");
         user.setEnabled(true);
         return user;
     }
