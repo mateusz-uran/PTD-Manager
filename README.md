@@ -118,7 +118,7 @@ _Here I will explain how to get all together so application can work on your mac
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-1. **Activation code requeried to register new user. After is used it's toggled and it's not active anymore, admin can see which user used code.**
+1. **Activation code requeried to register new user. Used is toggled and not active anymore, admin can see which user used code.**
   ![Code table][code_used]
   
 2. **Card table shows unique card number, author data, date of creation and if it's finished. Only finished card can be exported to PDF.**
