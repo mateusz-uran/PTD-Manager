@@ -49,7 +49,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Main page Screen Shot][main-page]]([https://example.com](http://ptdmanager-env.eba-uuwpwxj2.eu-central-1.elasticbeanstalk.com/))
+[![Main page Screen Shot][main-page]]((http://ptdmanager-env.eba-uuwpwxj2.eu-central-1.elasticbeanstalk.com/))
 
 [PTD Manager](http://ptdmanager-env.eba-uuwpwxj2.eu-central-1.elasticbeanstalk.com/) is system that helps professional truck driver to manage data during his trip.
 Secured environment provides features for example automatic of final results like fuel or the most important mileage. 
