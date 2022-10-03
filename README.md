@@ -52,15 +52,15 @@
 [![Main page Screen Shot][main-page]]((http://ptdmanager-env.eba-uuwpwxj2.eu-central-1.elasticbeanstalk.com/))
 
 [PTD Manager](http://ptdmanager-env.eba-uuwpwxj2.eu-central-1.elasticbeanstalk.com/) is system that helps professional truck driver to manage data during his trip.
-Secured environment provides features for example automatic of final results like fuel or the most important mileage. 
+Secured environment provides features for example automatic counting final results like fuel or the most important mileage. 
 The end result is a formatted pdf file filled with the data that the driver provided. Application is available on PC and mobile.
 
 Features:
 * Driver can create card with unique key and store data like fuel consumption and mileage. At the end everything is automatically calculated.
 * The final result is that those stored and sorted data are exported to formatted pdf file which driver can download.
-* The application allows you to manage multiple drivers at the same time thanks to profiles. Each driver has his own environment and can't ingerent into data of      another driver.
+* The application allows you to manage multiple drivers at the same time thanks to profiles. Each driver has his own environment and can't ingerent into data of         another driver.
 * Only admin or owner can see every card and add, update, delete driver or user. 
-* Thanks to custom code generator only allowed users can register to application. Aftery validation user is asked to confirm his identity threw email. That prevent from unwanted spam.
+* Thanks to custom code generator only allowed users can register to application, confirmation email is sended and then user can log in.
 
 ### Built With
 
@@ -118,7 +118,7 @@ _Here I will explain how to get all together so application can work on your mac
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-1. **Activation code requeried to register new user. Used is toggled and not active anymore, admin can see which code user used.**
+1. **Activation code requeried to register new user. It's toggled when it's used, admin can see which code where used by which user.**
   ![Code table][code_used]
   
 2. **Card table shows unique card number, author data, date of creation and if it's finished. Only finished card can be exported to PDF.**
