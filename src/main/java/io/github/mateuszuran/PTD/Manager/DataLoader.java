@@ -4,6 +4,7 @@ import io.github.mateuszuran.PTD.Manager.Role.Role;
 import io.github.mateuszuran.PTD.Manager.Role.RoleRepository;
 import io.github.mateuszuran.PTD.Manager.User.User;
 import io.github.mateuszuran.PTD.Manager.User.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Slf4j
 @Component
 class DataLoader implements ApplicationRunner {
     private final UserRepository userRepository;
@@ -22,10 +24,17 @@ class DataLoader implements ApplicationRunner {
     }
 
     @Override
-    public void run(final ApplicationArguments args) throws Exception {
-        /*userRepository.save(createAdmin());
-        roleRepository.saveAll(addRoles());
-        addRoleToDefaultUser();*/
+    public void run(final ApplicationArguments args) {
+        if(userRepository.existsByEmail("admin@o2.pl")) {
+        }
+            userRepository.save(createAdmin());
+        var roles = roleRepository.findAll();
+        if(roles.isEmpty()) {
+        }
+            roleRepository.saveAll(addRoles());
+        if(userRepository.existsByEmail("admin@o2.pl") && roles.contains(roleRepository.findByName("Admin"))) {
+        }
+            addRoleToDefaultUser();
     }
 
     User createAdmin() {

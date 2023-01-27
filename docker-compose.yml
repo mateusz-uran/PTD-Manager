@@ -1,0 +1,31 @@
+version: '3.1'
+services:
+  ptd-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - ptd-db
+    environment:
+      SPRING_PROFILES_ACTIVE: production
+      SPRING_DATASOURCE_URL: jdbc:mysql://ptd-db:3306/PTD_db
+
+  ptd-db:
+    container_name: ptd_db
+    image: mysql
+    environment:
+      MYSQL_DATABASE: PTD_db
+      MYSQL_USER: mateuszuran
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ptd-db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+
+volumes:
+  ptd-db:

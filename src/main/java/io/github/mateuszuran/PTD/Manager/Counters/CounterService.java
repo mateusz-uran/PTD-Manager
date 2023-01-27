@@ -23,7 +23,8 @@ public class CounterService {
     }
 
     public Counters findByCardId(Integer id) {
-        return countersRepository.findByCardId(id).orElseThrow(() -> new IllegalArgumentException("Counters of given ID not found"));
+        return countersRepository.findByCardId(id)
+                .orElseThrow(() -> new IllegalArgumentException("Counters of given ID not found"));
     }
 
     private void getCountersInfo(Integer id) {
