@@ -12,15 +12,6 @@
     Secured system designed to speed up and facilitate data management.
     <br />
     <br />
-    <a href="http://ptdmanager-env.eba-uuwpwxj2.eu-central-1.elasticbeanstalk.com/">View Demo</a>
-  </p>
-  <p>
-  <h4>Login as admin:</h4>
-    Login: ptd-admin@o2.pl </br>
-    Password: admin
-  <h4>Login as user:</h4>
-    Login: ptd-user@o2.pl </br>
-    Password: user
   </p>
 </div>
 
@@ -83,9 +74,8 @@ Application is using few external tools like S3 Bucket from Amazon, iText plugin
 ### Prerequisites
 
 Requirements for application to work properly: 
-* MySQL server
-* S3 Bucket from Amazon
-* Email verification to receive request from user who wanna register
+* Docker
+* Minimum 1GB available space
 
 ### Installation
 
@@ -96,22 +86,14 @@ _Here I will explain how to get all together so application can work on your mac
     - the most important is to get [access and secret key] to your account. Paste the correct username and password into the application.properties file.
 2. Create [GMAIL] account or provide existing account passes.
     - *(it can be another provider but then you will need to change smtp server in appliction propreties)*
-3. Create mysql database
-    - [Creating and Selecting a Database]
-    - Paste the correct username and password into the application.properties file.
-5. If everything is done correct you can start application. Hibernate will go threw all flyway migration and create tables.
-    - to be able to login you need to uncomment data loader runner which is creating default user
-    ```
-    @Override
-    public void run(final ApplicationArguments args) throws Exception {
-        userRepository.save(createAdmin());
-        roleRepository.saveAll(addRoles());
-        addRoleToDefaultUser();
-    }
-    ```
- 6. Run application with maven 
+    - configuration is in application-production.properties file under resources directory
+3. Run maven command to create JAR file requeired for Docker file
     ```sh
     ./mvnw clean package -DskipTests
+    ```
+4. Run docker command. Docker will build image from Dockerfile and previously create JAR file pass it to docker compose.
+    ```sh
+    docker compose up -d
     ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -142,8 +124,6 @@ _Here I will explain how to get all together so application can work on your mac
 
 Email - mateusz.uranowski@onet.pl
 
-My personal blog: [https://mateusz-uran.pl/](https://mateusz-uran.pl/)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -165,7 +145,6 @@ My personal blog: [https://mateusz-uran.pl/](https://mateusz-uran.pl/)
 [AWS S3 bucket]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html
 [GMAIL]: https://support.google.com/mail/answer/56256?hl=en
 [access and secret key]: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
-[Creating and Selecting a Database]: https://dev.mysql.com/doc/refman/8.0/en/creating-database.html
 
 [code_used]: readme-img/access_code.png
 [card]: readme-img/card.png
