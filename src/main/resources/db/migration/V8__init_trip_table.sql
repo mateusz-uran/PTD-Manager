@@ -9,8 +9,8 @@ CREATE TABLE trip (
   tripEndLocation VARCHAR(25),
   tripStartCountry VARCHAR(25),
   tripEndCountry VARCHAR(25),
-  tripStartVehicleCounter INT NOT NULL,
-  tripEndVehicleCounter INT NOT NULL,
+  tripStartVehicleCounter INT NOT NULL DEFAULT 0,
+  tripEndVehicleCounter INT NOT NULL DEFAULT 0,
   car_mileage INT,
   card_id INT UNSIGNED,
   FOREIGN KEY (card_id) REFERENCES card (id)

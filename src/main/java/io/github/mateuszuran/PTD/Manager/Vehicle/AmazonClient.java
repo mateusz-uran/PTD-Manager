@@ -34,11 +34,11 @@ public class AmazonClient {
     @Value("${amazonProperties.secretKey}")
     private String secretKey;
 
-    @PostConstruct
+/*    @PostConstruct
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
         this.s3Client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).build();
-    }
+    }*/
 
     public File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
